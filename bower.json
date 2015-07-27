@@ -16,6 +16,8 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.3"
+    "angular": "~1.4.3",
+    "material-design-lite": "~1.0.1",
+    "angular-route": "~1.4.3"
   }
 }
