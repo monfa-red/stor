@@ -1,3 +1,3 @@
 ### mn-shop
 
-#### a mean stack app ;)
+##### A mean app ;)
