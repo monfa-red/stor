@@ -1,0 +1,21 @@
+{
+  "name": "mn-shop",
+  "version": "0.0.0",
+  "homepage": "https://github.com/monfa-red/mn-shop",
+  "authors": [
+    "Abbas Monfared <a@monfa.red>"
+  ],
+  "main": "./bin/www",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3"
+  }
+}
