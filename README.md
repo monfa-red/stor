@@ -1,4 +1,3 @@
-# ch-a2
+### mn-shop
 
-### Just playing around with Express and Angular2
-
+#### a mean stack app ;)
