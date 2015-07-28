@@ -1,3 +1,9 @@
+# App
+# ======================
+access.log
+public/lib/
+# public/dist/
+
 # Mac
 # ===========
 .DS_Store
@@ -13,11 +19,6 @@ node_modules/
 app/tests/coverage/
 .bower-*/
 .idea/
-
-# App
-# ======================
-access.log
-# public/dist/
 
 # Sublime editor
 # ==============

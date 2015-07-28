@@ -1,25 +1,29 @@
-var app = angular.module("m-test", ['ngRoute']);
+angular
 
-app.config(function($routeProvider) {
-  $routeProvider
-  .when("/", {
-    template: "<h6>Root!</h6>"
+  .module('myApp', [
+    'ngNewRouter',
+    'myApp.home',
+    'myApp.ass'
+  ])
+
+  .controller('AppController', [
+    '$router',
+    AppController
+  ])
+
+  .config( function($locationProvider) {
+    $locationProvider.html5Mode(true);
   })
-  .when("/a", {
-    template: "<h6>Uers page :P</h6>"
-  })
-  .otherwise({
-    template: "404 my error"
-  })
-})
 
 
-// app.controller("appCtrl", function ($scope) {
-//   this.say = function(msg) {
-//     alert(msg);
-//   };
-//   return $scope.appCtrl = this;
-// })
+  function AppController($router) {
+    $router.config([
+      {path: '/',     component: 'home'},
+      {path: '/ass',  component: 'ass'}
+    ]);
+  }
+
+
 
 // app.directive("myApp", function() {
 //   return {

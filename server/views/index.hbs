@@ -1,6 +1,11 @@
-<div ng-app="m-test">
-  <ng-view></ng-view>
-  {{!-- <div ng-viewport></div> --}}
+<div ng-app="myApp" ng-controller="AppController as app">
+  {{!-- <ng-view></ng-view> --}}
+  <a ng-link="home" class="mdl-button">Home</a>
+  <a ng-link="ass" class="mdl-button">aaa</a>
+  <br><br>
+
+
+  <div ng-viewport></div>
 {{!--   <div class="" ng-controller="appCtrl">
     
     <div class="mdl-button mdl-button--colored mdl-button--raised mdl-button--accent" ng-click="appCtrl.say('hello')">Heyy!</div>
