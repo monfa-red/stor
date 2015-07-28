@@ -1,31 +1,19 @@
 var app = angular.module('myApp.ass', []);
 
-// app.directive('myDir', function() {
-//     return {
-//         restrict: 'E',
-//         template: "<h5>assssssss {{a.name}}</h5>",
-//         controller: function() {
-//             this.name = "AssAA"
-//         },
-//         controllerAs: "a"
-//     }
-// });
 app.controller('AssController', function () {
     this.name = "Abbas";
+    this.sayHello = function(){
+      alert(this.name)
+    }
 })
-
-
-// angular.module('myApp.ass', [])
-//   .controller('AssController', [function () {
-//     this.name = 'Abbas';
-//   }]);
-
-
-// app.directive('mydirect', function() {
-//     return {
-//         restrict: 'E',
-//         controller: function() {
-
-//         }
-//     }
-// })
+app.directive('mydir', function() {
+    return {
+        restrict: 'E',
+        template: "<p>mydir directive says <b>{{mydir.name}}</b></p>",
+        controller: function() {
+            this.name = "heey!";
+            console.log("mydir directive is working :D")
+        },
+        controllerAs: "mydir"
+    }
+});
