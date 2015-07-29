@@ -1,4 +1,4 @@
-var app = angular.module('myApp.ass', [])
+var app = angular.module('storeApp.ass', [])
   
   .service('myCoolService', function() {
     this.dataIsVis = false;

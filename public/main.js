@@ -1,10 +1,10 @@
 angular
 
-  .module('myApp', [
+  .module('storeApp', [
     'ngNewRouter',
-    'myApp.products',
-    'myApp.home',
-    'myApp.ass'
+    'storeApp.products',
+    'storeApp.home',
+    'storeApp.ass'
   ])
 
   .controller('AppController', [
@@ -27,7 +27,7 @@ angular
 
 
 
-// app.directive("myApp", function() {
+// app.directive("storeApp", function() {
 //   return {
 //     restrict: "A",
 //     link: function() {

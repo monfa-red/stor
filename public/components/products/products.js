@@ -1,6 +1,6 @@
 angular
     
-    .module('myApp.products', [])
+    .module('storeApp.products', [])
 
     .controller('ProductsController', productsController)
 
