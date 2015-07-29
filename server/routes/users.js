@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
+// Loading user.model
+require('../models/user.model');
 var users = require('../controllers/users.controller');
 
 // var sampleUser = {

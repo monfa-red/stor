@@ -9,8 +9,7 @@ var mongoose = require('mongoose');
 
 
 
-// Loading user.model
-require('./server/models/user.model');
+
 
 // Main Config file
 var config = require('./server/config/config');
