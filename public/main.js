@@ -2,6 +2,7 @@ angular
 
   .module('myApp', [
     'ngNewRouter',
+    'myApp.products',
     'myApp.home',
     'myApp.ass'
   ])
@@ -18,8 +19,9 @@ angular
 
   function AppController($router) {
     $router.config([
-      {path: '/',     component: 'home'},
-      {path: '/ass',  component: 'ass'}
+      { path: '/',         component: 'home' },
+      { path: '/ass',      component: 'ass' },
+      { path: '/products', component: 'products' }
     ]);
   }
 
