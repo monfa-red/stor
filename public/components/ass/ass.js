@@ -1,12 +1,18 @@
-var app = angular.module('myApp.ass', []);
-
-app.controller('AssController', function () {
+var app = angular.module('myApp.ass', [])
+  
+  .service('myCoolService', function() {
+    this.dataIsVis = false;
+  })
+  .controller('AssController', function(myCoolService) {
     this.name = "Abbas";
+    // $scope.dataVisible = false;
+    console.log(myCoolService);
     this.sayHello = function(){
       alert(this.name)
     }
-})
-app.directive('mydir', function() {
+  })
+
+  .directive('mydir', function() {
     return {
         restrict: 'E',
         // scope: {},
@@ -18,7 +24,7 @@ app.directive('mydir', function() {
               </li>
           </ul>
         </p>`,
-        controller: function($scope, $http) {
+        controller: function($scope, $http, myCoolService) {
             this.name = "heey!";
             _this = this;
             this.getData = function() {
@@ -26,7 +32,11 @@ app.directive('mydir', function() {
                 .get("/users/list")
                 .success(function(data) {
                   _this.list = data;
+                  myCoolService.dataIsVis = true;
                 })
+            }
+            if (myCoolService.dataIsVis) {
+              this.getData();
             }
             console.log($scope.list);
             console.log($scope);
