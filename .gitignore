@@ -2,6 +2,7 @@
 # ======================
 access.log
 public/lib/
+public/libs/
 # public/dist/
 
 # Mac
