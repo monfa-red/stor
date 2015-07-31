@@ -1,4 +1,4 @@
-var app = angular.module('storeApp.ass', [])
+angular.module('storeApp.ass', [])
   
   .service('myCoolService', function() {
     this.dataIsVis = false;
@@ -30,7 +30,7 @@ var app = angular.module('storeApp.ass', [])
             this.getData = function() {
               $http
                 .get("/users/list")
-                .success(function(data) {
+                .then(function(data) {
                   _this.list = data;
                   myCoolService.dataIsVis = true;
                 })

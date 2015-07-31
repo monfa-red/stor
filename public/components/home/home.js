@@ -4,7 +4,11 @@ angular
 
   .controller('HomeController', HomeController)
 
-  .directive('hero', function() {
+  .directive('hero', heroDirective);
+
+
+
+function heroDirective() {
     return {
       restrict: "E",
       templateUrl: "./components/home/hero/hero.html",
@@ -13,13 +17,10 @@ angular
       },
       controllerAs: "hero"
     }
-  })
-
-
-
+  };
 
 
   function HomeController($window) {
     $window.document.title = "Home :)"
     this.name = 'Friend';
-  }
+  };

@@ -7,15 +7,14 @@ angular
     'storeApp.ass'
   ])
 
-  .controller('AppController', [
-    '$router',
-    AppController
-  ])
+  .controller('AppController', AppController)
 
   .config( function($locationProvider) {
     $locationProvider.html5Mode(true);
   })
 
+
+  AppController.$inject = ['$router']
 
   function AppController($router) {
     $router.config([
