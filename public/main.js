@@ -2,27 +2,12 @@ angular
 
   .module('storeApp', [
     'ngNewRouter',
+    'app.admin',
     'storeApp.products',
     'storeApp.home',
     'storeApp.ass'
-  ])
+  ]);
 
-  .controller('AppController', AppController)
-
-  .config( function($locationProvider) {
-    $locationProvider.html5Mode(true);
-  })
-
-
-  AppController.$inject = ['$router']
-
-  function AppController($router) {
-    $router.config([
-      { path: '/',         component: 'home' },
-      { path: '/ass',      component: 'ass' },
-      { path: '/products', component: 'products' }
-    ]);
-  }
 
 
 
