@@ -16,9 +16,21 @@
 
       $router
         .config([
-          { path: '/',        component: 'home' },
-          { path: '/ass',     component: 'ass' },
-          { path: '/product', component: 'product' }
+          {
+            path: '/',
+            component: 'home',
+            as: 'home'
+          },
+          {
+            path: '/ass',
+            component: 'ass',
+            as: 'ass'
+          },
+          {
+            path: '/products',
+            component: 'products',
+            as: 'products'
+          },
         ]);
 
     };
