@@ -5,7 +5,8 @@
 
     .module('app', [
       'ngNewRouter',
-      'app.products',
+      'app.productList',
+      'app.productDetail',
       'app.home',
       'app.ass'
     ]);
