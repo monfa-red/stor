@@ -8,14 +8,17 @@
     .service('myCoolService', function() {
       this.dataIsVis = false;
     })
+    // .factory('assentry', function($resource) {
+    //   return $resource('/products/list'); // Note the full endpoint address
+    // })
     .controller('AssController', function(myCoolService) {
       this.name = "Abbas";
-      // $scope.dataVisible = false;
-      console.log(myCoolService);
+      // console.log(myCoolService);
       this.sayHello = function(){
         alert(this.name)
       }
     })
+
 
     .directive('mydir', function() {
       return {
@@ -25,7 +28,7 @@
           <button ng-click="mydir.getData()">getData</button>
           <ul>
               <li ng-repeat="list in mydir.list">
-                  {{ list.email }} is from {{ list.firstName }}
+                  {{ list.productName }} is <b>$\{{ list.price }}</b>
               </li>
           </ul>
         </p>`,
@@ -34,19 +37,17 @@
             var _this = this;
             this.getData = function() {
               $http
-                .get("/users/list")
-                .then(function(data) {
-                  _this.list = data;
+                .get("/products/list")
+                .then(function(result) {
+                  _this.list = result.data;
+                  console.log(result);
                   myCoolService.dataIsVis = true;
                 })
-            }
+            };
+
             if (myCoolService.dataIsVis) {
               this.getData();
             }
-            console.log($scope.list);
-            console.log($scope);
-            console.log("mydir directive is working :D");
-            console.log(this)
         },
         controllerAs: "mydir"
       }
@@ -54,6 +55,3 @@
 
 
 })()
-
-
-
