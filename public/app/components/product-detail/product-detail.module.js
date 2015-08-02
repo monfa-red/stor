@@ -3,6 +3,6 @@
 
   angular
 
-    .module('app.productDetail', [])
+    .module('app.productDetail', ['ngNewRouter'])
 
 })()

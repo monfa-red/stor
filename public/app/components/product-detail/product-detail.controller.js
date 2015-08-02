@@ -8,8 +8,12 @@
     .controller('ProductDetailController', ProductDetailController);
 
 
-    function ProductDetailController() {
+  ProductDetailController.$inject = [
+    '$routeParams'
+  ];
 
-    }
+  function ProductDetailController($routeParams) {
+    this.productId = $routeParams.productId;
+  }
 
 })()
