@@ -21,8 +21,8 @@ var db = mongoose.connect(config.db, function(err) {
     console.error(chalk.bgRed('Could not connect to MongoDB'));
     console.error(chalk.red(err));
   } else {
-    // remove this block !!
-    console.log(chalk.blue('connected to db from app.js'))
+    // Some cool typhography!
+    console.log("   " + chalk.bgBlue('    Connected to DB from server.js    '))
   }
 });
 
