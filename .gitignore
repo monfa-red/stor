@@ -1,9 +1,9 @@
-# App
+# Project files
 # ======================
 access.log
 public/lib/
 public/libs/
-# public/dist/
+public/assets/dist/
 
 # Mac
 # ===========
@@ -21,30 +21,6 @@ app/tests/coverage/
 .bower-*/
 .idea/
 
-# Sublime editor
-# ==============
-.sublime-project
-*.sublime-project
-*.sublime-workspace
-
-# Eclipse project files
-# =====================
-.project
-.settings/
-.*.md.html
-.metadata
-*~.nib
-local.properties
-
-# IntelliJ
-# ========
-*.iml
-
-# Cloud9 IDE
-# =========
-.c9/
-data/
-mongod
 
 # General
 # =======
