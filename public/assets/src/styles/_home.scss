@@ -1,8 +1,15 @@
-
+/**
+ * This layout will be in use when
+ * "layout--home" class is added to ".layout"
+ */
 .layout.layout--home {
 
   .layout__header {
     height: 100%;
+
+    .hero {
+      opacity: 1;
+    }
   }
   .layout__content {
     // TODO: remove this

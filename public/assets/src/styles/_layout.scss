@@ -1,15 +1,16 @@
 
-
+/* ========= LAYOUT ========= */
 .layout {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-/**
- *
- */
 /* ========= HEADER ========= */
+/**
+ * Can also be effected by:
+ * "_home.scss", 
+ */
 .layout__header {
   display: flex;
   position: relative;
@@ -17,48 +18,46 @@
   left: 0;
   width: 100%;
   height: 20%;
-  // background-color: green;
-}
-.hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url('../images/stor_bg.jpg');
 
-
-  &__logo {
-    width: 50%;
-    height: 13%;
-    // background-color: yellow;
-    background-image: url('../images/logo_noisy.png');
-    background-size: contain;
+  .hero {
+    display: flex;
+    opacity: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     background-position: center;
     background-repeat: no-repeat;
-  }
-  &__text {
-    margin-top: 3vh;
-    margin-bottom: 0;
-    font-size: 1.7rem;
-    // font-size: 1.8vh;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 300;
-  }
+    background-size: cover;
+    background-image: url('../images/stor_bg.jpg');
+    transition: opacity 0.5s;
 
-
+    &__logo {
+      width: 50%;
+      height: 13%;
+      // background-color: yellow;
+      background-image: url('../images/logo_noisy.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    &__text {
+      margin-top: 3vh;
+      margin-bottom: 0;
+      font-size: 1.7rem;
+      // font-size: 1.8vh;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 300;
+    }
+  }
 }
 
 /* ========= CONTENT ========= */
-
 .layout__content {
 
 }
