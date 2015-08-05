@@ -253,7 +253,7 @@ gulp.task('clean', cb => del([`${PATH.public.dist}/*`], {dot: true}, cb));
 
 
 // Watch files for changes & reload
-gulp.task('serve', ['styles', 'browser-sync'], () => {
+gulp.task('serve', ['styles', 'images', 'browser-sync'], () => {
   // gulp.watch([`${PATH.public.src}/**/*.html`], reload);
   gulp.watch([`${PATH.public.src}/styles/**/*.{scss,css}`], ['styles', reload]);
   gulp.watch([`${PATH.public.src}/scripts/**/*.js`], ['jshint']);

@@ -1,11 +1,33 @@
-<div>
-  <a ng-link="home" class="mdl-button">Home</a>
-  <a ng-link="ass" class="mdl-button">aaa</a>
-  <a ng-link="productList" class="mdl-button">Products</a>
-  <a ng-link="productDetail({productId:'some-product-name'})" class="mdl-button">Product one</a>
-  <a ng-link="productDetail({productId:'another-product'})" class="mdl-button">Product two</a>
-  <br>
+<div class="layout__container">
+  <div class="layout layout--home">
 
-  <div ng-viewport></div>
+    <!-- HEADER -->
+    <header class="layout__header layout__header--home">
+      <!-- hero -->
+      <div class="hero hero--home">
+        <!-- <div class="hero-content"> -->
+          <div class="hero__logo"></div>
+          <h4 class="hero__text"> some text here </h4>
+        <!-- </div> -->
+      </div>
 
+      <!-- navigation -->
+      <div class="header-nav__container">
+        <nav class="header-nav">
+          <a ng-link="home" class="mdl-button">Home</a>
+          <a ng-link="ass" class="mdl-button">aaa</a>
+          <a ng-link="productList" class="mdl-button">Products</a>
+          <a ng-link="productDetail({productId:'some-product-name'})" class="mdl-button">Product one</a>
+          <a ng-link="productDetail({productId:'another-product'})" class="mdl-button">Product two</a>
+        </nav>
+      </div>
+
+    </header>
+
+    <!-- CONTENT -->
+    <main class="layout__content">
+      <div ng-viewport></div>
+    </main>
+
+  </div>
 </div>

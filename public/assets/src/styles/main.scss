@@ -1,4 +1,8 @@
 
-body {
-  transition: none;
+body, html {
+  // transition: none;
+  font-size: 10px;
 }
+@import '_variables';
+@import '_layout';
+@import '_home'
