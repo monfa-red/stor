@@ -13,16 +13,16 @@
    * Services Constructors
    */
 
-  GlobalValues.$inject = ['$rootScope', 'constants'];
+  GlobalValues.$inject = ['$rootScope', 'CONSTANTS'];
 
-  function GlobalValues($rootScope, constants) {
+  function GlobalValues($rootScope, CONSTANTS) {
 
     this.setPageValues = function(obj) {
 
       $rootScope.pageValues = {
         pageName : obj.name || "",
-        pageTitle: obj.title || constants.appName,
-        pageDescription: obj.description || constants.appDescription
+        pageTitle: obj.title || CONSTANTS.appName,
+        pageDescription: obj.description || CONSTANTS.appDescription
       }
     }
 

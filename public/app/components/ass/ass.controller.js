@@ -8,9 +8,8 @@
     .service('myCoolService', function() {
       this.dataIsVis = false;
     })
-    // .factory('assentry', function($resource) {
-    //   return $resource('/products/list'); // Note the full endpoint address
-    // })
+
+    
     .controller('AssController', AssController)
 
 
@@ -48,20 +47,19 @@
     });
 
     AssController.$inject = ['myCoolService', 'GlobalValues'];
-    
+
     function AssController(myCoolService, GlobalValues) {
       this.name = "Abbas";
-      
+
       GlobalValues.setPageValues({
-        name: "ASSA",
-        title : "ASSA",
-        description: "ASSA"
+        name: "ass",
+        title : "Ass Page",
+        description: "Ass description"
       })
 
       this.sayHello = function(){
         alert(this.name)
       }
-      // $rootScope.title = "ASSSS"
     }
 
 

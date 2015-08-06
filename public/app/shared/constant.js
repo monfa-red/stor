@@ -5,7 +5,7 @@
 
     .module('app')
 
-    .constant('constants',
+    .constant('CONSTANTS',
       {
         appName: "Stor",
         appDescription: "Open-source Store App"
