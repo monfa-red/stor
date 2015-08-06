@@ -18,11 +18,14 @@
   function GlobalValues($rootScope, constants) {
 
     this.setPageValues = function(obj) {
-      $rootScope.pageName = obj.name || "";
-      $rootScope.pageTitle = obj.title || constants.appName;
-      $rootScope.pageDescription = obj.description || constants.appDescription;
+
+      $rootScope.pageValues = {
+        pageName : obj.name || "",
+        pageTitle: obj.title || constants.appName,
+        pageDescription: obj.description || constants.appDescription
+      }
     }
-    
+
   }
 
   function HomeService() {

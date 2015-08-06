@@ -47,10 +47,8 @@
       }
     });
 
-    AssController.$inject = [
-      'myCoolService',
-      'GlobalValues'
-    ]
+    AssController.$inject = ['myCoolService', 'GlobalValues'];
+    
     function AssController(myCoolService, GlobalValues) {
       this.name = "Abbas";
       

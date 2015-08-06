@@ -27,8 +27,8 @@
     function HomeController(GlobalValues) {
       // $window.document.title = "Home :)";
       GlobalValues.setPageValues({
-        name: "wwww",
-        title : "wwww",
+        name: "home",
+        title : "Stor Home",
         description: "wwww"
       })
       this.name = 'Friend';
