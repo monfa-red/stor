@@ -11,13 +11,7 @@
     // .factory('assentry', function($resource) {
     //   return $resource('/products/list'); // Note the full endpoint address
     // })
-    .controller('AssController', function(myCoolService) {
-      this.name = "Abbas";
-      // console.log(myCoolService);
-      this.sayHello = function(){
-        alert(this.name)
-      }
-    })
+    .controller('AssController', AssController)
 
 
     .directive('mydir', function() {
@@ -52,6 +46,25 @@
         controllerAs: "mydir"
       }
     });
+
+    AssController.$inject = [
+      'myCoolService',
+      'GlobalValues'
+    ]
+    function AssController(myCoolService, GlobalValues) {
+      this.name = "Abbas";
+      
+      GlobalValues.setPageValues({
+        name: "ASSA",
+        title : "ASSA",
+        description: "ASSA"
+      })
+
+      this.sayHello = function(){
+        alert(this.name)
+      }
+      // $rootScope.title = "ASSSS"
+    }
 
 
 })()

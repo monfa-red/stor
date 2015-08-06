@@ -10,19 +10,30 @@
     .config(appRouterConfig);
 
 
-    appRouter.$inject = ['$router'];
+    appRouter.$inject = ['$router', '$rootScope', '$location'];
 
     /**
      * Router configure management
      */
-    function appRouter($router) {
+    function appRouter($router, $rootScope, $location, $scope) {
       $router
         .config([
-          { path: '/',                    component: 'home' },
+          { path: '/',                    component: 'home'},
           { path: '/ass',                 component: 'ass' },
           { path: '/products',            component: 'productList' },
           { path: '/products/:productId', component: 'productDetail' },
         ]);
+        // $rootScope.$on("$locationChangeSuccess", function(event, current) {
+        //     console.log($rootScope);
+        //     console.log($location);
+        //     $rootScope.title = $location.path();
+        //     $rootScope.pageName = $location.path();
+        // })
+      //   console.log($rootScope.$on);
+      //   $rootScope.$on('$routeChangeStart', function (event, current, previous) {
+      //     console.log('dd');
+      //     // $rootScope.title = current.$$route.title;
+      // });
     };
 
 
@@ -51,7 +62,7 @@
       }
 
       /**
-       * Enable HTML5 routing 
+       * Enable HTML5 routing
        */
       $locationProvider
         .html5Mode(true);

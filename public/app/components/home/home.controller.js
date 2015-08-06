@@ -21,8 +21,16 @@
       }
     };
 
-    function HomeController($window) {
-      $window.document.title = "Home :)"
+
+    HomeController.$inject = ['GlobalValues'];
+
+    function HomeController(GlobalValues) {
+      // $window.document.title = "Home :)";
+      GlobalValues.setPageValues({
+        name: "wwww",
+        title : "wwww",
+        description: "wwww"
+      })
       this.name = 'Friend';
     };
 
