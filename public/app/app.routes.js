@@ -10,12 +10,12 @@
     .config(appRouterConfig);
 
 
-    appRouter.$inject = ['$router', '$rootScope', '$location'];
-
     /**
      * Router configure management
      */
-    function appRouter($router, $rootScope, $location, $scope) {
+    appRouter.$inject = ['$router'];
+
+    function appRouter($router) {
       $router
         .config([
           { path: '/',                    component: 'home'},
@@ -24,27 +24,19 @@
           { path: '/products/:productId', component: 'productDetail' },
         ]);
         // $rootScope.$on("$locationChangeSuccess", function(event, current) {
-        //     console.log($rootScope);
-        //     console.log($location);
         //     $rootScope.title = $location.path();
-        //     $rootScope.pageName = $location.path();
         // })
-      //   console.log($rootScope.$on);
-      //   $rootScope.$on('$routeChangeStart', function (event, current, previous) {
-      //     console.log('dd');
-      //     // $rootScope.title = current.$$route.title;
-      // });
     };
 
-
-    appRouterConfig.$inject = [
-      '$locationProvider',
-      '$componentLoaderProvider'
-    ];
 
     /**
      * Set router configurations
      */
+    appRouterConfig.$inject = [
+        '$locationProvider',
+        '$componentLoaderProvider'
+      ];
+
     function appRouterConfig($locationProvider, $componentLoaderProvider) {
 
       /**
@@ -77,5 +69,6 @@
         });
 
     };
+
 
 })()

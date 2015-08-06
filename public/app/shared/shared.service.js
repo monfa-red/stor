@@ -12,7 +12,6 @@
   /**
    * Services Constructors
    */
-
   GlobalValues.$inject = ['$rootScope', 'CONSTANTS'];
 
   function GlobalValues($rootScope, CONSTANTS) {
@@ -23,12 +22,15 @@
         pageName : obj.name || "",
         pageTitle: obj.title || CONSTANTS.appName,
         pageDescription: obj.description || CONSTANTS.appDescription
-      }
-    }
+      };
 
-  }
+    };
+
+  };
 
   function HomeService() {
 
-  }
+  };
+
+
 })();
