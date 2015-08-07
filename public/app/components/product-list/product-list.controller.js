@@ -17,9 +17,9 @@
 
       GlobalValues
         .setPageValues({
-            name: "ass",
-            title : "Ass Page",
-            description: "Ass description"
+            name: "product-list",
+            title : "Product List",
+            description: "The list of products"
           });
         
       this.products = [
