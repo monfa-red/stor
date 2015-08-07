@@ -16,10 +16,16 @@
                       </li>
                     </ul>`,
         controller: function() {
-          this.products = [{
-            title: "testTitle",
-            name: "tastName"
-          }];
+          this.products = [
+            {
+              title: "testTitle",
+              name: "tastName"
+            },
+            {
+              title: "secondtitle",
+              name: "second"
+            }
+          ];
           console.log(this.products);
         },
         controllerAs: "productNameList"

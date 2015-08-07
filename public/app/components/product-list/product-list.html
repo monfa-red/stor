@@ -1,2 +1,21 @@
-Products :D <br>
-<product-name-list></product-name-list>  
+
+
+
+<!-- Product list -->
+<div class="product-list__container">
+    <div class="product-list grid grid--no-spacing">
+        
+        <div class="product cell--4-col" ng-repeat="product in productList.products">
+            <figure class="product__figure">
+                
+            </figure>
+            <h3 class="product__title">
+                {{ product.title }}
+            </h3>
+            <div class="product__drawer">
+                
+            </div>
+        </div>
+
+    </div>
+</div>

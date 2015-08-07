@@ -65,7 +65,7 @@ const DEFAULTS = {
   browserSync: {
     proxy: 'http://localhost:3000',
     port: 4000,
-    browser: ['google-chrome']
+    browser: ['google chrome']
   },
   autoprefixerBrowsers: [
     'ie >= 10',

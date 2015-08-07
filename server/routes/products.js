@@ -22,4 +22,11 @@ router.get('/list', function(req, res) {
 });
 
 
+
+// Remove this block
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Products!' });
+});
+
+
 module.exports = router;

@@ -1,0 +1,61 @@
+
+/**
+ * Absolute align:
+ * This mixin works exactly like what you would
+ * expext from "margin" or "padding" work when 
+ * you pass it 2, 3 or 4 varibales.
+ * it also supports "skip" keyword when you need to
+ * ignore certain position
+ * @param  {[type]} $top
+ * @param  {[type]} $right:  [optional]
+ * @param  {[type]} $bottom: [optional]
+ * @param  {[type]} $left:   [optional]
+ */
+@mixin absolute-align($top, $right: null, $bottom: null, $left: null) {
+
+    @if ($left) {
+        @if ($top != "skip") {
+            top : $top;
+        }
+        @if ($right != "skip") {
+            right: $right;
+        }
+        @if ($bottom != "skip") {
+            bottom: $bottom;
+        }
+        @if ($left != "skip") {
+            left: $left;
+        }
+    }
+    @else if ($bottom) {
+        @if ($top != "skip") {
+            top : $top;
+        }
+        @if ($right != "skip") {
+            right: $right;
+            left: $right;
+        }
+        @if ($bottom != "skip") {
+            bottom: $bottom;
+        }
+    }
+    @else if ($right) {
+        @if ($top != "skip") {
+            top : $top;
+            bottom: $top;
+        }
+        @if ($right != "skip") {
+            right: $right;
+            left: $right;
+        }
+    }
+    @else {
+        @if ($top != "skip") {
+            top: $top;
+            right: $top;
+            bottom: $top;
+            left: $top;
+        }
+    }
+
+}
