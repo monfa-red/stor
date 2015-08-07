@@ -1,3 +1,9 @@
 html, body {
+  // 10px so we can easily use REM units
+  // and adjust it based on viewports
   font-size: 10px;
+  // To fix and standardise font-smooting on MAC
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+
 }
