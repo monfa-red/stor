@@ -70,5 +70,12 @@
 
     };
 
-
+    /**
+     * I'm not a big fan of ng-app!
+     * bootstrap the app from init.js instead of
+     * putting it in the dom
+     */
+    angular.element(document).ready(function() {
+      angular.bootstrap(document, ['app']);
+    });
 })()

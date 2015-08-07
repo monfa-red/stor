@@ -1,5 +1,5 @@
 
-
+<button ng-click="productList.runSample()"> Resource</button>
 
 <!-- Product list -->
 <div class="product-list__container">
@@ -10,10 +10,10 @@
                 
             </figure>
             <h3 class="product__title">
-                {{ product.title }}
+                {{ product.productName }}
             </h3>
             <div class="product__drawer">
-                
+                {{ product.price }}
             </div>
         </div>
 
