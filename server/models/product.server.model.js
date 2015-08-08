@@ -7,28 +7,45 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 /**
- * Article Schema
+ * Product Schema
  */
 var ProductSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
   },
-  title: {
+  productName: {
     type: String,
     default: '',
     trim: true,
-    required: 'Title cannot be blank'
+    required: 'Product name cannot be blank'
   },
-  content: {
+  productCaption: {
     type: String,
     default: '',
-    trim: true
+    trim: true,
   },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
+  productDescription: {
+    type: String,
+    default: '',
+    trim: true,
+    required: 'Product description cannot be blank'
+  },
+  price: {
+    type: String,
+    default: '',
+    trim: true,
+    required: 'Price cannot be blank'
+  },
+  productImageURL: {
+    type: String,
+    default: 'assets/src/imgaes/product-place-holder.png'
   }
+  // , TODO: figure this out!
+  // user: {
+  //   type: Schema.ObjectId,
+  //   ref: 'User'
+  // }
 });
 
 mongoose.model('Product', ProductSchema);

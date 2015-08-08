@@ -15,7 +15,9 @@ module.exports = {
 
   create: function (req, res) {
     var product = new Product(req.body);
-    product.user = req.user;
+
+    // TODO: Product authour needs to be set
+    // product.user = req.user;
 
     product.save(function (err) {
       if (err) {
@@ -32,7 +34,8 @@ module.exports = {
    * Show the current product
    */
   read: function (req, res) {
-    res.json(req.product);
+    res.json(req.params.productId);
+    // console.log(req.params.productId)
   },
 
   /**
