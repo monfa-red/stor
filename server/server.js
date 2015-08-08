@@ -28,9 +28,11 @@ var db = mongoose.connect(config.db, function(err) {
 
 
 // Routings
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var products = require('./routes/products');
+var routes = {};
+    routes.index = require('./routes/index');
+    routes.products = require('./routes/products.server.routes');
+// var routes.users = require('./routes/users');
+// var routes.products = require('./routes/products');
 
 
 var app = express();
@@ -47,10 +49,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../', 'public')));
 
-app.use('/', routes);
-app.use('/ass', routes);
-app.use('/users', users);
-app.use('/products', products);
+// Define error pages
+// app.route('/server-error').get(core.renderServerError);
+
+// Return a 404 for all undefined api, module or lib routes
+// app.route('/:url(api|modules|lib)/*').get(core.renderNotFound);
+
+// Define application route
+
+// app.route('/*').get(routes.index);
+app.use('/api/products', routes.products);
+app.use('/', routes.index);
+app.use('/ass', routes.index);
+app.use('/products', routes.index);
+
+
+
+// app.use('/', routes);
+// app.use('/ass', routes);
+// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

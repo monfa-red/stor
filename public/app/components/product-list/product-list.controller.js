@@ -9,7 +9,7 @@
 
 
     /**
-     * Inject GlobalValues 
+     * Inject GlobalValues
      */
     ProductListController.$inject = [
       'GlobalValues',
@@ -31,13 +31,13 @@
       // API stuff
       this.runSample = function() {
 
-        var User = $resource('/products/list/:ass')
+        var User = $resource('/api/products/list/:ass')
           .query();
 
         this.products = User;
 
       }
-        
+
       // this.products = [
       //   {
       //     productName: 'First Product'

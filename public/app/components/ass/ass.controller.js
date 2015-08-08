@@ -9,7 +9,7 @@
       this.dataIsVis = false;
     })
 
-    
+
     .controller('AssController', AssController)
 
 
@@ -30,7 +30,7 @@
             var _this = this;
             this.getData = function() {
               $http
-                .get("/products/list")
+                .get("/api/products/list")
                 .then(function(result) {
                   _this.list = result.data;
                   console.log(result);
