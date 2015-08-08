@@ -29,14 +29,13 @@
           });
 
       // API stuff
-      this.runSample = function() {
+      // this.runSample = function() {
 
-        var User = $resource('/api/products/list/:ass')
+        var User = $resource('/api/products/')
           .query();
 
         this.products = User;
 
-      }
 
       // this.products = [
       //   {

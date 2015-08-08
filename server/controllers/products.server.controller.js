@@ -59,18 +59,21 @@ module.exports = {
   },
 
   /**
+   * TODO: definitly change this!
    * Delete an product
    */
   delete: function (req, res) {
-    var product = req.product;
+    // var product = req.product;
+    // var product = req.params.productId;
+    // console.log(product)
 
-    product.remove(function (err) {
+    Product.remove({ _id: req.params.productId }, function (err, result) {
       if (err) {
         return res.status(400).send({
           message: errorHandler.getErrorMessage(err)
         });
       } else {
-        res.json(product);
+        res.json(result);
       }
     });
   },

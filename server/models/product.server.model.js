@@ -14,18 +14,18 @@ var ProductSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  productName: {
+  name: {
     type: String,
     default: '',
     trim: true,
     required: 'Product name cannot be blank'
   },
-  productCaption: {
+  caption: {
     type: String,
     default: '',
     trim: true,
   },
-  productDescription: {
+  description: {
     type: String,
     default: '',
     trim: true,
@@ -37,9 +37,13 @@ var ProductSchema = new Schema({
     trim: true,
     required: 'Price cannot be blank'
   },
-  productImageURL: {
-    type: String,
-    default: 'assets/src/imgaes/product-place-holder.png'
+  imageURLs: {
+    type: Array,
+    default: ['assets/src/imgaes/product-place-holder.png']
+  },
+  sale: {
+    type: Boolean,
+    default: false
   }
   // , TODO: figure this out!
   // user: {

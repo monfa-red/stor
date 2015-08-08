@@ -1,19 +1,21 @@
 
-<button ng-click="productList.runSample()"> Resource</button>
+<!-- <button ng-click="productList.runSample()"> Resource</button> -->
 
 <!-- Product list -->
 <div class="product-list__container">
     <div class="product-list grid grid--no-spacing">
-        
+
         <div class="product cell--4-col" ng-repeat="product in productList.products">
             <figure class="product__figure">
-                
+
             </figure>
-            <h3 class="product__title">
+            <h3 class="product-title">
                 {{ product.productName }}
             </h3>
-            <div class="product__drawer">
+            <h4 class="product-price">
                 {{ product.price }}
+            </h4>
+            <div class="product__drawer">
             </div>
         </div>
 
