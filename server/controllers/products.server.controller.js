@@ -16,6 +16,8 @@ module.exports = {
   create: function (req, res) {
     var product = new Product(req.body);
 
+    // console.log(req)
+    console.log(req.body)
     // TODO: Product authour needs to be set
     // product.user = req.user;
 

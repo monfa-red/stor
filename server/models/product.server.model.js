@@ -32,14 +32,14 @@ var ProductSchema = new Schema({
     required: 'Product description cannot be blank'
   },
   price: {
-    type: String,
+    type: Number,
     default: '',
     trim: true,
     required: 'Price cannot be blank'
   },
   imageURLs: {
-    type: Array,
-    default: ['assets/src/imgaes/product-place-holder.png']
+      type: Array,
+      default: ['assets/src/imgaes/product-place-holder.png']
   },
   sale: {
     type: Boolean,

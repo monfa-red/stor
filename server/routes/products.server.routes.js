@@ -12,14 +12,15 @@ router.get('/list', function(req, res) {
   var jsonResult = [],
     i;
 
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 8; i++) {
       jsonResult.push({
-        date: faker.date.past(),
-        productName: faker.commerce.productName(),
-        price: faker.commerce.price(),
-        productShortDesc: faker.lorem.sentence(),
-        productFullDesc: faker.lorem.paragraph(),
-        imageUrl: 'http://lorempixel.com/300/260/'
+        // date: faker.date.past(),
+        name: faker.commerce.productName(),
+        caption: faker.lorem.sentence(),
+        description: faker.lorem.paragraph(),
+        price: faker.random.number() + "00",
+        imageURLs: ['assets/src/imgaes/product-place-holder-2.png'],
+        sale: faker.random.boolean()
       });
     };
 
