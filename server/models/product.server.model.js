@@ -6,6 +6,17 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+
+/**
+ * dashify the name field to be used for a
+ * url-firendly api!
+ */
+function dashify(str) {
+  return str.trim().replace(/\s+/g, '-').toLowerCase();
+};
+
+
+
 /**
  * Product Schema
  */
@@ -18,7 +29,11 @@ var ProductSchema = new Schema({
     type: String,
     default: '',
     trim: true,
+    unique: true,
     required: 'Product name cannot be blank'
+  },
+  dashName: {
+    type: String
   },
   caption: {
     type: String,
@@ -39,7 +54,7 @@ var ProductSchema = new Schema({
   },
   imageURLs: {
       type: Array,
-      default: ['assets/src/imgaes/product-place-holder.png']
+      default: ['assets/src/images/product-place-holder.png']
   },
   sale: {
     type: Boolean,
@@ -50,6 +65,12 @@ var ProductSchema = new Schema({
   //   type: Schema.ObjectId,
   //   ref: 'User'
   // }
+});
+
+
+ProductSchema.pre('save', function (next) {
+  this.dashName = dashify(this.name);
+  next();
 });
 
 mongoose.model('Product', ProductSchema);

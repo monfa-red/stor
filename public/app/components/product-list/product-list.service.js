@@ -5,21 +5,25 @@
 
     .module('app.productList')
 
-    .factory('Products', Products);
+    // .factory('Products', Products)
+
+
 
 
     /**
      * Product Servie Constructor
      */
-    Products.$inject = ['$resource'];
+    // Products.$inject = ['$resource'];
+    //
+    // function Products($resource) {
+    //   return $resource('/api/products/:productId', {
+    //     productId:'@_id'
+    //   }, {
+    //     update: {
+    //       method:'PUT'
+    //     }
+    //   });
+    // }
 
-    function Products($resource) {
-      return $resource('/api/products/:productId', {
-        productId:'@_id'
-      }, {
-        update: {
-          method:'PUT'
-        }
-      });
-    }
+
 })()

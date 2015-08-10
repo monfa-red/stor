@@ -1,23 +1,31 @@
 
-<!-- <button ng-click="productList.runSample()"> Resource</button> -->
-
 <!-- Product list -->
 <div class="product-list__container">
-    <div class="product-list grid grid--no-spacing">
+    <div class="product-list grid ">
 
-        <div class="product cell--4-col" ng-repeat="product in productList.products">
+        <!-- START product-loop -->
+        <div class="product cell cell--4-col" ng-repeat="product in productList.products">
+
             <figure class="product__figure">
-
+              <img src="{{ product.imageURLs[0] }}" alt="" />
             </figure>
-            <h3 class="product-title">
-                {{ product.productName }}
-            </h3>
-            <h4 class="product-price">
-                {{ product.price }}
-            </h4>
-            <div class="product__drawer">
+
+            <div class="product__cover">
+
+              <h3 class="product-title">
+                  <a href="/products/{{ product.dashName }}">{{ product.name }}</a>
+              </h3>
+
+              <div class="product-price">
+                <div class="product-price_final">
+                  {{ ( product.price / 100 ) | currency:"$" }}
+                </div>
+              </div>
+
             </div>
+
         </div>
+        <!-- END product-loop -->
 
     </div>
 </div>

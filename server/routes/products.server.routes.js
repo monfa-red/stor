@@ -12,20 +12,21 @@ var products = require('../controllers/products.server.controller');
 var faker = require('faker');
 
 router.get('/list', function(req, res) {
-  var jsonResult = [],
+  // var jsonResult = [],
+  var jsonResult,
     i;
 
-    for (i = 0; i < 8; i++) {
-      jsonResult.push({
+    // for (i = 0; i < 8; i++) {
+      jsonResult = {
         // date: faker.date.past(),
         name: faker.commerce.productName(),
         caption: faker.lorem.sentence(),
         description: faker.lorem.paragraph(),
-        price: faker.random.number() + "00",
+        price: faker.random.number() + "99",
         imageURLs: ['assets/src/imgaes/product-place-holder-2.png'],
         sale: faker.random.boolean()
-      });
-    };
+      }
+    // )};
 
   res.json(jsonResult);
 });

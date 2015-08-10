@@ -9,33 +9,28 @@
 
 
     /**
-     * Inject GlobalValues
+     * Inject Services
      */
     ProductListController.$inject = [
       'GlobalValues',
-      '$resource',
-      'Products'
+      'Products',
+      'dashify'
       ]
 
-    function ProductListController(GlobalValues, $resource, Products) {
+    function ProductListController(GlobalValues, Products, dashify) {
 
-      var _this = this;
+      // var _this = this;
 
       // Set the page title
       GlobalValues
         .setPageValues({
-            name: "product-list",
-            title : "Product List",
-            description: "The list of products"
-          });
-
-
-        // this.products = Products.query();
-
-        this.products = Products.query({
-          productId: "55c768425758ade86428bb9d",
-          isCool: "yess"
+          name: "product-list",
+          title : "Product List",
+          description: "The list of products"
         });
+
+
+      this.products = Products.query();
 
 
     }

@@ -5,9 +5,13 @@
 
     .module('app')
 
-    .service('HomeService', HomeService)
+    .service('GlobalValues', GlobalValues)
 
-    .service('GlobalValues', GlobalValues);
+    .factory('Products', Products)
+
+    .factory('dashify', dashify);
+
+
 
   /**
    * Services Constructors
@@ -24,11 +28,35 @@
         pageDescription: obj.description || CONSTANTS.appDescription
       };
 
-    };
+    }
 
   };
 
-  function HomeService() {
+  /**
+   * Products Factory
+   */
+  Products.$inject = ['$resource'];
+
+  function Products($resource) {
+
+    return $resource('/api/products/:productId', {
+      productId:'@_id'
+    }, {
+      update: {
+        method:'PUT'
+      }
+    })
+
+  };
+
+  /**
+   * Trim and Dashify a String
+   */
+  function dashify() {
+
+    return function(str) {
+      return str.trim().replace(/\s+/g, '-').toLowerCase();
+    }
 
   };
 

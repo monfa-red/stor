@@ -1,1 +1,17 @@
-this is product Detail page for {{ productDetail.productId}}
+<div class="">
+  <h3 class="product-title">
+      {{ productDetail.product.name }}
+  </h3>
+  <h4 class="product-price">
+      {{ productDetail.product.price }}
+  </h4>
+  <p>
+    {{ productDetail.product.caption }}
+  </p>
+  <p>
+    {{ productDetail.product._id }}
+  </p>
+  <p>
+    {{ productDetail.product.description }}
+  </p>
+</div>

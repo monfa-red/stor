@@ -38,7 +38,7 @@ module.exports = {
   read: function (req, res) {
     // res.json(req.params.productId);
     Product
-      .find({ '_id': req.params.productId })
+      .findOne({ 'dashName': req.params.productId })
       .exec(function (err, product) {
         if (err) {
           return res.status(400).send({
