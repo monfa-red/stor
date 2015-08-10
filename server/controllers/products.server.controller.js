@@ -36,7 +36,18 @@ module.exports = {
    * Show the current product
    */
   read: function (req, res) {
-    res.json(req.params.productId);
+    // res.json(req.params.productId);
+    Product
+      .find({ '_id': req.params.productId })
+      .exec(function (err, product) {
+        if (err) {
+          return res.status(400).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.json(product);
+        }
+      });
     // console.log(req.params.productId)
   },
 

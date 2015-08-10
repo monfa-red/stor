@@ -5,7 +5,10 @@ require('../models/product.server.model.js');
 var products = require('../controllers/products.server.controller');
 
 
-
+/**
+ * TODO:
+ * This section has to be removed
+ */
 var faker = require('faker');
 
 router.get('/list', function(req, res) {

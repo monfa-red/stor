@@ -5,13 +5,21 @@
 
     .module('app.productList')
 
-    .service('ProductListService', ProductListService);
+    .factory('Products', Products);
 
 
     /**
      * Product Servie Constructor
      */
-    function ProductListService() {
-      this.getProductList = function() {}
+    Products.$inject = ['$resource'];
+
+    function Products($resource) {
+      return $resource('/api/products/:productId', {
+        productId:'@_id'
+      }, {
+        update: {
+          method:'PUT'
+        }
+      });
     }
 })()

@@ -13,10 +13,11 @@
      */
     ProductListController.$inject = [
       'GlobalValues',
-      '$resource'
+      '$resource',
+      'Products'
       ]
 
-    function ProductListController(GlobalValues, $resource) {
+    function ProductListController(GlobalValues, $resource, Products) {
 
       var _this = this;
 
@@ -28,32 +29,15 @@
             description: "The list of products"
           });
 
-      // API stuff
-      // this.runSample = function() {
 
-        var User = $resource('/api/products/')
-          .query();
+        // this.products = Products.query();
 
-        this.products = User;
+        this.products = Products.query({
+          productId: "55c768425758ade86428bb9d",
+          isCool: "yess"
+        });
 
 
-      // this.products = [
-      //   {
-      //     productName: 'First Product'
-      //   },
-      //   {
-      //     productName: 'second product'
-      //   },
-      //   {
-      //     productName: 'ontoher product'
-      //   },
-      //   {
-      //     productName: 'some other stuff'
-      //   },
-      //   {
-      //     productName: 'last one'
-      //   },
-      // ]
     }
 
 
