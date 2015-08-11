@@ -27,36 +27,41 @@
     &__cover {
       position: absolute;
       @include absolute-align(0);
+    }
 
-      .product-title {
-          position: absolute;
-          margin: 0 auto;
-          @include absolute-align(skip, 0, 4px);
+    &-title {
+        position: absolute;
+        margin: 0 auto;
+        @include absolute-align(skip, 0, 4px);
 
-          a {
-            display: block;
-            text-decoration: none;
-            color: $gray-6;
-            font-size: 1.4rem;
-            font-weight: 300;
-            text-align: center;
-
-            &:hover {
-              color: $gray-9;
-            }
-          }
-      }
-      .product-price {
-
-        .product-price_final {
-          position: absolute;
-          margin: 0 auto;
-          @include absolute-align(skip, 0, 36px);
+        a {
+          display: block;
+          text-decoration: none;
+          color: $gray-6;
+          font-size: 1.4rem;
+          font-weight: 300;
           text-align: center;
-          font-size: 1.8rem;
-          color: $gray-7;
-        }
-      }
 
+          &:hover {
+            color: $gray-9;
+          }
+        }
+    }
+
+    &-price {
+
+      &_final {
+        position: absolute;
+        margin: 0 auto;
+        @include absolute-align(skip, 0, 36px);
+        text-align: center;
+        font-size: 1.8rem;
+        color: $gray-7;
+      }
+    }
+
+    &-sale {
+        color: $gray-5;
+        text-transform: uppercase;
     }
 }

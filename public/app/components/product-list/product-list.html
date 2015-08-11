@@ -7,7 +7,11 @@
         <div class="product cell cell--4-col" ng-repeat="product in productList.products">
 
             <figure class="product__figure">
-              <img src="{{ product.imageURLs[0] }}" alt="" />
+              <div class="product-sale" ng-if="product.sale">
+                Sale
+              </div>
+              <img src="{{ product.imageURLs[0] }}"  alt="" />
+              <!-- TODO: setup a ng-for for imgages array -->
             </figure>
 
             <div class="product__cover">
