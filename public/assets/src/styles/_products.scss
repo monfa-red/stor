@@ -1,67 +1,142 @@
 
-
+//.product-list itself doesn't exit
 .product-list {
-    // width: 100%;
-
     &__container {
         width: 100%;
-        max-width: 1200px;
+        max-width: $grid-max-width;
         margin: 0 auto;
+    }
+
+    &__slogan {
+      h3 {
+        margin: 2rem 0;
+        // font-family: 'Roboto Mono';
+        text-align: center;
+        font-size: 2.2rem;
+        font-weight: 100;
+        color: $gray-150;
+        text-transform: uppercase;
+        letter-spacing: 1.1rem;
+      }
+    }
+    &__nav {
+      display: flex;
+      justify-content: center;
+      margin: 4.6rem 0 5rem;
+
+      a {
+        position: relative;
+        margin: 0 5%;
+        padding: 0.4rem 0 0 0.1rem;
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: $black;
+        text-transform: uppercase;
+        letter-spacing: 0.1rem;
+        text-decoration: none;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          right: 50%;
+          opacity: 0;
+          // width: 100%;
+          height: 1px;
+          background-color: $black;
+          transition-property: left, right, opacity;
+          transition-duration: 0.2s;
+        }
+
+        &:hover {
+          &::after {
+            left: 0;
+            right: 0;
+            opacity: 1;
+          }
+        }
+      }
+    }
+    &__grid {
+
     }
 }
 
 .product {
     position: relative;
+    overflow: hidden;
+    background-color: $gray-250;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+
+    // To get a relative width to .product
+    &::before {
+      content: "";
+      display: block;
+      padding: 58% 0;
+    }
+    &:hover {
+      background-color: $gray-245;
+    }
+
 
     &__figure {
-        width: 100%;
-        height: 30rem;
-        height: 55vh;
+        position: absolute;
+        // background-color: red;
+        @include absolute-align(0);
         margin: 0;
-        background-color: $gray-1;
 
         img {
+          top: 0;
+          opacity: 0.82;
           width: 100%;
+          transition-property: opacity;
+          transition-duration: 0.32s;
         }
     }
+    &:hover &__figure {
+        img {
+          opacity: 0.94;
+        }
+    }
+
     &__cover {
       position: absolute;
-      @include absolute-align(0);
+      @include absolute-align(9%, 10%, 15%);
+      // background-color: rgba(yellow, 0.2);
     }
 
-    &-title {
-        position: absolute;
-        margin: 0 auto;
-        @include absolute-align(skip, 0, 4px);
-
-        a {
-          display: block;
-          text-decoration: none;
-          color: $gray-6;
-          font-size: 1.4rem;
-          font-weight: 300;
-          text-align: center;
-
-          &:hover {
-            color: $gray-9;
-          }
-        }
-    }
-
-    &-price {
+    &__price {
+      font-family: 'Roboto Mono';
 
       &_final {
         position: absolute;
         margin: 0 auto;
-        @include absolute-align(skip, 0, 36px);
+        @include absolute-align(skip, 0, 3rem);
         text-align: center;
-        font-size: 1.8rem;
-        color: $gray-7;
+        font-size: 1.6rem;
+        letter-spacing: 0.2rem;
+        font-weight: 100;
+        color: $gray-120;
       }
     }
 
-    &-sale {
-        color: $gray-5;
-        text-transform: uppercase;
+    &__sale {
+      position: absolute;
+      @include absolute-align(1.8rem, skip, skip, 1.8rem);
+      color: $gray-220;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;
+      transition-property: color;
+      transition-duration: 0.3s;
     }
+    &:hover &__sale {
+      color: $gray-160;
+    }
+
+
+    // HOVER STATE:
+
 }

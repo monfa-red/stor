@@ -1,17 +1,46 @@
 
+/**
+ * COLORS
+ *
+ */
+$black: black;
+$white: white;
 
-$black: #000;
-$gray-0: #fff;
-$gray-1: #f1f1f1;
-$gray-2: #eee;
-$gray-3: #ccc;
-$gray-4: #aaa;
-$gray-5: #999;
-$gray-6: #666;
-$gray-7: #333;
-$gray-8: #111;
-$gray-9: #000;
+// Gray Scale from 0 to 255;
+$gray-0 : rgb(0 ,0 ,0 );
+$gray-10: rgb(10 ,10 ,10 );
+$gray-20: rgb(20 ,20 ,20 );
+$gray-30: rgb(30 ,30 ,30 );
+$gray-40: rgb(40 ,40 ,40 );
+$gray-50: rgb(50 ,50 ,50 );
+$gray-60: rgb(60 ,60 ,60 );
+$gray-70: rgb(70 ,70 ,70 );
+$gray-80: rgb(80 ,80 ,80 );
+$gray-90: rgb(90 ,90 ,90 );
+$gray-100: rgb(100 ,100 ,100 );
+$gray-110: rgb(110 ,110 ,110 );
+$gray-120: rgb(120 ,120 ,120 );
+$gray-130: rgb(130 ,130 ,130 );
+$gray-140: rgb(140 ,140 ,140 );
+$gray-150: rgb(150 ,150 ,150 );
+$gray-160: rgb(160 ,160 ,160 );
+$gray-170: rgb(170 ,170 ,170 );
+$gray-180: rgb(180 ,180 ,180 );
+$gray-190: rgb(190 ,190 ,190 );
+$gray-200: rgb(200 ,200 ,200 );
+$gray-210: rgb(210 ,210 ,210 );
+$gray-220: rgb(220 ,220 ,220 );
+$gray-230: rgb(230 ,230 ,230 );
+$gray-235: rgb(235 ,235 ,235 );
+$gray-240: rgb(240 ,240 ,240 );
+$gray-245: rgb(245 ,245 ,245 );
+$gray-250: rgb(250 ,250 ,250 );
+$gray-255: rgb(255 ,255 ,255 );
 
+// Layout Sizes
+
+// 1280px - (12px * 2 ) + 2px
+$grid-max-width: 125.4rem;
 
 
 
@@ -20,8 +49,8 @@ $gray-9: #000;
  */
 
 $grid-desktop-columns: 12 !default;
-$grid-desktop-gutter: 10px !default;
-$grid-desktop-margin: 14px !default;
+$grid-desktop-gutter: 12px !default;
+$grid-desktop-margin: 12px !default;
 
 $grid-desktop-breakpoint: 840px !default;
 
@@ -36,70 +65,3 @@ $grid-phone-gutter: $grid-desktop-gutter !default;
 $grid-phone-margin: $grid-desktop-margin !default;
 
 $grid-cell-default-columns: $grid-phone-columns !default;
-
-
-
-
-
-
-
-/**
- * Absolute align:
- * This mixin works exactly like what you would
- * expext from "margin" or "padding" work when
- * you pass it 2, 3 or 4 varibales.
- * it also supports "skip" keyword when you need
- * to ignore certain position
- * @param  {[type]} $top
- * @param  {[type]} $right:  [optional]
- * @param  {[type]} $bottom: [optional]
- * @param  {[type]} $left:   [optional]
- */
-@mixin absolute-align($top, $right: null, $bottom: null, $left: null) {
-
-    @if ($left) {
-        @if ($top != "skip") {
-            top : $top;
-        }
-        @if ($right != "skip") {
-            right: $right;
-        }
-        @if ($bottom != "skip") {
-            bottom: $bottom;
-        }
-        @if ($left != "skip") {
-            left: $left;
-        }
-    }
-    @else if ($bottom) {
-        @if ($top != "skip") {
-            top : $top;
-        }
-        @if ($right != "skip") {
-            right: $right;
-            left: $right;
-        }
-        @if ($bottom != "skip") {
-            bottom: $bottom;
-        }
-    }
-    @else if ($right) {
-        @if ($top != "skip") {
-            top : $top;
-            bottom: $top;
-        }
-        @if ($right != "skip") {
-            right: $right;
-            left: $right;
-        }
-    }
-    @else {
-        @if ($top != "skip") {
-            top: $top;
-            right: $top;
-            bottom: $top;
-            left: $top;
-        }
-    }
-
-}

@@ -23,7 +23,7 @@ router.get('/list', function(req, res) {
         caption: faker.lorem.sentence(),
         description: faker.lorem.paragraph(),
         price: faker.random.number() + "99",
-        imageURLs: ['assets/src/imgaes/product-place-holder-2.png'],
+        imageURLs: ['assets/src/images/product-place-holder-2.png'],
         sale: faker.random.boolean()
       }
     // )};
