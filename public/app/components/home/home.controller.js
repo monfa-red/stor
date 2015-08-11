@@ -10,17 +10,14 @@
   /**
    * Home Controller
    */
-  HomeController.$inject = ['GlobalValues'];
+  HomeController.$inject = ['InitService'];
 
-  function HomeController(GlobalValues) {
+  function HomeController(InitService) {
 
-    GlobalValues.setPageValues({
-      name: "home",
-      title : "Stor Home",
-      description: "wwww"
-    });
+    InitService('home');
+
 
   };
-  
+
 
 })()

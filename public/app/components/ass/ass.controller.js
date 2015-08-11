@@ -46,16 +46,12 @@
       }
     });
 
-    AssController.$inject = ['myCoolService', 'GlobalValues'];
+    AssController.$inject = ['myCoolService', 'InitService'];
 
-    function AssController(myCoolService, GlobalValues) {
+    function AssController(myCoolService, InitService) {
       this.name = "Abbas";
 
-      GlobalValues.setPageValues({
-        name: "ass",
-        title : "Ass Page",
-        description: "Ass description"
-      })
+      InitService('ass');
 
       this.sayHello = function(){
         alert(this.name)

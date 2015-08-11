@@ -20,6 +20,7 @@
         .config([
           { path: '/',                    component: 'home'},
           { path: '/ass',                 component: 'ass' },
+          { path: '/admin',                 component: 'admin' },
           { path: '/products',            component: 'productList' },
           { path: '/products/:productId', component: 'productDetail' },
         ]);

@@ -1,3 +1,9 @@
+/**
+ * TODO:
+ * Fix The mess here!
+ */
+
+
 var express = require('express');
 var path = require('path');
 // var favicon = require('serve-favicon');
@@ -8,14 +14,24 @@ var chalk = require('chalk');
 var mongoose = require('mongoose');
 
 
-
-
-
 // Main Config file
 var config = require('./config/config');
 
 
-// Bootstrap db connection
+// Routings
+var routes = {};
+    routes.index = require('./routes/index');
+    routes.admin = require('./routes/admin.server.routes'),
+    routes.products = require('./routes/products.server.routes');
+// var routes.users = require('./routes/users');
+// var routes.products = require('./routes/products');
+
+
+
+
+/**
+ *  Bootstrap db connection
+ */
 var db = mongoose.connect(config.db, function(err) {
   if (err) {
     console.error(chalk.bgRed('Could not connect to MongoDB'));
@@ -25,14 +41,6 @@ var db = mongoose.connect(config.db, function(err) {
     console.log("   " + chalk.bgBlue('    Connected to DB from server.js    '))
   }
 });
-
-
-// Routings
-var routes = {};
-    routes.index = require('./routes/index');
-    routes.products = require('./routes/products.server.routes');
-// var routes.users = require('./routes/users');
-// var routes.products = require('./routes/products');
 
 
 var app = express();
@@ -58,16 +66,18 @@ app.use(express.static(path.join(__dirname, '../', 'public')));
 // Define application route
 
 // app.route('/*').get(routes.index);
+/**
+ * TODO:
+ * FIX THIS MESS!!!
+ */
 app.use('/api/products', routes.products);
+app.use('/api/admin', routes.admin);
 app.use('/', routes.index);
 app.use('/ass', routes.index);
 app.use('/products', routes.index);
+app.use('/admin', routes.index);
 
 
-
-// app.use('/', routes);
-// app.use('/ass', routes);
-// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

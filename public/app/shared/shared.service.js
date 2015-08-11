@@ -5,7 +5,7 @@
 
     .module('app')
 
-    .service('GlobalValues', GlobalValues)
+    .factory('InitService', InitService)
 
     .factory('Products', Products)
 
@@ -14,23 +14,38 @@
 
 
   /**
-   * Services Constructors
+   * Services
    */
-  GlobalValues.$inject = ['$rootScope', 'CONSTANTS'];
 
-  function GlobalValues($rootScope, CONSTANTS) {
 
-    this.setPageValues = function(obj) {
 
-      $rootScope.pageValues = {
-        pageName : obj.name || "",
-        pageTitle: obj.title || CONSTANTS.appName,
-        pageDescription: obj.description || CONSTANTS.appDescription
-      };
+
+  /**
+   * Init Factory
+   * Set up the page title and className;
+   */
+
+  InitService.$inject = [ '$rootScope', 'G' ];
+
+  function InitService( $rootScope, G ) {
+
+    return function( page ) {
+
+      // check if an object is passed
+      if ( page && typeof page == 'string'  ) {
+        page = G[page];
+      } else if ( !page || !(page instanceof Object) ) {
+        console.log('InitService gets an String or Object')
+      }
+
+      $rootScope.pageConfig = {
+        id : page.id || G.default.id ,
+        title: page.title || G.default.title
+      }
 
     }
 
-  };
+  }
 
   /**
    * Products Factory

@@ -5,11 +5,31 @@
 
     .module('app')
 
-    .constant('CONSTANTS',
+    .constant('G',
+      // var G =
       {
-        appName: "Stor",
-        appDescription: "Open-source Store App"
+        default: {
+          id: 'store',
+          title: 'Store'
+        },
+        home: {
+          id: 'home',
+          title: 'Stor Home'
+        },
+        ass: {
+          id: 'ass',
+          title: 'Ass Page'
+        },
+        admin: {
+          id: 'admin',
+          title: 'Admin Page'
+        },
+        productList: {
+          id: 'product-list',
+          title: 'Product List'
+        }
       }
     );
+
 
 })();

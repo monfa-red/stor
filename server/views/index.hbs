@@ -1,5 +1,5 @@
 <div class="layout__container">
-  <div class="layout layout--\{{ pageValues.pageName }}">
+  <div class="layout layout--\{{ pageConfig.id }}">
 
     <!-- HEADER -->
     <header class="layout__header">
@@ -17,8 +17,9 @@
       <div class="header-nav__container">
         <nav class="header-nav">
           <a ng-link="home" class="mdl-button">Home</a>
-          <a ng-link="ass" class="mdl-button">aaa</a>
           <a ng-link="productList" class="mdl-button">Products</a>
+          <a ng-link="ass" class="mdl-button">aaa</a>
+          <a ng-link="admin" class="mdl-button">Admin</a>
           <!-- <a ng-link="productDetail({productId:'another-product'})" class="mdl-button">Product two</a> -->
         </nav>
       </div>

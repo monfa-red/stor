@@ -1,7 +1,7 @@
 {
   "name": "stor",
   "version": "0.0.0",
- "description": "a store app in node, MongoDB and Angular",
+  "description": "a store app in node, MongoDB and Angular",
   "scripts": {
     "start": "node ./bin/www",
     "test": "gulp serve"
@@ -14,6 +14,7 @@
     "express": "^4.13.3",
     "faker": "^3.0.1",
     "hbs": "~3.1.0",
+    "lodash": "^3.10.1",
     "mongoose": "^4.0.7",
     "morgan": "~1.6.1"
   },

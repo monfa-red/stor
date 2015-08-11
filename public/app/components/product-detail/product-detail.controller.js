@@ -10,16 +10,14 @@
 
   ProductDetailController.$inject = [
     '$routeParams',
-    'GlobalValues',
+    'InitService',
     'Products',
     'dashify'
   ];
 
-  function ProductDetailController($routeParams,GlobalValues, Products, dashify) {
+  function ProductDetailController($routeParams, InitService, Products, dashify) {
 
     var _this = this;
-
-    console.log(_this);
 
     /**
      * Load Data chain
@@ -43,14 +41,11 @@
     function ProductsLoaded(result) {
 
       _this.product = result;
-      console.log(result);
 
-      GlobalValues
-        .setPageValues({
-          name: $routeParams.productId,
-          title : result.name,
-          description: "product description"
-        });
+      InitService({
+        id: $routeParams.productId,
+        title : result.name,
+      })
 
     };
 

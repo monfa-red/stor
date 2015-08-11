@@ -12,22 +12,16 @@
      * Inject Services
      */
     ProductListController.$inject = [
-      'GlobalValues',
+      'InitService',
       'Products',
       'dashify'
       ]
 
-    function ProductListController(GlobalValues, Products, dashify) {
+    function ProductListController(InitService, Products, dashify) {
 
       // var _this = this;
 
-      // Set the page title
-      GlobalValues
-        .setPageValues({
-          name: "product-list",
-          title : "Product List",
-          description: "The list of products"
-        });
+      InitService('productList');
 
 
       this.products = Products.query();

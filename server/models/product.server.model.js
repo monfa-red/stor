@@ -3,18 +3,9 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
-
-
-/**
- * dashify the name field to be used for a
- * url-firendly api!
- */
-function dashify(str) {
-  return str.trim().replace(/\s+/g, '-').toLowerCase();
-};
-
+var mongoose  = require('mongoose'),
+      Schema  = mongoose.Schema,
+           _  = require('lodash');
 
 
 /**
@@ -69,7 +60,7 @@ var ProductSchema = new Schema({
 
 
 ProductSchema.pre('save', function (next) {
-  this.dashName = dashify(this.name);
+  this.dashName = _.kebabCase(this.name);
   next();
 });
 

@@ -9,6 +9,7 @@
       'app.productList',
       'app.productDetail',
       'app.home',
+      'app.admin',
       'app.ass'
     ]);
 

@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
     <!-- <title ng-bind="title">{{title}}</title> -->
-    <title ng-bind="pageValues.pageTitle + ' | {{title}}'">{{Title}}</title>
+    <title ng-bind="pageConfig.title + ' | {{title}}'">{{Title}}</title>
     <link rel="stylesheet" href="/lib/material-design-lite/material.css">
     <link rel='stylesheet' href='/assets/dist/styles/main.css'>
     <base href="/">
@@ -25,6 +25,9 @@
 
     <script src="./app/components/home/home.module.js"></script>
     <script src="./app/components/home/home.controller.js"></script>
+
+    <script src="./app/components/admin/admin.module.js"></script>
+    <script src="./app/components/admin/admin.controller.js"></script>
 
     <script src="./app/components/ass/ass.module.js"></script>
     <script src="./app/components/ass/ass.controller.js"></script>
