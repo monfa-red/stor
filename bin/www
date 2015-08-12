@@ -4,9 +4,17 @@
  * Module dependencies.
  */
 
+var config = require('../server/config/config');
 var app = require('../server/server');
-var debug = require('debug')('chat:server');
+var debug = require('debug')('stor');
 var http = require('http');
+
+/**
+ *  Bootstrap db connection
+ */
+var db = require('../server/config/db');
+    db.connect();
+
 
 /**
  * Get port from environment and store in Express.
@@ -15,19 +23,18 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+
 /**
- * Create HTTP server.
+ * Create HTTP server and
+ * Listen on provided port, on all network interfaces
  */
 
 var server = http.createServer(app);
+    server
+      .listen(port)
+        .on('error', onError)
+        .on('listening', onListening);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -48,6 +55,7 @@ function normalizePort(val) {
 
   return false;
 }
+
 
 /**
  * Event listener for HTTP server "error" event.
@@ -76,6 +84,7 @@ function onError(error) {
       throw error;
   }
 }
+
 
 /**
  * Event listener for HTTP server "listening" event.

@@ -10,40 +10,27 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var chalk = require('chalk');
-var mongoose = require('mongoose');
-
-
-// Main Config file
-var config = require('./config/config');
-
-
-// Routings
-var routes = {};
-    routes.index = require('./routes/index');
-    routes.admin = require('./routes/admin.server.routes'),
-    routes.products = require('./routes/products.server.routes');
-// var routes.users = require('./routes/users');
-// var routes.products = require('./routes/products');
+// var chalk = require('chalk');
 
 
 
 
 /**
- *  Bootstrap db connection
+ * Route modules
  */
-var db = mongoose.connect(config.db, function(err) {
-  if (err) {
-    console.error(chalk.bgRed('Could not connect to MongoDB'));
-    console.error(chalk.red(err));
-  } else {
-    // Some cool typhography!
-    console.log("   " + chalk.bgBlue('    Connected to DB from server.js    '))
-  }
-});
 
+var routes = {};
+    routes.index = require('./routes/index');
+    routes.admin = require('./routes/admin.server.routes'),
+    routes.products = require('./routes/products.server.routes');
+
+
+/**
+ * Initialize Express
+ */
 
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -65,7 +52,6 @@ app.use(express.static(path.join(__dirname, '../', 'public')));
 
 // Define application route
 
-// app.route('/*').get(routes.index);
 /**
  * TODO:
  * FIX THIS MESS!!!
@@ -79,6 +65,7 @@ app.use('/admin', routes.index);
 
 
 
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -86,7 +73,10 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
+
+/**
+ *  error handlers
+ */
 
 // development error handler
 // will print stacktrace
