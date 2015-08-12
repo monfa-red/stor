@@ -34,7 +34,7 @@ module.exports.connect = function(cb) {
     console.error(chalk.bgRed('Could not connect to db'), chalk.red(err));
   }
 
-  function connectionSucess(cb) {
+  function connectionSucess() {
     // Some typhography!
     console.log("   " + chalk.bgBlue('    Connected to DB from server.js    '))
     // Call success callback if required
