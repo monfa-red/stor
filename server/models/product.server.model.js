@@ -69,11 +69,11 @@ var productSchema = new Schema({
     default: false
   }
   // ,
-
+  //
   // // TODO: need to be finalized!
   // author: {
   //   type: Schema.ObjectId,
-  //   ref: 'User'
+  //   ref: 'user'
   // },
   //
   // // TODO: need to be finalized!
