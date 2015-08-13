@@ -17,7 +17,7 @@ var escapeProperty = function(value) {
 /**
  * User Schema
  */
-var UserSchema = new Schema({
+var userSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
@@ -44,7 +44,7 @@ var UserSchema = new Schema({
   }
 });
 
-// var UserSchema = new Schema({
+// var userSchema = new Schema({
 //   firstName: {
 //     type: String,
 //     required: true,
@@ -93,10 +93,10 @@ var UserSchema = new Schema({
 // });
 
 
-UserSchema.pre('save', function (next) {
+userSchema.pre('save', function (next) {
   // this.dashName = dashify(this.name);
-  console.log('---Saving User---');
+  console.log(' ---Saving User--- ');
   next();
 });
 
-mongoose.model('User', UserSchema);
+mongoose.model('User', userSchema);

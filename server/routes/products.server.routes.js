@@ -32,18 +32,31 @@ router.get('/list', function(req, res) {
 });
 
 
+// //JUST FOR TEST:
+// var mongoose = require('mongoose');
+// router.get('/l', function(req, res) {
+//   mongoose
+//     .model('Product')
+//     .findOne({"_id": "55cd1106dc69a300374da291"})
+//     .populate('User')
+//     .exec(function(err, result) {
+//       res.json(result)
+//     })
+// })
 
 
-  // Products collection routes
-  router.route('/')
-    .get(products.list)
-    .post(products.create);
 
-  // Single product routes
-  router.route('/:productId')
-    .get(products.read)
-    .put(products.update)
-    .delete(products.delete);
+
+// Products collection routes
+router.route('/')
+  .get(products.list)
+  .post(products.create);
+
+// Single product routes
+router.route('/:productId')
+  .get(products.read)
+  .put(products.update)
+  .delete(products.delete);
 
 
 // Remove this block

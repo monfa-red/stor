@@ -1,22 +1,17 @@
 #!/usr/bin/env node
 
 /**
- * TODO:
- * Setup environment configurations
- */
-// temporarily
-process.env.debug = 'stor';
-
-
-
-/**
  * Module dependencies.
  */
-
 var config = require('../server/config/config');
-var app = require('../server/server');
-var debug = require('debug')('stor');
-var http = require('http');
+// TODO: Setup environment configurations
+process.env.debug = config.app.title;
+
+var app = require('../server/server'),
+  http = require('http'),
+  debug = require('debug')(config.app.title);
+
+
 
 /**
  *  Bootstrap db connection
