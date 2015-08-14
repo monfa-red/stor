@@ -3,9 +3,10 @@
 /**
  * Module dependencies.
  */
-var mongoose  = require('mongoose'),
-      Schema  = mongoose.Schema,
-           _  = require('lodash');
+ var mongoose = require('mongoose'),
+       Schema = mongoose.Schema,
+     ObjectId = Schema.Types.ObjectId,
+            _ = require('lodash');
 
 
 
@@ -18,30 +19,51 @@ var escapeProperty = function(value) {
  * User Schema
  */
 var userSchema = new Schema({
+
   created: {
     type: Date,
     default: Date.now
   },
-  firstName: {
+
+  name: {
+    first: {
+      type: String,
+      default: '',
+      trim: true,
+      required: 'First name can not be blank'
+    },
+    last: {
+      type: String,
+      default: '',
+      trim: true,
+      required: 'Last name can not be blank'
+    }
+  },
+
+  email: {
     type: String,
     default: '',
     trim: true,
-    // unique: true,
-    required: 'First name can not be blank'
+    required: 'Email can not be blank'
   },
-  lastName: {
-    type: String,
-    default: '',
-    trim: true,
-    // unique: true,
-    required: 'Last name can not be blank'
-  },
+
   username: {
     type: String,
     unique: true,
     required: true,
     get: escapeProperty
+  },
+
+  salt: {
+    type: String,
+    default: ''
+  },
+
+  active: {
+    type: Boolean,
+    default: true
   }
+
 });
 
 // var userSchema = new Schema({

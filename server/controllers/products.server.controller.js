@@ -38,7 +38,9 @@ module.exports = {
   read: function (req, res) {
     // res.json(req.params.productId);
     Product
-      .findOne({ 'dashName': req.params.productId })
+      .findOne({ 'nameId': req.params.productId })
+       // TODO: only return necessary data
+      .populate('author')
       .exec(function (err, product) {
         if (err) {
           return res.status(400).send({

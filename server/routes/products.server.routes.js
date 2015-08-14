@@ -20,29 +20,23 @@ router.get('/list', function(req, res) {
       jsonResult = {
         // date: faker.date.past(),
         name: faker.commerce.productName(),
-        caption: faker.lorem.sentence(),
-        description: faker.lorem.paragraph(),
-        price: faker.random.number() + "99",
-        imageURLs: ['assets/src/images/product-place-holder-2.png'],
-        sale: faker.random.boolean()
+        details: {
+          caption: faker.lorem.sentence(),
+          description: faker.lorem.paragraph()
+        },
+        price: {
+          retail: faker.random.number() + "99",
+          shipping: "1299"
+        },
+        //TEST: replace it with a user ID
+        author: "55ca791ccbd3c480233a3071"
+        // imageURLs: ['assets/src/images/product-place-holder-2.png'],
+        // sale: faker.random.boolean()
       }
     // )};
 
   res.json(jsonResult);
 });
-
-
-// //JUST FOR TEST:
-// var mongoose = require('mongoose');
-// router.get('/l', function(req, res) {
-//   mongoose
-//     .model('Product')
-//     .findOne({"_id": "55cd15d011a52c9801d0d9b6"})
-//     .populate('User')
-//     .exec(function(err, result) {
-//       res.json(result)
-//     })
-// })
 
 
 
@@ -57,12 +51,6 @@ router.route('/:productId')
   .get(products.read)
   .put(products.update)
   .delete(products.delete);
-
-
-// Remove this block
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Products!' });
-// });
 
 
 module.exports = router;

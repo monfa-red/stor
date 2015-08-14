@@ -4,9 +4,10 @@
  * Module dependencies
  */
 
-var mongoose  = require('mongoose'),
-      Schema  = mongoose.Schema,
-           _  = require('lodash');
+var mongoose = require('mongoose'),
+      Schema = mongoose.Schema,
+    ObjectId = Schema.Types.ObjectId,
+           _ = require('lodash');
 
 
 /**
@@ -20,77 +21,106 @@ var productSchema = new Schema({
     default: Date.now
   },
 
+  nameId: {
+    type: String
+  },
+
   name: {
     type: String,
     default: '',
     trim: true,
     unique: true,
-    required: 'Product name cannot be blank'
+    required: 'Product name can not be blank'
   },
 
-  // TODO: Rename this
-  dashName: {
-    type: String
-  },
+  details: {
 
-  caption: {
-    type: String,
-    default: '',
-    trim: true,
-  },
+    caption: {
+      type: String,
+      default: '',
+      trim: true,
+    },
 
-  description: {
-    type: String,
-    default: '',
-    trim: true,
-    required: 'Product description cannot be blank'
+    description: {
+      type: String,
+      default: '',
+      trim: true,
+      required: 'Product description can not be blank'
+    }
+
   },
 
   price: {
-    type: Number,
-    default: '',
-    trim: true,
-    required: 'Price cannot be blank'
+
+    retail: {
+      type: Number,
+      default: 0,
+      trim: true,
+      required: 'Retail price can not be blank'
+    },
+
+    sale: {
+      type: Number,
+      trim: true
+    },
+
+    shipping: {
+      type: Number,
+      default: 0,
+      trim: true,
+      required: 'Shipping price can not be blank'
+    }
+
   },
 
-  imageURLs: {
+  images: {
+
+    small: {
       type: Array,
-      // TODO: remove the or shorten the placeholder url
+      // TODO: remove this placeholder url
       default: ['assets/src/images/product-place-holder.png']
+      // default: ['sdsd', 'dfdsf']
+    },
+
+    large: {
+      type: Array
+    }
+
   },
 
-  sale: {
+  active: {
+    type: Boolean,
+    default: true
+  },
+
+  featured: {
     type: Boolean,
     default: false
   },
 
-  hidden: {
-    type: Boolean,
-    default: false
+  author: {
+    type: ObjectId,
+    required: true,
+    ref: 'User'
+  },
+
+  category: {
+    type: ObjectId,
+    // required: true,
+    ref: 'Category'
   }
-  // ,
-  //
-  // // TODO: need to be finalized!
-  // author: {
-  //   type: Schema.ObjectId,
-  //   ref: 'user'
-  // },
-  //
-  // // TODO: need to be finalized!
-  // category: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Category'
-  // }
 
 });
 
+
 /**
- * Add a dash-cased property to the document
- * based on the "name".
+ * Fill the "nameId" with the
+ * dased-case of "name" property
  */
+
 productSchema.pre('save', function (next) {
 
-  this.dashName = _.kebabCase(this.name);
+  this.nameId = _.kebabCase(this.name);
   next();
 
 });
@@ -98,7 +128,7 @@ productSchema.pre('save', function (next) {
 
 /**
  * Instantiate the "Product" model.
- * collection name will be set to "products" automaticly.
+ * collection name will be set to "products" automatically
  */
 
 mongoose.model('Product', productSchema);
