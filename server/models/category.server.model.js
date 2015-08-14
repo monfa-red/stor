@@ -41,11 +41,11 @@ var categorySchema = new Schema({
 });
 
 
-
 /**
- * Add a dash-cased property to the document
- * based on the "name".
+ * Fill the "nameId" with the
+ * dased-case of "name" property
  */
+
 categorySchema.pre('save', function (next) {
 
   this.nameId = _.kebabCase(this.name);
@@ -59,4 +59,4 @@ categorySchema.pre('save', function (next) {
  * collection name will be set to "Categories" automatically
  */
 
-mongoose.model('Category', productSchema);
+mongoose.model('Category', categorySchema);
