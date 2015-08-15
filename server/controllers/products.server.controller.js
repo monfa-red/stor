@@ -4,9 +4,9 @@
  * Module dependencies
  */
 
-var mongoose = require('mongoose'),
-  Product = mongoose.model('Product'),
-  errorHandler = require('../controllers/errors.server.controller');
+var mongoose = require('mongoose');
+var  Product = mongoose.model('Product');
+var  errorHandler = require('../controllers/errors.server.controller');
 
 
 /**
