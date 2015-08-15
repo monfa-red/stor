@@ -15,15 +15,15 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
-  create: create,
+  create,
 
-  read: read,
+  read,
 
-  update: update,
+  update,
 
-  destroy: destroy,
+  destroy,
 
-  all: all
+  all
 
 };
 
