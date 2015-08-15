@@ -1,15 +1,16 @@
 'use strict';
 
 /**
- * Module dependencies.
+ * Module dependencies
  */
+
 var mongoose = require('mongoose'),
   Product = mongoose.model('Product'),
   errorHandler = require('../controllers/errors.server.controller');
 
 
 /**
- * Create a product
+ * A list of all Exported methods
  */
 
 module.exports = {
@@ -20,42 +21,40 @@ module.exports = {
 
   update: update,
 
-  delete: delete,
+  destroy: destroy,
 
-  list: list,
-
-  productByID: productByID
-
-}
-
-
-
-
-
-
-function create(req, res) {
-
-  var product = new Product(req.body);
-
-  product.save(function (err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(product);
-    }
-  })
+  all: all
 
 };
 
 
 /**
- * Show the current product
+ * Create a product
+ */
+
+function create(req, res) {
+
+  var product = new Product(req.body);
+
+  product
+    .save(function (err) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      }
+      res.json(product);
+    })
+
+};
+
+
+/**
+ * Find a product by "nameId"
  */
 
 function read(req, res) {
-  // res.json(req.params.productId);
+
   Product
     .findOne({ 'nameId': req.params.productId })
      // TODO: only return necessary data
@@ -65,9 +64,8 @@ function read(req, res) {
         return res.status(400).send({
           message: errorHandler.getErrorMessage(err)
         });
-      } else {
-        res.json(product);
       }
+      res.json(product);
     });
 
 };
@@ -78,71 +76,70 @@ function read(req, res) {
  */
 
 function update(req, res) {
-  var product = req.product;
 
+  var product = req.product;
   product.title = req.body.title;
   product.content = req.body.content;
 
-  product.save(function (err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
+  product
+    .save(function (err) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      }
       res.json(product);
-    }
-  });
+    });
+
 };
 
 
 
 /**
- * TODO: definitly change this!
+ * TODO:
  * Delete an product
  */
 
-function delete(req, res) {
-  // var product = req.product;
-  // var product = req.params.productId;
+function destroy(req, res) {
 
-  Product.remove({ _id: req.params.productId }, function (err, result) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
+  Product
+    .remove({ _id: req.params.productId }, function (err, result) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      }
       res.json(result);
-    }
-  });
+    });
 
 };
 
 
 /**
- * List of Articles
+ * Get a list of products
  */
-// TODO: .populate('user', 'displayName')
 
-function list(req, res) {
+function all(req, res) {
 
-  Product.find().sort('-created').exec(function (err, products) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
+  Product
+    .find()
+    .sort('-created')
+    .exec(function (err, products) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      }
       res.json(products);
-    }
-  });
+    });
 
 };
-
-
 
 
 /**
  * Product middleware
  */
+
 function productByID(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -151,16 +148,19 @@ function productByID(req, res, next, id) {
     });
   }
 
-  Product.findById(id).populate('user', 'displayName').exec(function (err, product) {
-    if (err) {
-      return next(err);
-    } else if (!product) {
-      return res.status(404).send({
-        message: 'No product with that identifier has been found'
-      });
-    }
-    req.product = product;
-    next();
-  });
+  Product
+    .findById(id)
+    .populate('user', 'displayName')
+    .exec(function (err, product) {
+        if (err) {
+          return next(err);
+        } else if (!product) {
+          return res.status(404).send({
+            message: 'No product with that identifier has been found'
+          });
+        }
+      req.product = product;
+      next();
+    });
 
 };

@@ -43,14 +43,14 @@ router.get('/list', function(req, res) {
 
 // Products collection routes
 router.route('/')
-  .get(products.list)
+  .get(products.all)
   .post(products.create);
 
 // Single product routes
 router.route('/:productId')
   .get(products.read)
   .put(products.update)
-  .delete(products.delete);
+  .delete(products.destroy)
 
 
 module.exports = router;
