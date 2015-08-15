@@ -1,3 +1,4 @@
-### mn-shop
+#### Stor
+###### Mean Stack store app
 
-##### A mean app ;)
+Under development!
