@@ -1,4 +1,4 @@
 # Stor
-##### Mean Stack store app
+#### Mean Stack store app
 
 Under development!
