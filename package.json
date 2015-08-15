@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "a store app in node, MongoDB and Angular",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "iojs ./bin/www",
     "test": "gulp serve"
   },
   "dependencies": {
