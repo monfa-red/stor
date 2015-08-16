@@ -7,6 +7,7 @@
     "test": "gulp serve"
   },
   "dependencies": {
+    "babel": "^5.8.21",
     "babel-core": "^5.8.22",
     "body-parser": "^1.13.3",
     "chalk": "^1.1.0",
