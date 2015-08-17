@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "a store app in node, MongoDB and Angular",
   "scripts": {
-    "start": "iojs ./bin/www",
+    "start": "nodemon",
     "test": "gulp serve"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "lodash": "^3.10.1",
     "mongoose": "^4.1.2",
     "morgan": "~1.6.1",
+    "nodemon": "^1.4.1",
     "size": "^1.0.0",
     "swig": "^1.4.2"
   },
