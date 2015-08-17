@@ -41,10 +41,8 @@ export default {
   files: {
     server: {
       routes: [
-        './server/routes/index.js',
-        './server/routes/index.js',
-        './server/routes/index.js',
-        './server/routes/index.js'
+        './server/routes/products.server.routes',
+        './server/routes/index'
       ]
     },
     client: {

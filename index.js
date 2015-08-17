@@ -1,2 +1,5 @@
+/**
+ * Transpile the app one the fly with bable
+ */
 require("babel/register");
-require('./bin/www')
+require('./server/config/app')
