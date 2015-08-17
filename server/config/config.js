@@ -38,15 +38,22 @@ export default {
   favicon: 'PATH/TO/SRC/favicon.ico',
 
   //files
+  //TODO: structure will change, it's just for test
   files: {
     server: {
       routes: [
         './server/routes/products.server.routes',
         './server/routes/index'
+      ],
+      controllers: [
+        'server/controllers/**/!(err)*.js',
+        'server/controllers/**/*.js',
       ]
     },
     client: {
-
+      lib: {
+        js: 'public/app/**/*.js',
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
  * Module dependencies
  */
 import debug from 'debug';
-import config from './config';
 import chalk from 'chalk';
+import config from '../config';
 
 
 /**

@@ -5,8 +5,8 @@
  */
 import mongoose from 'mongoose';
 import chalk from 'chalk';
-import config from './config';
 import events from './events';
+import config from '../config';
 
 
 /**
