@@ -11,9 +11,15 @@ import _ from 'lodash';
 /**
  * Export list
  */
-export default function globify;
+export default pathServer;
 
-export function clientify;
+export {
+
+  pathServer,
+
+  pathClient
+
+};
 
 
 
@@ -26,12 +32,12 @@ const REL_ROOT = '../../../';
 /**
  *
  */
-function globify(patterns) {
+function pathServer(patterns) {
 
   if (_.isArray(patterns)) {
     let pathList = [];
     patterns.forEach( pattern => {
-      pathList = _.union(pathList, globify(pattern));
+      pathList = _.union(pathList, pathServer(pattern));
     });
     return pathList;
   }
@@ -43,12 +49,12 @@ function globify(patterns) {
 /**
  *
  */
-function clientify(patterns) {
+function pathClient(patterns) {
 
   if (_.isArray(patterns)) {
     let pathList = [];
     patterns.forEach( pattern => {
-      pathList = _.union(pathList, clientify(pattern));
+      pathList = _.union(pathList, pathClient(pattern));
     });
     return pathList;
   }
@@ -60,5 +66,5 @@ function clientify(patterns) {
 
 
 // import config from './../config';
-// console.log(globify(config.files.server.controllers));
-// console.log(clientify(config.files.client.lib.js));
+// console.log(pathServer(config.files.server.controllers));
+// console.log(pathClient(config.files.client.lib.js));
