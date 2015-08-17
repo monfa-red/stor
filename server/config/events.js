@@ -66,7 +66,8 @@ function onServerListening() {
   debug(config.app.title);
   debug('Listening on ' + bind);
   console.log(
-    chalk.bgBlue('\t   Listening on ')
+    '\t'
+    + chalk.bgBlue('   Listening on ')
     + chalk.bgBlue.red(bind)
     + chalk.bgBlue('   ')
   );
@@ -86,7 +87,10 @@ function dbConnectionError(err) {
  * Event handler for MongoDB connection "open" event
  */
 function dbConnectionSucess(callback) {
-  console.log(chalk.bgBlue('\t    Connected to MongoDB    '))
+  console.log(
+    '\t'
+    + chalk.bgBlue('    Connected to MongoDB    ')
+  );
   // Call success callback
   if (callback) callback();
 };
