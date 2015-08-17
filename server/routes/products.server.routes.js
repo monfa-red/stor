@@ -5,7 +5,6 @@
  */
 import '../models/product.server.model';
 import products from '../controllers/products.server.controller';
-// TODO: remove this
 import faker from 'faker';
 
 
@@ -22,7 +21,6 @@ function productsRouter(app) {
 
   //REMOVE THIS
   fakeUserInitialTests(app);
-
 
   // Routes
   app
@@ -45,25 +43,23 @@ function productsRouter(app) {
  */
 function fakeUserInitialTests(app) {
 
-  app.route('/api/products/list').get(function(req, res) {
-    // var jsonResult = [],
-    let jres = {
-        // date: faker.date.past(),
-        name: faker.commerce.productName(),
-        details: {
-          caption: faker.lorem.sentence(),
-          description: faker.lorem.paragraph()
-        },
-        price: {
-          retail: faker.random.number() + "99",
-          shipping: "1299"
-        },
-        //TEST: replace it with a user ID
-        author: "55ca791ccbd3c480233a3071"
-
-      };
-
-    res.json(jres)
-  });
+  app
+    .route('/api/products/list').get(function(req, res) {
+      let jres = {
+          // date: faker.date.past(),
+          name: faker.commerce.productName(),
+          details: {
+            caption: faker.lorem.sentence(),
+            description: faker.lorem.paragraph()
+          },
+          price: {
+            retail: faker.random.number() + "99",
+            shipping: "1299"
+          },
+          //TEST: replace it with a user ID
+          author: "55ca791ccbd3c480233a3071"
+        };
+      res.json(jres)
+    });
 
 };
