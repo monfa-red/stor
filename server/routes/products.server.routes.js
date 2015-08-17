@@ -1,24 +1,50 @@
 'use strict';
 
+/**
+ * Moudle dependencies
+ */
 import '../models/product.server.model';
 import products from '../controllers/products.server.controller';
 // TODO: remove this
 import faker from 'faker';
 
 
+/**
+ * Export productRoutes (to: express.js)
+ */
+export default productsRouter;
 
-export default function (app) {
 
-  app.route('/api/products')
-    .get(products.all)
-    .post(products.create);
+/**
+ *  Assign routes to controllers
+ */
+function productsRouter(app) {
 
+  //REMOVE THIS
+  fakeUserInitialTests(app);
+
+
+  // Routes
+  app
+    .route('/api/products')
+      .get(products.all)
+      .post(products.create);
+
+  app
+    .route('/api/products/:productId')
+      .get(products.read)
+      .put(products.update)
+      .delete(products.destroy)
+
+};
 
 
 /**
  * TODO:
  * This section has to be removed
  */
+function fakeUserInitialTests(app) {
+
   app.route('/api/products/list').get(function(req, res) {
     // var jsonResult = [],
     let jres = {
@@ -39,16 +65,5 @@ export default function (app) {
 
     res.json(jres)
   });
-
-
-
-
-  // Single product routes
-  app.route('/api/products/:productId')
-    .get(products.read)
-    .put(products.update)
-    .delete(products.destroy)
-
-
 
 };
