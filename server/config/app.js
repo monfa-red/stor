@@ -3,10 +3,10 @@
 /**
  * Moudle dependencies
  */
+import db from './lib/db';
+import express from './lib/express';
+import events from './lib/events';
 import config from './config';
-import db from './db';
-import express from './express';
-import events from './events';
 
 
 /**
