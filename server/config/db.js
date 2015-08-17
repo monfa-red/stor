@@ -9,12 +9,19 @@ var config = require('./config'),
   mongoose = require('mongoose');
 
 
+/**
+ * Exported methods
+ */
+ 
+export default {
+  connect
+}
 
 /**
  * Initialize Mongoose db connection
  */
 
-module.exports.connect = function(cb) {
+function connect(callback) {
 
   mongoose
 
@@ -34,11 +41,11 @@ module.exports.connect = function(cb) {
     console.error(chalk.bgRed('Could not connect to db'), chalk.red(err));
   }
 
-  function connectionSucess() {
+  function connectionSucess(callback) {
     // Some typhography!
     console.log("   " + chalk.bgBlue('    Connected to DB from server.js    '))
     // Call success callback if required
-    if (cb) cb(db);
+    if (callback) callback(db);
   }
 
 }

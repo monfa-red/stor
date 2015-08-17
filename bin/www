@@ -3,29 +3,33 @@
 /**
  * Module dependencies.
  */
-var config = require('../server/config/config');
+
+import config from '../server/config/config';
 // TODO: Setup environment configurations
 process.env.debug = config.app.title;
+// import app from '../server/server';
+import express from '../server/config/express';
+import db from '../server/config/db';
 
-var app = require('../server/server'),
-  http = require('http'),
-  debug = require('debug')(config.app.title);
-
+import http from 'http';
+import debug from 'debug';
+  debug(config.app.title);
 
 
 /**
  *  Bootstrap db connection
  */
-var db = require('../server/config/db');
-    db.connect();
+db.connect();
 
 
-/**
- * Get port from environment and store in Express.
- */
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+
+var app = express.init(db);
+
+
+
+// var port = normalizePort();
+app.set('port', config.port);
 
 
 /**
@@ -33,32 +37,11 @@ app.set('port', port);
  * Listen on provided port, on all network interfaces
  */
 
-var server = http.createServer(app);
+let server = http.createServer(app);
     server
-      .listen(port)
+      .listen(config.port)
         .on('error', onError)
         .on('listening', onListening);
-
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
 
 
 /**
@@ -70,7 +53,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
+  let bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port;
 
@@ -95,8 +78,8 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
+  let addr = server.address();
+  let bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
