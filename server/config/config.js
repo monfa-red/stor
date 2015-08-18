@@ -41,9 +41,12 @@ export default {
   //TODO: structure will change, it's just for test
   files: {
     server: {
+      views: 'server/modules/*/views',
       routes: [
-        './server/routes/products.server.routes',
-        './server/routes/index'
+        // './server/modules/*/routes/**/*.js',
+        './server/modules/core/routes/**/*.js',
+        './server/modules/products/routes/**/*.js',
+        // './server/modules/admin/routes/**/*.js'
       ],
       controllers: [
         'server/controllers/**/!(err)*.js',
@@ -51,6 +54,7 @@ export default {
       ]
     },
     client: {
+      static: 'public',
       lib: {
         js: 'public/app/**/*.js',
       }

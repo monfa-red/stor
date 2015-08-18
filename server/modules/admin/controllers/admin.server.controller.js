@@ -5,7 +5,7 @@
  */
 var mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  errorHandler = require('../controllers/errors.server.controller');
+  errorHandler = require('../../core/controllers/errors.server.controller');
 
 
 

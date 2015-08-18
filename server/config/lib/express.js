@@ -19,6 +19,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import consolidate from 'consolidate';
+import paths from './paths';
 import config from '../config';
 
 
@@ -32,6 +33,15 @@ export default {
 };
 
 
+/**
+ * Moudles relation to root
+ */
+const REL_ROOT = '../../../';
+
+
+/**
+ * App Initializer
+ */
 function init(db) {
 
   // Initialize express app
@@ -42,20 +52,17 @@ function init(db) {
   // Initialize Express middleware
   initMiddlewares(app);
 
-  // Initialize Express view engine
   initViewEngine(app);
 
   // Express session initSession(app, db);
   // Modules configuration initModulesConfiguration(app);
   // Helmet security headers initHelmetHeaders(app);
 
-  // Initialize modules static client routes
-  initModulesClientRoutes(app);
+  initClientRoutes(app);
 
   // modules server authorization policies initModulesServerPolicies(app);
 
-  // Initialize modules server routes
-  initModulesServerRoutes(app);
+  initServerRoutes(app);
 
   // Initialize error routes
   initErrorRoutes(app);
@@ -89,8 +96,7 @@ function initViewEngine(app) {
   app
     .engine('html', consolidate[config.templateEngine])
       .set('view engine', 'html')
-      .set('views', path.join(__dirname, '../', 'views'))
-
+      .set('views', paths(config.files.server.views))
 };
 
 
@@ -103,11 +109,13 @@ function initSession(app) {
 
 
 /**
- * Setting the client-side static folder
+ * Setting the client-side static folder[s]
  */
-function initModulesClientRoutes(app) {
+function initClientRoutes(app) {
 
-  app.use(express.static(path.join(__dirname, '../../', 'public')));
+  // loop and define static directories
+  paths(config.files.client.static)
+    .forEach(dir => app.use(express.static(dir)))
 
 };
 
@@ -115,20 +123,11 @@ function initModulesClientRoutes(app) {
 /**
  * Configure the modules server routes
  */
-function initModulesServerRoutes(app) {
+function initServerRoutes(app) {
 
-  // Globbing routing files
-  // config.files.server.routes.forEach(function (routePath) {
-  //   require(path.resolve(routePath))(app);
-  // });
-
-  config.files.server.routes.forEach( routePath => {
-    // import routePath;
-    // routePath(app);
-    require(path.resolve(routePath))(app);
-    console.log('Mounted: %s', routePath);
-  });
-    // require('../../server/routes/products.server.routes')(app)
+  // globe and require server routes
+  paths(config.files.server.routes)
+    .forEach(dir => require(dir)(app))
 
 };
 

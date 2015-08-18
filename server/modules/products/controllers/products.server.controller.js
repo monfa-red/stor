@@ -6,7 +6,7 @@
 
 var mongoose = require('mongoose');
 var  Product = mongoose.model('Product');
-var  errorHandler = require('../controllers/errors.server.controller');
+var  errorHandler = require('../../core/controllers/errors.server.controller');
 
 
 /**
