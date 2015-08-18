@@ -3,17 +3,20 @@
 /**
  * Module dependencies
  */
-
- var mongoose = require('mongoose'),
-       Schema = mongoose.Schema,
-     ObjectId = Schema.Types.ObjectId,
-            _ = require('lodash');
+import mongoose from 'mongoose';
+import _ from 'lodash';
 
 
 /**
- * Product Category Schema
+ * Abstract Schema and ObjectId for simplification
  */
+let Schema = mongoose.Schema;
+let ObjectId = Schema.Types.ObjectId;
 
+
+/**
+ * Instantiate Product Category Schema
+ */
 var categorySchema = new Schema({
 
   created: {
@@ -42,10 +45,9 @@ var categorySchema = new Schema({
 
 
 /**
- * Fill the "nameId" with the
- * dased-case of "name" property
+ * Fill in the "nameId" with the
+ * kebab-cased of "name" property
  */
-
 categorySchema.pre('save', function (next) {
 
   this.nameId = _.kebabCase(this.name);
@@ -55,8 +57,6 @@ categorySchema.pre('save', function (next) {
 
 
 /**
- * Instantiate the "Category" model.
- * collection name will be set to "Categories" automatically
+ * Instantiate the "Category" model
  */
-
 mongoose.model('Category', categorySchema);

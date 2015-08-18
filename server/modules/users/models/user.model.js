@@ -1,10 +1,19 @@
-// 'use strict';
+'use strict';
 
 /**
- * Module dependencie
+ * Module dependencies
  */
-var mongoose = require('mongoose');
-	Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+// import _ from 'lodash';
+
+
+/**
+ * Define Schema and ObjectId for ease of use
+ */
+let Schema = mongoose.Schema;
+let ObjectId = Schema.Types.ObjectId;
+
+
 
 /**
  * User Schema

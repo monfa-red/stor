@@ -23,7 +23,7 @@ var User = mongoose.model('User');
             // if succesfull
             res.json(newUser)
 
-        })     
+        })
     },
     read: function(req, res) {
 

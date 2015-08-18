@@ -6,21 +6,13 @@
 import path from 'path';
 import glob from 'glob';
 import _ from 'lodash';
+import config from '../config';
 
 
 /**
- * Export list
+ * Export module
  */
-export default pathServer;
-
-export {
-
-  pathServer,
-
-  pathClient
-
-};
-
+export default paths;
 
 
 /**
@@ -30,41 +22,28 @@ const REL_ROOT = '../../../';
 
 
 /**
- *
+ * Glob
  */
-function pathServer(patterns) {
+function paths(patterns, boolean) {
 
   if (_.isArray(patterns)) {
-    let pathList = [];
-    patterns.forEach( pattern => {
-      pathList = _.union(pathList, pathServer(pattern));
-    });
-    return pathList;
+    let bind = [];
+    patterns
+      .forEach(pattern => bind = _.union(bind, paths(pattern, boolean)));
+    return bind;
   }
+
+  if (boolean) {
+    return glob.sync(path.join(REL_ROOT, patterns))
+      .map(file => file.replace(REL_ROOT + config.files.client.static, ''));
+  }
+
   return glob.sync(path.resolve(__dirname, REL_ROOT, patterns));
 
 };
 
 
-/**
- *
- */
-function pathClient(patterns) {
-
-  if (_.isArray(patterns)) {
-    let pathList = [];
-    patterns.forEach( pattern => {
-      pathList = _.union(pathList, pathClient(pattern));
-    });
-    return pathList;
-  }
-  return glob.sync(path.join(REL_ROOT, patterns))
-          .map(file => file.replace(REL_ROOT +'public', ''));
-
-};
-
-
-
-// import config from './../config';
-// console.log(pathServer(config.files.server.controllers));
-// console.log(pathClient(config.files.client.lib.js));
+// a few test
+// console.log(paths(config.files.client.lib.js));
+// console.log(paths(config.files.client.lib.sass));
+// console.log(paths(config.files.client.lib.sass, true));

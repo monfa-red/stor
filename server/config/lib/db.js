@@ -5,6 +5,7 @@
  */
 import mongoose from 'mongoose';
 import chalk from 'chalk';
+import paths from './paths';
 import events from './events';
 import config from '../config';
 
@@ -14,9 +15,23 @@ import config from '../config';
  */
 export default {
 
-  connect
+  connect,
+
+  loadModels
 
 };
+
+/**
+ * Load Mongoose models
+ */
+function loadModels() {
+
+  paths(config.files.server.models)
+    .forEach(model => require(model));
+
+  return this;
+
+}
 
 
 /**
@@ -33,4 +48,6 @@ function connect(callback) {
         .on('error', events.db.error)
         .on('open', () => events.db.success(callback));
 
+  return this;
+  
 }

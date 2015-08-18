@@ -44,10 +44,11 @@ export default {
       views: 'server/modules/*/views',
       routes: [
         // './server/modules/*/routes/**/*.js',
-        './server/modules/core/routes/**/*.js',
         './server/modules/products/routes/**/*.js',
+        './server/modules/core/routes/**/*.js',
         // './server/modules/admin/routes/**/*.js'
       ],
+      models: 'server/modules/*/models/**/*.js',
       controllers: [
         'server/controllers/**/!(err)*.js',
         'server/controllers/**/*.js',
@@ -57,6 +58,7 @@ export default {
       static: 'public',
       lib: {
         js: 'public/app/**/*.js',
+        sass: 'public/assets/src/**/*.scss'
       }
     }
   }

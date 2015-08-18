@@ -35,17 +35,17 @@ function onServerError(err) {
   }
 
   let bind = typeof config.port === 'string'
-    ? 'Pipe ' + config.port
-    : 'Port ' + config.port;
+    ? `Pipe ${config.port}`
+    : `Port ${config.port}`;
 
   // handle specific listen errors with friendly messages
   switch (err.code) {
     case 'EACCES':
-      console.error(chalk.bgRed('\t' + bind + ' requires elevated privileges'));
+      console.error(chalk.bgRed(`\t ${bind} requires elevated privileges `));
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(chalk.bgRed('\t ' + bind + ' is already in use '));
+      console.error(chalk.bgRed(`\t ${bind} is already in use`));
       process.exit(1);
       break;
     default:
@@ -60,16 +60,16 @@ function onServerError(err) {
 function onServerListening() {
   let address = this.address();
   let bind = typeof address === 'string'
-    ? 'pipe ' + address
-    : 'port ' + address.port;
+    ? `Pipe ${address}`
+    : `Port ${address.port}`;
 
   debug(config.app.title);
-  debug('Listening on ' + bind);
+  debug(`Listening on ${bind}`);
   console.log(
-    '\t'
-    + chalk.bgBlue('   Listening on ')
+    `\t`
+    + chalk.bgBlue(`   Listening on `)
     + chalk.bgBlue.red(bind)
-    + chalk.bgBlue('   ')
+    + chalk.bgBlue(`   `)
   );
 };
 
@@ -78,7 +78,7 @@ function onServerListening() {
  * Event handler for MongoDB connection "error" event
  */
 function dbConnectionError(err) {
-  console.error(chalk.bgRed('\t  Could not connect to MongoDB  '));
+  console.error(chalk.bgRed(`\t  Could not connect to MongoDB  `));
   console.error(chalk.red(err));
 };
 
@@ -87,10 +87,7 @@ function dbConnectionError(err) {
  * Event handler for MongoDB connection "open" event
  */
 function dbConnectionSucess(callback) {
-  console.log(
-    '\t'
-    + chalk.bgBlue('    Connected to MongoDB    ')
-  );
+  console.log(`\t` + chalk.bgBlue(`    Connected to MongoDB    `));
   // Call success callback
   if (callback) callback();
 };

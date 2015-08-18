@@ -3,16 +3,19 @@
 /**
  * Module dependencies
  */
-
-var mongoose = require('mongoose');
-var  Product = mongoose.model('Product');
-var  errorHandler = require('../../core/controllers/errors.server.controller');
+import mongoose from 'mongoose';
+import errors from '../../core/controllers/errors.controller';
 
 
 /**
- * A list of all Exported methods
+ * Get the Product model
  */
+let Product = mongoose.model('Product');
 
+
+/**
+ * Export methods list
+ */
 module.exports = {
 
   create,
@@ -29,19 +32,18 @@ module.exports = {
 
 
 /**
- * Create a product
+ * Create and save a product
  */
-
 function create(req, res) {
 
   var product = new Product(req.body);
 
   product
-    .save(function (err) {
+    .save(err => {
       if (err) {
         return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
+            message: errors.getMessage(err)
+          });
       }
       res.json(product);
     })
@@ -52,18 +54,17 @@ function create(req, res) {
 /**
  * Find a product by "nameId"
  */
-
 function read(req, res) {
 
   Product
     .findOne({ 'nameId': req.params.productId })
      // TODO: only return necessary data
     .populate('author')
-    .exec(function (err, product) {
+    .exec((err, product) => {
       if (err) {
         return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
+            message: errors.getMessage(err)
+          });
       }
       res.json(product);
     });
@@ -74,7 +75,6 @@ function read(req, res) {
 /**
  * Update a product
  */
-
 function update(req, res) {
 
   var product = req.product;
@@ -82,11 +82,11 @@ function update(req, res) {
   product.content = req.body.content;
 
   product
-    .save(function (err) {
+    .save(err => {
       if (err) {
         return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
+            message: errors.getMessage(err)
+          });
       }
       res.json(product);
     });
@@ -94,20 +94,17 @@ function update(req, res) {
 };
 
 
-
 /**
- * TODO:
  * Delete an product
  */
-
 function destroy(req, res) {
 
   Product
-    .remove({ _id: req.params.productId }, function (err, result) {
+    .remove({ _id: req.params.productId }, (err, result) => {
       if (err) {
         return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
+            message: errors.getMessage(err)
+          });
       }
       res.json(result);
     });
@@ -118,17 +115,16 @@ function destroy(req, res) {
 /**
  * Get a list of products
  */
-
 function all(req, res) {
 
   Product
     .find()
     .sort('-created')
-    .exec(function (err, products) {
+    .exec((err, products) => {
       if (err) {
         return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
+            message: errors.getMessage(err)
+          });
       }
       res.json(products);
     });
@@ -139,25 +135,24 @@ function all(req, res) {
 /**
  * Product middleware
  */
-
 function productByID(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'Product is invalid'
-    });
+        message: 'Product is invalid'
+      });
   }
 
   Product
     .findById(id)
     .populate('user', 'displayName')
-    .exec(function (err, product) {
+    .exec((err, product) => {
         if (err) {
           return next(err);
         } else if (!product) {
           return res.status(404).send({
-            message: 'No product with that identifier has been found'
-          });
+              message: 'No product with that identifier has been found'
+            });
         }
       req.product = product;
       next();

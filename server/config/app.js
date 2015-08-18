@@ -10,9 +10,12 @@ import config from './config';
 
 
 /**
- * connect to database and bootstap the application
+ * Load Modles, connect to database
+ * and bootstap the application
  */
-db.connect(bootStrap)
+db
+  .loadModels()
+  .connect(bootStrap)
 
 
 /**
