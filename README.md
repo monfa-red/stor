@@ -1,7 +1,6 @@
 Stor 
 =====
-
-Stor is a e-commerce web applications platform.
+Stor is an e-commerce web applications platform.
 
 ### Intro
 Stor is powered by **node.js**, **Express.js**, **MongoDB** and **Angular.js**, being coded beautifully in **ES6/ES2015**.
