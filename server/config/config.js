@@ -9,6 +9,17 @@ export default {
     // Enable mongoose debug mode
     debug: process.env.MONGODB_DEBUG || false
   },
+  http: {
+    port: process.env.PORT || 3000
+  },
+  https: {
+    port: false,
+    // Paths to key and cert as string
+    ssl: {
+      key: './server/config/lib/keys/key.pem',
+      cert: './server/config/lib/keys/cert.pem'
+    }
+  },
   // log: {
   //   // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
   //   format: 'dev',
@@ -24,7 +35,6 @@ export default {
     googleAnalyticsTrackingID:
       process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID'
   },
-  port: process.env.PORT || 3000,
   templateEngine: 'swig',
   // Session details
   // session expiration is set by default to 24 hours
