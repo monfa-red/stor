@@ -47,25 +47,26 @@ function init(db) {
   // Initialize express app
   let app = express();
 
-  // local variables this.initLocalVariables(app);
+  // local variables this.LocalVariables(app);
 
   // Initialize Express middleware
-  initMiddlewares(app);
+  middlewares(app);
 
-  initViewEngine(app);
+  viewEngine(app);
 
-  // Express session initSession(app, db);
-  // Modules configuration initModulesConfiguration(app);
-  // Helmet security headers initHelmetHeaders(app);
+  // Express session
+  session(app, db);
+  // Modules configuration ModulesConfiguration(app);
+  // Helmet security headers HelmetHeaders(app);
 
-  initClientRoutes(app);
+  clientRoutes(app);
 
-  // modules server authorization policies initModulesServerPolicies(app);
+  // modules server authorization policies ModulesServerPolicies(app);
 
-  initServerRoutes(app);
+  serverRoutes(app);
 
   // Initialize error routes
-  initErrorRoutes(app);
+  errorHandler(app);
 
   // return Initialize express app for bootstraping
   return app;
@@ -76,13 +77,14 @@ function init(db) {
 /**
  * Initialize application middlewares
  */
-function initMiddlewares(app) {
+function middlewares(app) {
 
   app
     .use(logger('dev'))
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: false }))
-    .use(cookieParser());
+    .use(cookieParser())
+      .set('showStackError', true);
 
 };
 
@@ -90,20 +92,21 @@ function initMiddlewares(app) {
 /**
  * Configure view engine
  */
-function initViewEngine(app) {
+function viewEngine(app) {
 
-  // Set swig as the template engine and assign it to .html files
+  // Set swig as the template engine and assign it to ".html" files
   app
     .engine('html', consolidate[config.templateEngine])
       .set('view engine', 'html')
       .set('views', paths(config.files.server.views))
+
 };
 
 
 /**
  * Configure Express session
  */
-function initSession(app) {
+function session(app, db) {
 
 };
 
@@ -111,7 +114,7 @@ function initSession(app) {
 /**
  * Setting the client-side static folder[s]
  */
-function initClientRoutes(app) {
+function clientRoutes(app) {
 
   // loop and define static directories
   paths(config.files.client.static)
@@ -123,7 +126,7 @@ function initClientRoutes(app) {
 /**
  * Configure the modules server routes
  */
-function initServerRoutes(app) {
+function serverRoutes(app) {
 
   // globe and require server routes
   paths(config.files.server.routes)
@@ -135,25 +138,24 @@ function initServerRoutes(app) {
 /**
  * Configure error handling
  */
-function initErrorRoutes(app) {
+function errorHandler(app) {
 
-  // app.use(function (err, req, res, next) {
-  //   // If the error object doesn't exists
-  //   if (!err) {
-  //     return next();
-  //   }
-  //   // Log it
-  //   console.error(err.stack);
-  //
-  //   // Redirect to error page
-  //   res.redirect('/error-page');
-  // });
+  // final error handlers
+  app.use((err, req, res, next) => {
 
-  // catch 404 and forward to error handler
-  // app.use(function(req, res, next) {
-  //   var err = new Error('Not Found');
-  //   err.status = 404;
-  //   next(err);
-  // });
+    let error = {
+      status: err.status || 500,
+      message: err.message || 'Internal Server Error',
+    };
+    error.title = error.status + ' ' + error.message;
+
+    // Print stacktrace only in development
+    if (app.get('env') === 'development') {
+      error.stack = err.stack;
+    }
+
+    res.status(error.status)
+      .render('500', error);
+  });
 
 };

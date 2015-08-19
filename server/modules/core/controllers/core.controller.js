@@ -1,12 +1,6 @@
 'user strict';
 
 /**
- * Module dependencies
- */
-import _ from 'lodash';
-
-
-/**
  * Export core controllers
  */
 export default {
@@ -26,8 +20,7 @@ export default {
 function index(req, res) {
 
   res.render('index', {
-      title: 'Stor',
-      urlTitle: _.startCase(req.params[0])
+      title: 'Stor'
     });
 
 };
@@ -42,25 +35,23 @@ function notFound(req, res) {
   res.status(404)
     .format({
       'text/html': () => res.render('404', {
-        url: req.originalUrl
+        url: req.originalUrl,
+        title: '404 Page Not Found'
       }),
       'application/json': () => res.json({
-          error: 'Path not found'
+          error: 'Path Not Found'
       }),
-      'default': () => res.send('Page not found')
+      'default': () => res.send('Page Not Found')
     })
 
 };
 
 
 /**
- * Render the server error page
+ * Define an error and pass it to error handler
  */
-function serverError(req, res) {
+function serverError(req, res, next) {
 
-  res.status(500)
-    .render('500', {
-      error: 'Oops! Something went wrong...'
-    })
+  next(new Error());
 
 };

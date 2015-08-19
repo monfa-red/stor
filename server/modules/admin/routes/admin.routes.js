@@ -4,7 +4,7 @@ var router = express.Router();
 var users = require('../controllers/admin.controller');
 
 
-router.route('/')
+router.route('/api/admin')
   .get(users.list)
   .post(users.create)
 

@@ -1,2 +1,13 @@
-from 404.html, page not found
-<br> this gonna change!
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="layout__container">
+  <div class="layout layout--404">
+
+    <h1>404</h1>
+    <h3>Page Not Found</h3>
+    <pre>{{url}}</pre>
+
+  </div>
+</div>
+{% endblock %}

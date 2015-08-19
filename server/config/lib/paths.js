@@ -41,9 +41,3 @@ function paths(patterns, boolean) {
   return glob.sync(path.resolve(__dirname, REL_ROOT, patterns));
 
 };
-
-
-// a few test
-// console.log(paths(config.files.client.lib.js));
-// console.log(paths(config.files.client.lib.sass));
-// console.log(paths(config.files.client.lib.sass, true));

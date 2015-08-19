@@ -22,7 +22,7 @@ function coreRoutes(app) {
     .route('/error')
       .get(core.serverError);
 
-  // 404 error for undefined api routes and lib, assets and app public folders
+  // 404 error for undefined api, lib, assets and app routes
   app
     .route('/:url(api|lib|assets|app)/*')
       .get(core.notFound);
@@ -30,6 +30,10 @@ function coreRoutes(app) {
   // application route
   app
     .route('/*')
-      .get(core.index)
+      .get(core.index);
 
+  // Forward all other requests to error handler
+  app
+    .use(core.serverError);
+    
 };
