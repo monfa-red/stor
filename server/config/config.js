@@ -35,7 +35,7 @@ export default {
   // for obsecurity reasons
   sessionKey: 'sessionId',
   sessionCollection: 'sessions',
-  logo: 'PATH/TO/SRC/logo.png',
+  // logo: 'PATH/TO/SRC/logo.png',
   favicon: 'PATH/TO/SRC/favicon.ico',
 
   //files
@@ -54,9 +54,22 @@ export default {
     client: {
       static: 'public',
       lib: {
-        js: 'public/app/**/*.js',
+        js: [
+          'public/lib/angular/angular.min.js',
+          'public/lib/angular-resource/angular-resource.js',
+          'public/lib/angular-new-router/dist/router.es5.js',
+          'public/app/*module.js',
+          'public/app/*.js',
+          'public/app/shared/**/*.js',
+          'public/app/**/*module.js',
+          'public/app/**/*service.js',
+          'public/app/**/*.js',
+        ],
         sass: 'public/assets/src/**/*.scss',
-        css: 'public/assets/dist/*/**/*.css'
+        css: [
+          'public/lib/material-design-lite/material.css',
+          'public/assets/dist/*/**/*.css'
+        ]
       }
     }
   }
