@@ -137,17 +137,17 @@ function initServerRoutes(app) {
  */
 function initErrorRoutes(app) {
 
-  app.use(function (err, req, res, next) {
-    // If the error object doesn't exists
-    if (!err) {
-      return next();
-    }
-    // Log it
-    console.error(err.stack);
-
-    // Redirect to error page
-    res.redirect('/error-page');
-  });
+  // app.use(function (err, req, res, next) {
+  //   // If the error object doesn't exists
+  //   if (!err) {
+  //     return next();
+  //   }
+  //   // Log it
+  //   console.error(err.stack);
+  //
+  //   // Redirect to error page
+  //   res.redirect('/error-page');
+  // });
 
   // catch 404 and forward to error handler
   // app.use(function(req, res, next) {
