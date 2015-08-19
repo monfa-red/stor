@@ -73,7 +73,6 @@ function localVariables(app) {
   locals.keywords = config.app.keywords;
   locals.cssFiles = paths(config.files.client.lib.css, true);
   locals.jsFiles = paths(config.files.client.lib.js, true);
-  console.log(locals);
   // Passing the request url to environment locals
   app.use((req, res, next) => {
     res.locals.host = req.protocol + '://' + req.hostname;
