@@ -34,12 +34,6 @@ export default {
 
 
 /**
- * Moudles relation to root
- */
-const REL_ROOT = '../../../';
-
-
-/**
  * App Initializer
  */
 function init(db) {
@@ -47,26 +41,18 @@ function init(db) {
   // Initialize express app
   let app = express();
 
-  // Set local variables
   localVariables(app);
 
-  // Initialize Express middleware
   middlewares(app);
 
   viewEngine(app);
 
-  // Express session
   session(app, db);
-  // Modules configuration ModulesConfiguration(app);
-  // Helmet security headers HelmetHeaders(app);
 
   clientRoutes(app);
 
-  // modules server authorization policies ModulesServerPolicies(app);
-
   serverRoutes(app);
 
-  // Initialize error routes
   errorHandler(app);
 
   // return Initialize express app for bootstraping
@@ -80,25 +66,21 @@ function init(db) {
  */
 function localVariables(app) {
 
+  // Setting application local variables
   let locals = app.locals;
-    locals.title = config.app.title;
-    locals.description = config.app.description;
-    locals.keywords = config.app.keywords;
-    // locals.secure = config.secure;
-    // locals.googleAnalyticsTrackingID = config.app.googleAnalyticsTrackingID;
-    // locals.facebookAppId = config.facebook.clientID;
-    // locals.logo = config.logo;
-    // locals.favicon = config.favicon;
-    locals.cssFiles = paths(config.files.client.lib.css, true);
-    locals.jsFiles = paths(config.files.client.lib.js, true);
-
+  locals.title = config.app.title;
+  locals.description = config.app.description;
+  locals.keywords = config.app.keywords;
+  locals.cssFiles = paths(config.files.client.lib.css, true);
+  locals.jsFiles = paths(config.files.client.lib.js, true);
+  console.log(locals);
   // Passing the request url to environment locals
   app.use((req, res, next) => {
     res.locals.host = req.protocol + '://' + req.hostname;
     res.locals.url = req.protocol + '://' + req.headers.host + req.originalUrl;
     next();
   });
-  console.log(locals);
+
 };
 
 
