@@ -1,7 +1,7 @@
 export default {
   db: {
-    uri:
-		process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mn-s',
+    uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://'
+         + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mn-s',
     options: {
       // user: '',
       // pass: ''
@@ -19,9 +19,10 @@ export default {
   //   },
 	app: {
     title: 'Stor',
-    description: 'Open-Source Modern Full-Stack JavaScript Store Application',
-    keywords: 'store app, e-commerce, commerce, mean, es2015, angular2, express, node.js, mongodb',
-    googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID'
+    description: 'Open-Source Modern Full-Stack JavaScript e-commerce Application',
+    keywords: 'stor, ecommerce, mean, es2015, angular2, express, node.js, mongodb',
+    googleAnalyticsTrackingID:
+      process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID'
   },
   port: process.env.PORT || 3000,
   templateEngine: 'swig',
@@ -48,17 +49,14 @@ export default {
         './server/modules/core/routes/**/*.js',
         // './server/modules/admin/routes/**/*.js'
       ],
-      models: 'server/modules/*/models/**/*.js',
-      controllers: [
-        'server/controllers/**/!(err)*.js',
-        'server/controllers/**/*.js',
-      ]
+      models: 'server/modules/*/models/**/*.js'
     },
     client: {
       static: 'public',
       lib: {
         js: 'public/app/**/*.js',
-        sass: 'public/assets/src/**/*.scss'
+        sass: 'public/assets/src/**/*.scss',
+        css: 'public/assets/dist/*/**/*.css'
       }
     }
   }

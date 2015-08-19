@@ -3,7 +3,6 @@
 // session = require('express-session'),
 // MongoStore = require('connect-mongo')(session),
 // multer = require('multer'),
-// favicon = require('serve-favicon'),
 // compress = require('compression'),
 // methodOverride = require('method-override'),
 // helmet = require('helmet'),
@@ -18,6 +17,7 @@ import path from 'path';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import favicon from 'serve-favicon';
 import consolidate from 'consolidate';
 import paths from './paths';
 import config from '../config';
@@ -47,7 +47,8 @@ function init(db) {
   // Initialize express app
   let app = express();
 
-  // local variables this.LocalVariables(app);
+  // Set local variables
+  localVariables(app);
 
   // Initialize Express middleware
   middlewares(app);
@@ -75,6 +76,33 @@ function init(db) {
 
 
 /**
+ * Initialize local variables
+ */
+function localVariables(app) {
+
+  let locals = app.locals;
+    locals.title = config.app.title;
+    locals.description = config.app.description;
+    locals.keywords = config.app.keywords;
+    // locals.secure = config.secure;
+    // locals.googleAnalyticsTrackingID = config.app.googleAnalyticsTrackingID;
+    // locals.facebookAppId = config.facebook.clientID;
+    // locals.logo = config.logo;
+    // locals.favicon = config.favicon;
+    locals.cssFiles = paths(config.files.client.lib.css, true);
+    locals.jsFiles = paths(config.files.client.lib.js, true);
+
+  // Passing the request url to environment locals
+  app.use((req, res, next) => {
+    res.locals.host = req.protocol + '://' + req.hostname;
+    res.locals.url = req.protocol + '://' + req.headers.host + req.originalUrl;
+    next();
+  });
+  console.log(locals);
+};
+
+
+/**
  * Initialize application middlewares
  */
 function middlewares(app) {
@@ -84,7 +112,7 @@ function middlewares(app) {
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: false }))
     .use(cookieParser())
-      .set('showStackError', true);
+    // .use(favicon(config.favicon));
 
 };
 

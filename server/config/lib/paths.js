@@ -16,12 +16,6 @@ export default paths;
 
 
 /**
- * Moudles relation to root
- */
-const REL_ROOT = '../../../';
-
-
-/**
  * Glob
  */
 function paths(patterns, boolean) {
@@ -34,10 +28,10 @@ function paths(patterns, boolean) {
   }
 
   if (boolean) {
-    return glob.sync(path.join(REL_ROOT, patterns))
-      .map(file => file.replace(REL_ROOT + config.files.client.static, ''));
+    return glob.sync(patterns)
+      .map(file => file.replace(config.files.client.static, ''));
   }
 
-  return glob.sync(path.resolve(__dirname, REL_ROOT, patterns));
+  return glob.sync(path.resolve(patterns));
 
 };

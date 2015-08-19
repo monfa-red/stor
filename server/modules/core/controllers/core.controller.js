@@ -19,9 +19,7 @@ export default {
  */
 function index(req, res) {
 
-  res.render('index', {
-      title: 'Stor'
-    });
+  res.render('index');
 
 };
 
@@ -35,11 +33,10 @@ function notFound(req, res) {
   res.status(404)
     .format({
       'text/html': () => res.render('404', {
-        url: req.originalUrl,
         title: '404 Page Not Found'
       }),
       'application/json': () => res.json({
-          error: 'Path Not Found'
+        error: 'Path Not Found'
       }),
       'default': () => res.send('Page Not Found')
     })
