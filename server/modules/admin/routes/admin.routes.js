@@ -1,12 +1,25 @@
-var express = require('express');
-var router = express.Router();
+'use strict';
 
-var users = require('../controllers/admin.controller');
-
-
-router.route('/api/admin')
-  .get(users.list)
-  .post(users.create)
+/**
+ * Moudle dependencies
+ */
+import admin from '../controllers/admin.controller';
 
 
-module.exports = router;
+/**
+ * Export product Routes (to: express.js)
+ */
+export default adminRouter;
+
+
+/**
+ *  Assign routes to controllers
+ */
+function adminRouter(app) {
+
+  app
+    .route('/api/admin')
+      .get(admin.all)
+      .post(admin.create);
+
+};
