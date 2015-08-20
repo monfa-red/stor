@@ -1,32 +1,31 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
+'use strict';
 
-// Loading user.model
-require('../models/user.model');
-var users = require('../controllers/users.controller');
+/**
+ * Moudle dependencies
+ */
+import users from '../controllers/users.controller';
 
-// var sampleUser = {
-// 	firstName: "abbas",
-// 	lastName: "Monfared",
-// 	email: "a@monfa.red"
-// }
 
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//     User(sampleUser)
-//     .save(function(err, msg) {
-//       if (err) {
-//         res.send(err)
-//       } else {
-//         res.send(msg)
-//       }
-//     })
-// });
+/**
+ * Export users Routes (to: express.js)
+ */
+export default usersRouter;
 
-router.get('/list', users.list);
-router.get('/list/:test', users.list);
 
-router.post('/add', users.create);
+/**
+ *  Assign routes to controllers
+ */
+function usersRouter(app) {
 
-module.exports = router;
+  app
+    .route('/api/users')
+      .get(users.all)
+      .post(users.create);
+
+  app
+    .route('/api/users/:userId')
+      .get(users.read)
+      .put(users.update)
+      .delete(users.destroy)
+
+};

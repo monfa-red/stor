@@ -1,54 +1,86 @@
 'use strict';
 
 /**
- * Module dependencies.
+ * Module dependencies
  */
-var mongoose = require('mongoose'),
-  User = mongoose.model('User'),
-  errorHandler = require('../../core/controllers/errors.controller');
+import mongoose from 'mongoose';
+import errors from '../../core/controllers/errors.controller';
 
 
+/**
+ * Get the User model
+ */
+let User = mongoose.model('User');
 
 
-
+/**
+ * Export methods list
+ */
 module.exports = {
 
-  create: function (req, res) {
-    var user = new User(req.body);
+  create,
 
-    user
-      .save(function (err) {
-        if (err) {
-          return res
-            .status(400)
-            .send({
-              message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-          res.json(user);
-        }
-      });
-  },
+  read,
 
-  /**
-   * List users
-   */
-  list: function (req, res) {
+  update,
 
-    User
-      .find()
-      .sort('-created')
-      .exec(function (err, users) {
-        if (err) {
-          return res
-            .status(400)
-            .send({
-              message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-          res.json(users);
-        }
+  destroy,
+
+  all
+
+};
+
+
+/**
+ * Create and save a user
+ */
+function create(req, res) {
+
+  let user = new User(req.body);
+
+  user
+    .save(err => {
+      if (err) {
+        return res.status(400).send({
+            message: errors.getMessage(err)
+          });
+      }
+      res.json(user);
+    })
+
+};
+
+
+function read(req, res) {
+
+};
+
+
+function update(req, res) {
+
+};
+
+
+function destroy(req, res) {
+
+};
+
+
+/**
+ * Get a list of users
+ */
+function all(req, res) {
+
+  User
+    .find()
+    .sort('-created')
+    .exec((err, users) => {
+      if (err) {
+        return res.status(400).send({
+            message: errors.getMessage(err)
+          });
+      }
+      res.json(users);
     });
 
-  }
-}
+};

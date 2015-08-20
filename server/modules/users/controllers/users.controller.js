@@ -52,7 +52,6 @@ function create(req, res) {
 };
 
 
-
 function read(req, res) {
 
 };
@@ -66,7 +65,6 @@ function update(req, res) {
 function destroy(req, res) {
 
 };
-
 
 
 /**
