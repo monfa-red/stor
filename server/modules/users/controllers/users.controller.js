@@ -1,55 +1,89 @@
+'use strict';
+
 /**
- * Module dependencie
+ * Module dependencies
  */
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
+import mongoose from 'mongoose';
+import errors from '../../core/controllers/errors.controller';
+
+
+/**
+ * Get the User model
+ */
+let User = mongoose.model('User');
 
 
 
+/**
+ * Export methods list
+ */
+module.exports = {
+
+  create,
+
+  read,
+
+  update,
+
+  destroy,
+
+  all
+
+};
 
 
- module.exports = {
+/**
+ * Create and save a user
+ */
+function create(req, res) {
 
-    /**
-     * CRUD
-     */
-    create: function(req, res) {
-        newUser = new User(req.body);
-        newUser.save(function(err) {
-            if (err) {
-                console.log(err);
-                // res.redirect()
-            };
-            // if succesfull
-            res.json(newUser)
+  let user = new User(req.body);
 
-        })
-    },
-    read: function(req, res) {
+  user
+    .save(err => {
+      if (err) {
+        return res.status(400).send({
+            message: errors.getMessage(err)
+          });
+      }
+      res.json(user);
+    })
 
-    },
-    update: function(req, res) {
+};
 
-    },
-    delete: function(req, res) {
 
-    },
 
-    /**
-     * List users
-     * Just a test!
-     */
-    list: function(req, res) {
-        User
-            .find(function(err, result) {
-                if (err) {
-                    // log the error --REMOVE-THIS--
-                    console.log(err);
-                    res.redirect('/error-page');
-                }
-                // if succesfull
-                res.json(result);
-            })
-     }
+function read(req, res) {
 
- }
+};
+
+
+function update(req, res) {
+
+};
+
+
+function destroy(req, res) {
+
+};
+
+
+
+/**
+ * Get a list of users
+ */
+function all(req, res) {
+
+  User
+    .find()
+    .sort('-created')
+    .exec((err, users) => {
+      if (err) {
+        return res.status(400).send({
+            message: errors.getMessage(err)
+          });
+      }
+      res.json(users);
+    });
+
+};

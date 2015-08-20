@@ -36,7 +36,7 @@ module.exports = {
  */
 function create(req, res) {
 
-  var product = new Product(req.body);
+  let product = new Product(req.body);
 
   product
     .save(err => {
@@ -77,7 +77,7 @@ function read(req, res) {
  */
 function update(req, res) {
 
-  var product = req.product;
+  let product = req.product;
   product.title = req.body.title;
   product.content = req.body.content;
 
