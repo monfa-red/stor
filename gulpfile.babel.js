@@ -56,7 +56,7 @@ const PATH = {
   },
   server: {
     dir: './server',
-    bin: './bin/www'
+    app: './index'
   }
 };
 const DEFAULTS = {
@@ -208,9 +208,9 @@ gulp.task('scripts', () => {
 gulp.task('nodemon', cb => {
   var called = false;
   return $.nodemon({
-    script: PATH.server.bin,
+    script: PATH.server.app,
     // watch core server file(s) that require server restart on change
-    watch: ['app.js']
+    // watch: ['app.js']
   })
     .on('start', () => {
       // ensure start only got called once
