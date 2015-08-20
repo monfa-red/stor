@@ -18,7 +18,7 @@ let ObjectId = Schema.Types.ObjectId;
 /**
  * User Schema
  */
-var UserSchema = new Schema({
+let UserSchema = new Schema({
 	created: {
 		type: Date,
 		default: Date.now

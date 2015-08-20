@@ -17,7 +17,7 @@ let ObjectId = Schema.Types.ObjectId;
 /**
  * Instantiate Product Category Schema
  */
-var categorySchema = new Schema({
+let categorySchema = new Schema({
 
   created: {
     type: Date,
@@ -31,7 +31,6 @@ var categorySchema = new Schema({
   name: {
     type: String,
     trim: true,
-    required: true,
     required: 'Category name can not be blank'
   },
 
