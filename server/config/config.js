@@ -52,12 +52,10 @@ export default {
   //TODO: structure will change, it's just for test
   files: {
     server: {
-      views: 'server/modules/*/views',
+      views: 'server/modules/*/views/',
       routes: [
-        // './server/modules/*/routes/**/*.js',
-        './server/modules/products/routes/**/*.js',
-        './server/modules/core/routes/**/*.js',
-        // './server/modules/admin/routes/**/*.js'
+        'server/modules/!(core)/routes/**/*.js',
+        'server/modules/core/routes/**/*.js'
       ],
       models: 'server/modules/*/models/**/*.js'
     },
