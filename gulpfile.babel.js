@@ -130,7 +130,6 @@ gulp.task('styles', () => {
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
     `${PATH.public.src}/**/*.scss`,
-    // `${PATH.public.src}/styles/**/*.css`
   ])
     .pipe($.sass({
       precision: 10

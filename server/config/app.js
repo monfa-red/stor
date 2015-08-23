@@ -3,8 +3,8 @@
 /**
  * Moudle dependencies
  */
-import https from 'https';
 import http from 'http';
+import https from 'https';
 import db from './lib/db';
 import express from './lib/express';
 import events from './lib/events';
@@ -37,7 +37,7 @@ function bootStrap() {
         .on('error', events.server.error)
         .on('listening', events.server.listening);
 
-  // if required, Create an HTTPS server on options
+  // If https port provided, create an HTTPS server as well
   if (config.https.port) {
     https
       .createServer(certificate, app)
