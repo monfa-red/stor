@@ -92,15 +92,21 @@ let productSchema = new Schema({
 
   author: {
     type: ObjectId,
-    required: true,
+    required: 'Author can not be blank',
     ref: 'User'
   },
 
   category: {
     type: ObjectId,
-    // required: true,
+    required: 'Main category need to be selected',
     ref: 'Category'
-  }
+  },
+
+  categories: [{
+    type: ObjectId,
+    required: 'At least one category is required',
+    ref: 'Category'
+  }]
 
 });
 

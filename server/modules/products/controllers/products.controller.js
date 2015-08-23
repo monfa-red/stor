@@ -16,7 +16,7 @@ let Product = mongoose.model('Product');
 /**
  * Export methods list
  */
-module.exports = {
+export default {
 
   create,
 
@@ -119,7 +119,10 @@ function all(req, res) {
 
   Product
     .find()
+    .select('-__v')
     .sort('-created')
+    .populate('author', 'firstName lastName email')
+    .populate('categories', 'name nameId')
     .exec((err, products) => {
       if (err) {
         return res.status(400).send({
