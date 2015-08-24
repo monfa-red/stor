@@ -12,12 +12,13 @@
      * Inject Services
      */
     ProductListController.$inject = [
+      '$routeParams',
       'InitService',
       'Products',
       'dashify'
       ]
 
-    function ProductListController(InitService, Products, dashify) {
+    function ProductListController($routeParams, InitService, Products, dashify) {
 
       // var _this = this;
 

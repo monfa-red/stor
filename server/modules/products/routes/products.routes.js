@@ -61,7 +61,8 @@ function fakeUserInitialTests(app) {
             categories: [
               "55d91920203d5c441e0b0bc6",
               "55d918d5203d5c441e0b0bc4"
-            ]
+            ],
+            category: "55d91920203d5c441e0b0bc6"
           };
         res.json(jres)
       });

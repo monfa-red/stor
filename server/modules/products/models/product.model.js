@@ -96,9 +96,10 @@ let productSchema = new Schema({
     ref: 'User'
   },
 
+  // Default category for SEO
   category: {
     type: ObjectId,
-    required: 'Main category need to be selected',
+    required: 'Main category should be selected',
     ref: 'Category'
   },
 

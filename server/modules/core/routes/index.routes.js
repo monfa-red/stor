@@ -35,5 +35,5 @@ function coreRoutes(app) {
   // Forward all other requests to error handler
   app
     .use(core.serverError);
-    
+
 };

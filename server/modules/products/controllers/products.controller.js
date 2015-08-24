@@ -119,10 +119,11 @@ function all(req, res) {
 
   Product
     .find()
-    .select('-__v')
+    .select('-__v -categories')
     .sort('-created')
     .populate('author', 'firstName lastName email')
-    .populate('categories', 'name nameId')
+    // .populate('categories', 'name nameId')
+    .populate('category', 'name nameId')
     .exec((err, products) => {
       if (err) {
         return res.status(400).send({

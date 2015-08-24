@@ -17,7 +17,7 @@ let User = mongoose.model('User');
 /**
  * Export methods list
  */
-module.exports = {
+export default {
 
   create,
 
