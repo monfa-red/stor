@@ -3,7 +3,7 @@
 /**
  * Moudle dependencies
  */
-import admin from '../controllers/admin.controller';
+// import admin from '../controllers/admin.controller';
 
 
 /**
@@ -17,9 +17,9 @@ export default adminRouter;
  */
 function adminRouter(app) {
 
-  app
-    .route('/api/admin')
-      .get(admin.all)
-      .post(admin.create);
+  // app
+  //   .route('/api/admin')
+  //     .get(admin.all)
+  //     .post(admin.create);
 
 };

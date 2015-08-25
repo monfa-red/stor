@@ -57,7 +57,12 @@ function fakeUserInitialTests(app) {
               shipping: "1299"
             },
             //TEST: replace it with a user ID
-            author: "55ca791ccbd3c480233a3071"
+            author: "55ca791ccbd3c480233a3071",
+            categories: [
+              "55d91920203d5c441e0b0bc6",
+              "55d918d5203d5c441e0b0bc4"
+            ],
+            category: "55d91920203d5c441e0b0bc6"
           };
         res.json(jres)
       });

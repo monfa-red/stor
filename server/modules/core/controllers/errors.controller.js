@@ -1,7 +1,7 @@
 'use strict';
 
 
-export {
+export default {
   getMessage
 }
 
@@ -27,7 +27,7 @@ var getUniqueErrorMessage = function (err) {
  * Get the error message from error object
  */
 function getMessage(err) {
-  var message = '';
+  let message = '';
 
   if (err.code) {
     switch (err.code) {
@@ -39,7 +39,7 @@ function getMessage(err) {
         message = 'Something went wrong';
     }
   } else {
-    for (var errName in err.errors) {
+    for (let errName in err.errors) {
       if (err.errors[errName].message) {
         message = err.errors[errName].message;
       }

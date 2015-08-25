@@ -16,7 +16,7 @@ let Category = mongoose.model('Category');
 /**
  * Export methods list
  */
-module.exports = {
+export default {
 
   create,
 
@@ -37,6 +37,7 @@ module.exports = {
 function create(req, res) {
 
   let category = new Category(req.body);
+
 
   category
     .save(err => {
@@ -118,7 +119,9 @@ function all(req, res) {
 
   Category
     .find()
+    .select('-__v')
     .sort('-created')
+    .populate('author', 'firstName lastName email')
     .exec((err, categorys) => {
       if (err) {
         return res.status(400).send({
@@ -126,35 +129,6 @@ function all(req, res) {
           });
       }
       res.json(categorys);
-    });
-
-};
-
-
-/**
- * Category middleware
- */
-function categoryByID(req, res, next, id) {
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).send({
-        message: 'Category is invalid'
-      });
-  }
-
-  Category
-    .findById(id)
-    .populate('user', 'displayName')
-    .exec((err, category) => {
-        if (err) {
-          return next(err);
-        } else if (!category) {
-          return res.status(404).send({
-              message: 'No category with that identifier has been found'
-            });
-        }
-      req.category = category;
-      next();
     });
 
 };

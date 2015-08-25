@@ -36,7 +36,7 @@ let categorySchema = new Schema({
 
   author: {
     type: ObjectId,
-    required: true,
+    required: 'Category author is required',
     ref: 'User'
   }
 
