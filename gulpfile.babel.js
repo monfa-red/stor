@@ -1,4 +1,4 @@
-  'use strict';
+'use strict';
 /**
  * Available gulp packages to gulp-load-plugins:
  * sass -- sass compiler
@@ -26,8 +26,6 @@
  * finish production tasks
  *
  */
-
-
 import gulp from 'gulp';
 import fs from 'fs';
 import path from 'path';

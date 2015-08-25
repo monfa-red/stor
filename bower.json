@@ -1,11 +1,11 @@
 {
-  "name": "mn-shop",
+  "name": "stor",
   "version": "0.0.0",
-  "homepage": "https://github.com/monfa-red/mn-shop",
+  "homepage": "https://github.com/monfa-red/stor",
   "authors": [
     "Abbas Monfared <a@monfa.red>"
   ],
-  "main": "./bin/www",
+  "main": "./index.js",
   "license": "MIT",
   "ignore": [
     "**/.*",

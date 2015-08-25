@@ -9,7 +9,7 @@ import db from './lib/db';
 import express from './lib/express';
 import events from './lib/events';
 import config from './config';
-import certificate from './lib/keys/certificate';
+import cert from './lib/keys/certificate';
 
 
 /**
@@ -40,7 +40,7 @@ function bootStrap() {
   // If https port provided, create an HTTPS server as well
   if (config.https.port) {
     https
-      .createServer(certificate, app)
+      .createServer(cert, app)
         .listen(config.https.port)
           .on('error', events.server.httpsError)
           .on('listening', events.server.listening);
