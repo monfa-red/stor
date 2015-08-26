@@ -4,6 +4,7 @@
  * Moudle dependencies
  */
 import users from '../controllers/users.controller';
+import auth from '../../../config/lib/auth';
 
 
 /**
@@ -20,7 +21,7 @@ function usersRouter(app) {
   app
     .route('/api/users')
       .get(users.all)
-      .post(users.create);
+      .post(auth, users.create);
 
   app
     .route('/api/users/:userId')
