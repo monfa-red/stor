@@ -4,7 +4,7 @@
  * Moudle dependencies
  */
 import users from '../controllers/users.controller';
-import auth from '../../../config/lib/auth';
+import auth from '../controllers/auth';
 
 
 /**

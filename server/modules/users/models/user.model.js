@@ -4,6 +4,7 @@
  * Module dependencies
  */
 import mongoose from 'mongoose';
+import crypto from 'crypto';
 // import _ from 'lodash';
 
 
@@ -19,46 +20,133 @@ let ObjectId = Schema.Types.ObjectId;
  * User Schema
  */
 let UserSchema = new Schema({
+
 	created: {
 		type: Date,
 		default: Date.now
 	},
-	firstName: {
-		type: String,
-		trim: true,
-		default: '',
-		// validate: [validate, 'Please fill in your first name']
+
+	name: {
+		first: {
+			type: String,
+			trim: true,
+			default: ''
+		},
+		last: {
+			type: String,
+			trim: true,
+			default: ''
+		}
 	},
-	lastName: {
-		type: String,
-		trim: true,
-		default: '',
-		// validate: [validate, 'Please fill in your last name']
-	},
+
+	role: {
+    type: String,
+    default: 'user'
+  },
+
 	email: {
 		type: String,
 		trim: true,
+		lowercase: true,
 		default: '',
 		// validate: [validate, 'Please fill in your email address'],
 		// match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
+
 	password: {
 		type: String,
+		required: 'Password is required'
+	},
 
-		// TODO:
-		// Password stuff!
-		default: '0'
+	provider: String,
 
-	}
+	salt: String
+
 });
+
+/**
+ * Virtuals
+ */
+// Public profile information
+// UserSchema
+// 	.virtual('profile')
+// 		.get(() => {
+// 				return {
+// 					'name': this.name,
+// 					'role': this.role
+// 				};
+// 			});
+
+// Non-sensitive info we'll be putting in the token
+UserSchema
+  .virtual('token')
+	  .get(() => {
+	    return {
+	      '_id': this._id,
+	      'role': this.role
+	    };
+	  });
+
+
+/**
+ * UserSchema Methods
+ */
+UserSchema.methods = {
+
+	encryptPassword,
+
+	authenticate,
+	// findUniqueUsername,
+	makeSalt
+
+};
+
+/**
+ * Make salt
+ */
+function makeSalt(byteSize = 16) {
+	return crypto
+					.randomBytes(byteSize)
+						.toString('base64');
+};
+
+/**
+ * Encrypt Password
+ */
+function encryptPassword(password) {
+	if (!password || !this.salt) {
+    return null;
+  }
+
+  let iterations = 10000;
+  let keyLength = 64;
+  let salt = new Buffer(this.salt, 'base64');
+
+  return crypto
+					.pbkdf2Sync(password, salt, iterations, keyLength)
+          	.toString('base64');
+};
+
+/**
+ * Authenticate - check if the passwords are the same
+ */
+function authenticate(password) {
+	return this.password === this.encryptPassword(password);
+}
+
 
 /**
  * Testing Schema.pre()
  */
 UserSchema.pre('save', function(next) {
-	console.log("saveed a user form user.model");
+	if (this.password && this.isModified('password') && this.password.length >= 6) {
+		this.salt = makeSalt();
+		this.password = this.encryptPassword(this.password);
+	}
+	console.log("saved a user form user.model");
 	next();
 });
+
 
 /**
  * Compiling UserSchema into User model
