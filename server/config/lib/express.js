@@ -136,6 +136,7 @@ function clientRoutes(app) {
 
 /**
  * Configure the modules server routes
+ * TODO: mount the router instance instead
  */
 function serverRoutes(app) {
 

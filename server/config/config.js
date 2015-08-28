@@ -1,4 +1,5 @@
 export default {
+
   db: {
     uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://'
          + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mn-s',
@@ -9,6 +10,7 @@ export default {
     // Enable mongoose debug mode
     debug: process.env.MONGODB_DEBUG || false
   },
+
   http: {
     port: process.env.PORT || 3000
   },
@@ -20,6 +22,7 @@ export default {
       cert: './server/config/lib/keys/cert.pem'
     }
   },
+
   // log: {
   //   // Can specify one of 'combined', 'common', 'dev', 'short', 'tiny'
   //   format: 'dev',
@@ -35,7 +38,9 @@ export default {
     googleAnalyticsTrackingID:
       process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID'
   },
+
   templateEngine: 'swig',
+  
   // Session details
   // session expiration is set by default to 24 hours
   sessionExpiration: 24 * (60 * 1000),
@@ -80,5 +85,24 @@ export default {
         ]
       }
     }
+  },
+
+  facebook: {
+    clientID:     process.env.FACEBOOK_ID || 'id',
+    clientSecret: process.env.FACEBOOK_SECRET || 'secret',
+    callbackURL:  (process.env.DOMAIN || '') + '/auth/facebook/callback'
+  },
+
+  twitter: {
+    clientID:     process.env.TWITTER_ID || 'id',
+    clientSecret: process.env.TWITTER_SECRET || 'secret',
+    callbackURL:  (process.env.DOMAIN || '') + '/auth/twitter/callback'
+  },
+
+  google: {
+    clientID:     process.env.GOOGLE_ID || 'id',
+    clientSecret: process.env.GOOGLE_SECRET || 'secret',
+    callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
   }
+
 }
