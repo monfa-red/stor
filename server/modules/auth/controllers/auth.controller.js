@@ -6,6 +6,7 @@
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 
+
 /**
  * Authentication failure redirect route
  */
@@ -13,7 +14,7 @@ const FAILURE_REDIRECT = '/auth/signup';
 
 
 /**
- * Export authentication handleres
+ * Export authentication controllers
  */
 export default  {
 
@@ -58,12 +59,11 @@ function setToken(req, res) {
 };
 
 
-
 /**
- * Facebook passport authentication and callback
+ * Passport Facebook authentication and callback
  */
 function facebookOAuth(req, res, next) {
-  passport.authenticate('facebook', (err, user, info) => {
+  passport.authenticate('facebook', {
     scope: ['email', 'user_about_me'],
     failureRedirect: FAILURE_REDIRECT,
     session: false
@@ -71,7 +71,7 @@ function facebookOAuth(req, res, next) {
 };
 
 function facebookCallback(req, res, next) {
-  passport.authenticate('facebook', (err, user, info) => {
+  passport.authenticate('facebook', {
     failureRedirect: FAILURE_REDIRECT,
     session: false
   })(req, res, next);
@@ -79,10 +79,10 @@ function facebookCallback(req, res, next) {
 
 
 /**
- * Google passport authentication and callback
+ * Passport Google authentication and callback
  */
 function googleOAuth(req, res, next) {
-  passport.authenticate('google', (err, user, info) => {
+  passport.authenticate('google', {
     scope: ['profile', 'email'],
     failureRedirect: FAILURE_REDIRECT,
     session: false
@@ -90,16 +90,16 @@ function googleOAuth(req, res, next) {
 };
 
 function googleCallback(req, res, next) {
-  passport.authenticate('google', (err, user, info) => {
+  passport.authenticate('google', {
     failureRedirect: FAILURE_REDIRECT,
     session: false
   })(req, res, next);
 };
 
 
-
-
-
+/**
+ * Passport local authentication
+ */
 function local(req, res, next) {
   passport.authenticate('local', (err, user, info) => {
     let error = err || info;
@@ -107,6 +107,6 @@ function local(req, res, next) {
     if (!user) return res.status(404).json({
       message: 'Something went wrong, please try again.'
     });
-    // res.json({you:'dam exist!'})
+    // res.json({you:'Yay exist!'})
   })(req, res, next)
 }

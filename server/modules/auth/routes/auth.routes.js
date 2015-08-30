@@ -47,5 +47,4 @@ function authRouter(app) {
       .get(auth.google.oAuthCallback, auth.signToken);
 
 
-
 };
