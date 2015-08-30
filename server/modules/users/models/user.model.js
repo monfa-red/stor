@@ -58,6 +58,8 @@ let UserSchema = new Schema({
 		required: 'Password is required'
 	},
 
+	profileImage: String,
+
 	provider: String,
 
 	salt: String
