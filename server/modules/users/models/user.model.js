@@ -145,7 +145,6 @@ UserSchema.pre('save', function(next) {
 		this.salt = makeSalt();
 		this.password = this.encryptPassword(this.password);
 	}
-	console.log("saved a user form user.model");
 	next();
 });
 
