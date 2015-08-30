@@ -4,6 +4,7 @@
 import passport from 'passport';
 import FacebookStrategy from 'passport-facebook';
 import mongoose from 'mongoose';
+import config from '../../../config/config'
 
 
 /**
@@ -32,6 +33,9 @@ passport.use(new FacebookStrategy({
         if (err) return done(err);
 
         if (user) return done(null, user);
+
+        console.log('PROFILE::: ', profile);
+        console.log('PROFILE-JJ::: ', profile._json);
 
         user = new User({
           name: {

@@ -64,7 +64,7 @@ function setToken(req, res) {
  */
 function facebookOAuth(req, res, next) {
   passport.authenticate('facebook', {
-    scope: ['email', 'user_about_me'],
+    scope: ['email', 'public_profile'],
     failureRedirect: FAILURE_REDIRECT,
     session: false
   })(req, res, next);

@@ -2,8 +2,9 @@
  * Module dependencies
  */
 import passport from 'passport';
-import {OAuth2Strategy} as GoogleStrategy from 'passport-google-oauth';
+import {OAuth2Strategy as GoogleStrategy} from 'passport-google-oauth';
 import mongoose from 'mongoose';
+import config from '../../../config/config'
 
 
 /**
