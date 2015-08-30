@@ -9,7 +9,7 @@ import db from './lib/db';
 import express from './lib/express';
 import events from './lib/events';
 import config from './config';
-import cert from './lib/keys/certificate';
+import cert from './cert/cert';
 
 
 /**

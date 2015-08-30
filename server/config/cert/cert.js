@@ -4,7 +4,7 @@
  * Module dependencies
  */
 import fs from 'fs';
-import config from '../../config';
+import config from '../config';
 
 
 /**
