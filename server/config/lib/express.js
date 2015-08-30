@@ -48,9 +48,9 @@ function init(db) {
 
   viewEngine(app);
 
-  session(app, db);
-
   clientRoutes(app);
+
+  authStrategies(app);
 
   serverRoutes(app);
 
@@ -115,14 +115,6 @@ function viewEngine(app) {
 
 
 /**
- * Configure Express session
- */
-function session(app, db) {
-
-};
-
-
-/**
  * Setting the client-side static folder[s]
  */
 function clientRoutes(app) {
@@ -131,6 +123,15 @@ function clientRoutes(app) {
   paths(config.files.client.static)
     .forEach(dir => app.use(express.static(dir)))
 
+};
+
+
+/**
+ * Mount passport strategies
+ */
+function authStrategies() {
+  paths(config.files.server.strategies)
+    .forEach(dir => require(dir))
 };
 
 
