@@ -18,8 +18,8 @@ export default {
     port: false,
     // Paths to key and cert as string
     ssl: {
-      key: './server/config/lib/keys/key.pem',
-      cert: './server/config/lib/keys/cert.pem'
+      key: './server/config/cert/key.pem',
+      cert: './server/config/cert/cert.pem'
     }
   },
 
@@ -40,16 +40,16 @@ export default {
   },
 
   templateEngine: 'swig',
-  
+
   // Session details
   // session expiration is set by default to 24 hours
-  sessionExpiration: 24 * (60 * 1000),
+  // sessionExpiration: 24 * (60 * 1000),
   // sessionSecret should be changed for security measures and concerns
-  sessionSecret: 'STOR',
+  // sessionSecret: 'STOR',
   // sessionKey is set to the generic sessionId key used by PHP applications
   // for obsecurity reasons
-  sessionKey: 'sessionId',
-  sessionCollection: 'sessions',
+  // sessionKey: 'sessionId',
+  // sessionCollection: 'sessions',
   // logo: 'PATH/TO/SRC/logo.png',
   favicon: 'PATH/TO/SRC/favicon.ico',
 
@@ -62,7 +62,8 @@ export default {
         'server/modules/!(core)/routes/**/*.js',
         'server/modules/core/routes/**/*.js'
       ],
-      models: 'server/modules/*/models/**/*.js'
+      models: 'server/modules/*/models/**/*.js',
+      strategies: 'server/modules/auth/strategies/**/*.js'
     },
     client: {
       static: 'public',

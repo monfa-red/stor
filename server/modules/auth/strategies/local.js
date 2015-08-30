@@ -1,20 +1,15 @@
 /**
  * Module dependencies
  */
- import passport from 'passport';
- import LocalStrategy from 'passport-local';
- import mongoose from 'mongoose';
-
-
- /**
-  * Get the User model
-  */
- let User = mongoose.model('User');
+import passport from 'passport';
+import LocalStrategy from 'passport-local';
+import mongoose from 'mongoose';
 
 
 /**
- * Export and exec function
+ * Get the User model
  */
+let User = mongoose.model('User');
 
 
 /**

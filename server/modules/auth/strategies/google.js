@@ -1,19 +1,20 @@
 /**
  * Module dependencies
  */
- import passport from 'passport';
- import {OAuth2Strategy} as GoogleStrategy from 'passport-google-oauth';
- import mongoose from 'mongoose';
+import passport from 'passport';
+import {OAuth2Strategy} as GoogleStrategy from 'passport-google-oauth';
+import mongoose from 'mongoose';
 
 
- /**
-  * Get the User model
-  */
- let User = mongoose.model('User');
+/**
+ * Get the User model
+ */
+let User = mongoose.model('User');
 
 
-
-// Use google strategy
+/**
+ * Google strategy
+ */
 passport.use(new GoogleStrategy({
     clientID: config.strategies.google.clientID,
     clientSecret: config.strategies.google.clientSecret,
@@ -39,11 +40,9 @@ passport.use(new GoogleStrategy({
         });
 
         user.save(err => {
-          if (err) {
-            return done(null, false, {
-              message: 'Google login failed, email already used by other login strategy'
-            });
-          }
+          if (err) return done(null, false, {
+            message: 'Google login failed, email already used by other login strategy'
+          });
           return done(null, user);
         });
       });

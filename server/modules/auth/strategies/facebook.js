@@ -1,16 +1,15 @@
 /**
  * Module dependencies
  */
- import passport from 'passport';
- import FacebookStrategy from 'passport-facebook';
- import mongoose from 'mongoose';
+import passport from 'passport';
+import FacebookStrategy from 'passport-facebook';
+import mongoose from 'mongoose';
 
 
- /**
-  * Get the User model
-  */
- let User = mongoose.model('User');
-
+/**
+ * Get the User model
+ */
+let User = mongoose.model('User');
 
 
 /**
@@ -20,7 +19,6 @@ passport.use(new FacebookStrategy({
     clientID: config.strategies.facebook.clientID,
     clientSecret: config.strategies.facebook.clientSecret,
     callbackURL: config.strategies.facebook.callbackURL
-    //, profileFields: ['displayName','emails']
   },
   (accessToken, refreshToken, profile, done) => {
 
@@ -42,11 +40,9 @@ passport.use(new FacebookStrategy({
         });
 
         user.save(err => {
-          if (err) {
-            return done(null, false, {
-              message: 'Facebook login failed, email already used by other login strategy'
-            });
-          }
+          if (err) return done(null, false, {
+            message: 'Facebook login failed, email already used by other login strategy'
+          });
           return done(null, user);
         });
       });
