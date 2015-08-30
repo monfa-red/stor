@@ -16,9 +16,10 @@ let User = mongoose.model('User');
  * Google strategy
  */
 passport.use(new GoogleStrategy({
-    clientID: config.strategies.google.clientID,
-    clientSecret: config.strategies.google.clientSecret,
-    callbackURL: config.strategies.google.callbackURL
+    clientID: config.google.clientID,
+    clientSecret: config.google.clientSecret,
+    callbackURL: config.google.callbackURL,
+    // passReqToCallback: true
   },
   (accessToken, refreshToken, profile, done) => {
 
@@ -32,9 +33,15 @@ passport.use(new GoogleStrategy({
         if (user) return done(null, user);
 
         user = new User({
-          name: profile.displayName,
+          name: {
+            first: profile.name.givenName,
+            last: profile.name.familyName
+          },
           email: profile.emails[0].value,
           role: 'user',
+          profileImage: (providerData.picture)
+            ? providerData.picture
+            : undefined,
           provider: 'google',
           google: profile._json
         });

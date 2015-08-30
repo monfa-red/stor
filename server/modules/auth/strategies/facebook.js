@@ -16,9 +16,11 @@ let User = mongoose.model('User');
  * Facebook strategy
  */
 passport.use(new FacebookStrategy({
-    clientID: config.strategies.facebook.clientID,
-    clientSecret: config.strategies.facebook.clientSecret,
-    callbackURL: config.strategies.facebook.callbackURL
+    clientID: config.facebook.clientID,
+    clientSecret: config.facebook.clientSecret,
+    callbackURL: config.facebook.callbackURL,
+    // profileFields: ['id', 'name', 'displayName', 'emails', 'photos'],
+    // passReqToCallback: true
   },
   (accessToken, refreshToken, profile, done) => {
 
@@ -32,9 +34,15 @@ passport.use(new FacebookStrategy({
         if (user) return done(null, user);
 
         user = new User({
-          name: profile.displayName,
+          name: {
+            first: profile.name.givenName,
+            last: profile.name.familyName
+          },
           email: profile.emails[0].value,
           role: 'user',
+          profileImage: (profile.id)
+            ? '//graph.facebook.com/' + profile.id + '/picture?type=large'
+            : undefined,
           provider: 'facebook',
           facebook: profile._json
         });
