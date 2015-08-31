@@ -11,6 +11,8 @@ export default {
     debug: process.env.MONGODB_DEBUG || false
   },
 
+  secret: 'secret',
+
   http: {
     port: process.env.PORT || 3000
   },

@@ -34,8 +34,7 @@ let UserSchema = new Schema({
 		},
 		last: {
 			type: String,
-			trim: true,
-			default: ''
+			trim: true
 		}
 	},
 
@@ -47,8 +46,9 @@ let UserSchema = new Schema({
 	email: {
 		type: String,
 		trim: true,
-		lowercase: true,
-		default: '',
+		required: 'Email is required',
+		unique: true,
+		lowercase: true
 		// validate: [validate, 'Please fill in your email address'],
 		// match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
@@ -98,7 +98,7 @@ UserSchema.methods = {
 	encryptPassword,
 
 	authenticate,
-	// findUniqueUsername,
+
 	makeSalt
 
 };
@@ -138,14 +138,15 @@ function authenticate(password) {
 
 
 /**
- * Testing Schema.pre()
+ * Pre-save hook
  */
 UserSchema.pre('save', function(next) {
 	if (this.password && this.isModified('password') && this.password.length >= 6) {
 		this.salt = makeSalt();
 		this.password = this.encryptPassword(this.password);
+		next();
 	}
-	next();
+	next(new Error('Invalid Password'));
 });
 
 

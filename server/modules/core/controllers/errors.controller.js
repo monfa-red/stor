@@ -27,6 +27,7 @@ var getUniqueErrorMessage = function (err) {
  * Get the error message from error object
  */
 function getMessage(err) {
+  console.log(err);
   let message = '';
 
   if (err.code) {
@@ -39,11 +40,12 @@ function getMessage(err) {
         message = 'Something went wrong';
     }
   } else {
-    for (let errName in err.errors) {
-      if (err.errors[errName].message) {
-        message = err.errors[errName].message;
-      }
-    }
+    // for (let errName in err.errors) {
+    //   if (err.errors[errName].message) {
+        message = err.message;
+        // message = err.errors[errName].message;
+    //   }
+    // }
   }
 
   return message;

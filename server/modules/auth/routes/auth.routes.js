@@ -22,18 +22,18 @@ function authRouter(app) {
    */
   app
     .route('/api/auth/local')
-      .post(auth.local)
+      .post(auth.local, auth.setToken)
 
   /**
    * Facebook Authentication
    */
   app
     .route('/api/auth/facebook')
-      .get(auth.facebook.oAuth);
+      .get(auth.facebook.oAuth, auth.setToken);
 
   app
     .route('/api/auth/facebook/callback')
-      .get(auth.facebook.oAuthCallback, auth.signToken);
+      .get(auth.facebook.oAuthCallback, auth.setToken);
 
   /**
    * Google Authentication
@@ -44,7 +44,7 @@ function authRouter(app) {
 
   app
     .route('/api/auth/google/callback')
-      .get(auth.google.oAuthCallback, auth.signToken);
+      .get(auth.google.oAuthCallback, auth.setToken);
 
 
 };

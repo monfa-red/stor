@@ -5,6 +5,7 @@
  */
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
+import config from '../../../config/config'
 
 
 /**
@@ -51,7 +52,7 @@ function signToken(id, role) {
  */
 function setToken(req, res) {
   if (!req.user) return res.status(404).json({
-    message: 'Something went wrong, please try again.'
+    message: 'Something went wrong, please try again. (Error No. 15)'
   })
   let token = signToken(req.user._id, req.user.role);
   // res.cookie('token', JSON.stringify(token));
@@ -107,6 +108,7 @@ function local(req, res, next) {
     if (!user) return res.status(404).json({
       message: 'Something went wrong, please try again.'
     });
-    // res.json({you:'Yay exist!'})
+    req.user = user;
+    next();
   })(req, res, next)
 }
