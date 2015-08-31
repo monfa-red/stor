@@ -4,7 +4,6 @@
 // MongoStore = require('connect-mongo')(session),
 // multer = require('multer'),
 // compress = require('compression'),
-// methodOverride = require('method-override'),
 // helmet = require('helmet'),
 // flash = require('connect-flash'),
 
@@ -18,6 +17,7 @@ import passport from 'passport';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import helmet from 'helmet';
 import favicon from 'serve-favicon';
 import consolidate from 'consolidate';
 import paths from './paths';
@@ -47,6 +47,8 @@ function init(db) {
   middlewares(app);
 
   viewEngine(app);
+
+  helmetHeaders(app);
 
   clientRoutes(app);
 
@@ -113,6 +115,28 @@ function viewEngine(app) {
 
 };
 
+/**
+ * Configure Helmet headers configuration
+ */
+function helmetHeaders(app) {
+
+  // Use helmet to secure Express headers
+  const SIX_MONTHS = 15778476000;
+  // app.use(helmet());
+  app
+    .use(helmet.xframe())
+    .use(helmet.xssFilter())
+    .use(helmet.nosniff())
+    .use(helmet.ienoopen())
+    .use(helmet.hsts({
+      maxAge: SIX_MONTHS,
+      includeSubdomains: true,
+      force: true
+    }))
+    .disable('x-powered-by');
+
+};
+
 
 /**
  * Setting the client-side static folder[s]
@@ -130,8 +154,11 @@ function clientRoutes(app) {
  * Mount passport strategies
  */
 function authStrategies() {
+
+  // globe and require passport strategies
   paths(config.files.server.strategies)
-    .forEach(dir => require(dir))
+    .forEach(dir => require(dir));
+
 };
 
 
