@@ -106,6 +106,8 @@ export default {
     clientID:     process.env.GOOGLE_ID || 'id',
     clientSecret: process.env.GOOGLE_SECRET || 'secret',
     callbackURL:  (process.env.DOMAIN || '') + '/api/auth/google/callback'
-  }
+  },
+
+  oAuthFailureRedirect: '/auth/signup',
 
 }
