@@ -13,31 +13,25 @@ export default authRouter;
 
 
 /**
- *  Assign auth routes to controllers
+ *  Assign auth routes to the controllers
  */
 function authRouter(app) {
 
-  /**
-   * Local Authentication
-   */
+  // Local authentication
   app
     .route('/api/auth/local')
       .post(auth.local, auth.setToken)
 
-  /**
-   * Facebook Authentication
-   */
+  // Facebook authentication
   app
     .route('/api/auth/facebook')
-      .get(auth.facebook.oAuth, auth.setToken);
+      .get(auth.facebook.oAuth);
 
   app
     .route('/api/auth/facebook/callback')
       .get(auth.facebook.oAuthCallback, auth.setToken);
 
-  /**
-   * Google Authentication
-   */
+  // Google authentication
   app
     .route('/api/auth/google')
       .get(auth.google.oAuth);
