@@ -124,10 +124,30 @@ function helmetHeaders(app) {
   const SIX_MONTHS = 15778476000;
   // app.use(helmet());
   app
+    .use(helmet.contentSecurityPolicy({
+      defaultSrc: ["'self'", 'google.com'],
+      // scriptSrc: ['scripts.com'],
+      // styleSrc: ['style.com'],
+      // imgSrc: ['img.com'],
+      // connectSrc: ['connect.com'],
+      // fontSrc: ['font.com'],
+      // objectSrc: ['object.com'],
+      // mediaSrc: ['media.com'],
+      // frameSrc: ['frame.com'],
+      // sandbox: ['allow-forms', 'allow-scripts'],
+      // reportUri: '/report-violation',
+      reportOnly: false, // set to true if you only want to report errors
+      setAllHeaders: false, // set to true if you want to set all headers
+      disableAndroid: false, // set to true if you want to disable Android (browsers can vary and be buggy)
+      safari5: false // set to true if you want to force buggy CSP in Safari 5
+    }))
     .use(helmet.xframe())
-    .use(helmet.xssFilter())
-    .use(helmet.nosniff())
-    .use(helmet.ienoopen())
+    // .use(helmet.xssFilter())
+    .use(helmet.xssFilter({
+      setOnOldIE: true
+    }))
+    .use(helmet.noSniff())
+    // .use(helmet.ieNoOpen())
     .use(helmet.hsts({
       maxAge: SIX_MONTHS,
       includeSubdomains: true,

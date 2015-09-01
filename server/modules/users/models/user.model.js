@@ -62,7 +62,18 @@ let UserSchema = new Schema({
 
 	provider: String,
 
-	salt: String
+	salt: String,
+
+	resetPasswordToken: String,
+
+	resetPasswordExpires: Date,
+
+	profile: {},
+
+	facebook: {},
+
+	google: {}
+
 
 });
 
@@ -95,13 +106,31 @@ UserSchema
  */
 UserSchema.methods = {
 
-	encryptPassword,
+	isAdmin,
 
 	authenticate,
 
 	makeSalt
 
+	encryptPassword,
+
 };
+
+
+/**
+ * IsAdmin - check if the user is an administrator
+ */
+function isAdmin() {
+	return this.role !== 'admin';
+},
+
+/**
+ * Authenticate - check if the passwords are the same
+ */
+function authenticate(password) {
+	return this.password === this.encryptPassword(password);
+}
+
 
 /**
  * Make salt
@@ -129,12 +158,7 @@ function encryptPassword(password) {
           	.toString('base64');
 };
 
-/**
- * Authenticate - check if the passwords are the same
- */
-function authenticate(password) {
-	return this.password === this.encryptPassword(password);
-}
+
 
 
 /**
