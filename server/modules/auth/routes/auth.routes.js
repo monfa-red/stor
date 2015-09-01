@@ -40,5 +40,4 @@ function authRouter(app) {
     .route('/api/auth/google/callback')
       .get(auth.google.oAuthCallback, auth.setToken);
 
-
 };
