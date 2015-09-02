@@ -18,35 +18,36 @@ export default authRouter;
 function authRouter(app) {
 
   // Local authentication
-  app
-    .route('/api/auth/signin')
-      .post(auth.local, auth.setToken)
+  app.route('/api/auth/signin')
+    .post(auth.local, auth.setToken)
 
-  app
-    .route('/api/auth/signup')
-      .post(users.create, auth.setToken)
+  app.route('/api/auth/signup')
+    .post(users.create, auth.setToken)
 
-  app
-    .route('/api/auth/forgot')
-      .post(users.forgot)
+  app.route('/api/auth/forgot')
+    .post(users.forgot);
 
+  app.route('/api/auth/reset')
+    .post(users.reset)
+
+  app.route('/api/auth/reset/:token')
+    .get(users.validateResetToken);
+
+  app.route('/api/auth/reset/:token')
+    .post(users.reset);
 
   // Facebook authentication
-  app
-    .route('/api/auth/facebook')
-      .get(auth.facebook.oAuth);
+  app.route('/api/auth/facebook')
+    .get(auth.facebook.oAuth);
 
-  app
-    .route('/api/auth/facebook/callback')
-      .get(auth.facebook.oAuthCallback, auth.setToken);
+  app.route('/api/auth/facebook/callback')
+    .get(auth.facebook.oAuthCallback, auth.setToken);
 
   // Google authentication
-  app
-    .route('/api/auth/google')
-      .get(auth.google.oAuth);
+  app.route('/api/auth/google')
+    .get(auth.google.oAuth);
 
-  app
-    .route('/api/auth/google/callback')
-      .get(auth.google.oAuthCallback, auth.setToken);
+  app.route('/api/auth/google/callback')
+    .get(auth.google.oAuthCallback, auth.setToken);
 
 };

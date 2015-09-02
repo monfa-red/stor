@@ -17,7 +17,8 @@ export default  {
 
   setToken,
 
-  local,
+  signin,
+  signup,
 
   facebook: {
     oAuth: facebookOAuth,
@@ -95,31 +96,31 @@ function signup(req, res) {
 };
 
 
-function signin(req, res, next) {
-  passport.authenticate('local', function (err, user, info) {
-    if (err || !user) {
-      res.status(400).send(info);
-    } else {
-      // Remove sensitive data before login
-      user.password = undefined;
-      user.salt = undefined;
-
-      req.login(user, function (err) {
-        if (err) {
-          res.status(400).send(err);
-        } else {
-          res.json(user);
-        }
-      });
-    }
-  })(req, res, next);
-};
+// function signin(req, res, next) {
+//   passport.authenticate('local', function (err, user, info) {
+//     if (err || !user) {
+//       res.status(400).send(info);
+//     } else {
+//       // Remove sensitive data before login
+//       user.password = undefined;
+//       user.salt = undefined;
+//
+//       req.login(user, function (err) {
+//         if (err) {
+//           res.status(400).send(err);
+//         } else {
+//           res.json(user);
+//         }
+//       });
+//     }
+//   })(req, res, next);
+// };
 
 
 /**
  * Passport local authentication
  */
-function local(req, res, next) {
+function signin(req, res, next) {
   passport.authenticate('local', (err, user, info) => {
     let error = err || info;
     if (error) return res.status(401).json(error);
