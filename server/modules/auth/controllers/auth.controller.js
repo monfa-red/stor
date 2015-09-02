@@ -5,6 +5,7 @@
  */
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
+import expressJwt from 'express-jwt';
 import config from '../../../config/config';
 
 
@@ -16,6 +17,14 @@ export default  {
   signToken,
 
   setToken,
+
+  verifyToken,
+
+  verifyUser,
+
+  verifyUserType,
+
+  verify,
 
   signin,
   signup,
@@ -56,8 +65,95 @@ function setToken(req, res) {
 };
 
 
+function verifyToken(req, res, next) {
+
+  if (req.query && req.query.hasOwnProperty('access_token')) {
+    req.headers.authorization = 'Bearer ' + req.query.access_token;
+  }
+  expressJwt({secret: config.secret});
+
+};
 
 
+
+function verifyUser(req, res, next) {
+
+  // if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+  //   return res.status(400).send({ message: 'User is invalid'});}
+
+  User
+    .findOne({
+      _id: req.user._id
+    })
+    .exec(function (err, user) {
+      if (err) return next(err);
+
+      if (!user) {
+        return res.status(400).send({
+            message: 'No account with that username has been found'
+          });
+      }
+
+      req.user = user;
+      next();
+    });
+
+};
+
+
+
+// function verifyAdmin(req, res, next) {
+//   return verifyUserType(req, res, next, 'admin');
+// };
+
+
+
+function verifyUserType(req, res, next, verifyType) {
+
+  if (!req.user.role || req.user.role === verifyType) {
+    return res.status(400).send({
+        message: 'User is not authorized'
+      });
+  }
+  next();
+
+};
+
+
+function verify(verifyType) {
+
+  if (!verifyType) {
+    return function(req, res, next) {
+      next(new Error('Auth verification type is not set'));
+    };
+  }
+
+  if (config.userTypes.indexOf(verifyType) === -1 && verifyType !== 'token') {
+    return function(req, res, next) {
+      next(new Error('Auth verification type does is not valid'));
+    };
+  }
+
+  if (verifyType === 'token') {
+    return {
+      verifyToken(req, res, next)
+    };
+  }
+
+  if (verifyType === 'user') {
+    return {
+      verifyToken(req, res, next),
+      verifyUser(req, res, next)
+    };
+  }
+
+  return {
+    verifyToken(req, res, next),
+    verifyUser(req, res, next),
+    verifyUserType(req, res, next, verifyType)
+  }
+
+};
 
 
 

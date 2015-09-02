@@ -23,18 +23,16 @@ function authRouter(app) {
 
   app.route('/api/auth/signup')
     .post(users.create, auth.setToken)
+  // 
+  // app.route('/api/auth/forgot')
+  //   .post(auth.forgot);
+  //
+  // app.route('/api/auth/reset')
+  //   .post(auth.reset)
+  //
+  // app.route('/api/auth/reset/:token')
+  //   .get(auth.validateResetToken);
 
-  app.route('/api/auth/forgot')
-    .post(users.forgot);
-
-  app.route('/api/auth/reset')
-    .post(users.reset)
-
-  app.route('/api/auth/reset/:token')
-    .get(users.validateResetToken);
-
-  app.route('/api/auth/reset/:token')
-    .post(users.reset);
 
   // Facebook authentication
   app.route('/api/auth/facebook')
