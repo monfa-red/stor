@@ -20,8 +20,8 @@ function certificate() {
 
   if (config.https.port) {
     return {
-      key: fs.readFileSync(config.https.ssl.key),
-      cert: fs.readFileSync(config.https.ssl.cert)
+      key: fs.readFileSync(config.https.key),
+      cert: fs.readFileSync(config.https.cert)
     };
   }
 

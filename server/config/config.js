@@ -21,10 +21,8 @@ export default {
   https: {
     port: false,
     // Paths to key and cert as string
-    ssl: {
-      key: './server/config/cert/key.pem',
-      cert: './server/config/cert/cert.pem'
-    }
+    key: './server/config/cert/key.pem',
+    cert: './server/config/cert/cert.pem'
   },
 
   // log: {
