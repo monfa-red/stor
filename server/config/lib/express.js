@@ -200,9 +200,7 @@ function serverRoutes(app) {
  */
 function errorHandler(app) {
 
-  // final error handlers
   app.use((err, req, res, next) => {
-
     let error = {
       status: err.status || 500,
       message: err.message || 'Internal Server Error',
@@ -214,8 +212,14 @@ function errorHandler(app) {
       error.stack = err.stack;
     }
 
+    // api error handle
+   if (req.originalUrl.startsWith('/api/')) {
+      return res.status(err.status || 400)
+        .json({ message: error.message })
+    }
+    // all other errors handler
     res.status(error.status)
-      .render('500', error);
+      .render('error', error);
   });
 
 };

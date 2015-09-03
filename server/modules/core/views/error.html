@@ -2,11 +2,12 @@
 
 {% block content %}
 <div class="layout__container">
-  <div class="layout layout--404">
+  <div class="layout layout--error layout--{{status}}">
 
-    <h1>404</h1>
-    <h3>Page Not Found</h3>
+    <h1>{{status}}</h1>
+    <h3>{{message}}</h3>
     <pre>{{url}}</pre>
+    <pre>{{stack}}</pre>
 
   </div>
 </div>
