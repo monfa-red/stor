@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
-import middlewares from 'composable-middleware';
+import compose from 'composable-middleware';
 import config from '../../../config/config';
 
 
@@ -26,7 +26,11 @@ export default  {
 
   verifyToken,
 
-  verify,
+  loadUser,
+
+  verifyUser : compose(verifyToken, loadUser),
+
+  restrictTo,
 
   signin,
 
@@ -46,16 +50,6 @@ export default  {
 
 
 /**
- * Returns a jwt token signed by the app secret
- */
-// function geneToken(id, role) {
-//   return jwt.sign({ _id: id, role: role }, config.secret, {
-//     expiresInMinutes: 60 * 5
-//   });
-// };
-
-
-/**
  * Sign and send a jwt token
  */
 function signToken(req, res) {
@@ -66,12 +60,11 @@ function signToken(req, res) {
   })
 
   let token = jwt.sign({
-    _id: req.user._id,
-    role: req.user.role
-  }, config.secret, {
-    expiresInMinutes: config.tokenExpiration
-  });
-
+      _id: req.user._id,
+      role: req.user.role
+    }, config.secret, {
+      expiresInMinutes: config.tokenExpiration
+    });
   res.json({ token: token });
 
 };
@@ -100,7 +93,7 @@ function verifyToken(req, res, next) {
  */
 function loadUser(req, res, next) {
 
-  // Verify user "_id" before querying to db
+  // Verify user id before querying to db
   if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
     return res.status(400).send({
       message: 'User is not valid'
@@ -125,78 +118,44 @@ function loadUser(req, res, next) {
 };
 
 
-function verifyUserType(userType) {
-  return (req, res, next) => {
+/**
+ * Restrict to only users who have that role
+ */
+function restrictTo(type) {
 
-    if (!req.user.role || req.user.role !== userType) {
-      return res.status(400).send({
+  if (!type || type.length === 0 ) {
+    return next(new Error('Auth restriction type is not set'));
+  }
+
+  // TODO: should also check and array
+  return (req, res, next) => {
+    if (!req.user.role || req.user.role !== type) {
+      return res.status(401).send({
           message: 'User is not authorized'
         });
     }
     next();
-
   };
-};
-
-
-function verify(type) {
-
-  // if (!type ||
-  //   type.length === 0 ||
-  //   (Array.isArray(type) && type.indexOf('token') >= 0 && type.length === 1)) {
-  //     return verifyToken;
-  //   };
-  //
-  //
-  //
-
-
-  if (!type) {
-    return (req, res, next) => {
-      next(new Error('Auth verification type is not set'));
-    };
-  }
-
-  if (config.userTypes.indexOf(type) === -1
-      && type !== 'token'
-      && type !== 'user') {
-    return (req, res, next) => {
-      next(new Error('Auth verification type is not valid'));
-    };
-  }
-
-  if (type === 'token') {
-    return verifyToken;
-  }
-
-  if (type === 'user') {
-    return middlewares()
-      .use(verifyToken)
-      .use(loadUser)
-  }
-
-  return middlewares()
-    .use(verifyToken)
-    .use(verifyUserType(type))
-    .use(loadUser)
-    .use(verifyUserType(type));
 
 };
 
 
 
+/**
+ * Register user with local provider
+ */
 function signup(req, res) {
-  // For security measurement we remove the role from the req.body object
+
+  // For , we remove the role from the req.body
   delete req.body.role;
   delete req.body.created;
 
   // Init Variables
   let user = new User(req.body);
-  // let message = null;
 
   // Add missing user fields
-  user.provider = 'local';
-  user.displayName = user.name.first + ' ' + user.name.last;
+  // user.provider = 'local';
+  // user.displayName = user.name.first + ' ' + user.name.last;
 
   user
     .save(err => {
@@ -217,6 +176,7 @@ function signup(req, res) {
  * Passport local authentication
  */
 function signin(req, res, next) {
+
   passport.authenticate('local', (err, user, info) => {
     let error = err || info;
     if (error) return res.status(401).json(error);
@@ -226,21 +186,26 @@ function signin(req, res, next) {
     req.user = user;
     next();
   })(req, res, next)
+
 };
 
 
+/**
+ * TODO: not finilized
+ */
 function changePassword(req, res, next) {
+
   let userId = req.user._id;
   let oldPass = String(req.body.oldPassword);
   let newPass = String(req.body.newPassword);
 
   User.findById(userId, function (err, user) {
-
     if(!user.authenticate(oldPass)) {
       return res.status(403).send({
         message: 'This password is not correct.'
       });
     }
+
     user.password = newPass;
     user.save(function(err) {
       if (err) return next(err);
@@ -249,11 +214,8 @@ function changePassword(req, res, next) {
       });
     });
   });
+
 };
-
-
-
-
 
 
 /**
