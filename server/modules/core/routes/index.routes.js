@@ -22,12 +22,13 @@ function coreRoutes(app) {
     .route('/error')
       .get(core.serverError);
 
-  // 404 error for undefined api, lib, assets and app routes
+  // Handle api and all static routs errors
   app
     .route('/:url(api|lib|assets|app)/*')
-      .get(core.notFound);
+      .get(core.notFound)
+      .all(core.badRequest);
 
-  // application route
+  // Application route
   app
     .route('/*')
       .get(core.index);

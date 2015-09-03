@@ -12,6 +12,8 @@ export default {
   },
 
   secret: 'secret',
+  // jwt token expiration time in minutes
+  tokenExpiration: 60 * 5,
 
   http: {
     port: process.env.PORT || 3000

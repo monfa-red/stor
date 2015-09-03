@@ -19,14 +19,14 @@ function authRouter(app) {
 
   // Local authentication
   app.route('/api/auth/signin')
-    .post(auth.signin, auth.setToken)
+    .post(auth.signin, auth.signToken)
 
   app.route('/api/auth/signup')
-    .post(auth.signup, auth.setToken)
+    .post(auth.signup, auth.signToken)
 
 
   app.route('/api/auth/test')
-    .post(auth.verifyToken, function(req, res, next) {
+    .post(auth.verify('user'), (req, res, next) => {
       res.send(req.user)
     })
   //
@@ -45,13 +45,13 @@ function authRouter(app) {
     .get(auth.facebook.oAuth);
 
   app.route('/api/auth/facebook/callback')
-    .get(auth.facebook.oAuthCallback, auth.setToken);
+    .get(auth.facebook.oAuthCallback, auth.signToken);
 
   // Google authentication
   app.route('/api/auth/google')
     .get(auth.google.oAuth);
 
   app.route('/api/auth/google/callback')
-    .get(auth.google.oAuthCallback, auth.setToken);
+    .get(auth.google.oAuthCallback, auth.signToken);
 
 };

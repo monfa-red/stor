@@ -24,13 +24,7 @@ export default  {
 
   signToken,
 
-  setToken,
-
   verifyToken,
-
-  verifyUser,
-
-  verifyAdmin,
 
   verify,
 
@@ -54,23 +48,30 @@ export default  {
 /**
  * Returns a jwt token signed by the app secret
  */
-function signToken(id, role) {
-  return jwt.sign({ _id: id, role: role }, config.secret, {
-    expiresInMinutes: 60 * 5
-  });
-};
+// function geneToken(id, role) {
+//   return jwt.sign({ _id: id, role: role }, config.secret, {
+//     expiresInMinutes: 60 * 5
+//   });
+// };
 
 
 /**
  * Sign and send a jwt token
  */
-function setToken(req, res) {
+function signToken(req, res) {
 
-  if (!req.user) return res.status(404).json({
+  if (!req.user) return res.status(401).json({
     // message: 'Something went wrong, please try again.'
     message: 'req.user not set (change this msg!)'
   })
-  let token = signToken(req.user._id, req.user.role);
+
+  let token = jwt.sign({
+    _id: req.user._id,
+    role: req.user.role
+  }, config.secret, {
+    expiresInMinutes: config.tokenExpiration
+  });
+
   res.json({ token: token });
 
 };
@@ -80,9 +81,10 @@ function setToken(req, res) {
  * Extract and validate jwt and attach it to the "req.user"
  */
 function verifyToken(req, res, next) {
-  
+
   if (!req.headers.authorization) {
-    let token = (req.body && req.body.access_token) || (req.query && req.query.access_token);
+    let token = (req.body && req.body.access_token)
+          || (req.query && req.query.access_token);
     if (token) req.headers.authorization = 'Bearer ' + token;
   }
 
@@ -96,28 +98,26 @@ function verifyToken(req, res, next) {
 /**
  * Attaches the user object to the request if validated jwt exist
  */
-function verifyUser(req, res, next) {
+function loadUser(req, res, next) {
 
-  // extra ObjectId check
-  // if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
-  //   return res.status(400).send({
-  //     message: 'User is invalid'
-  //   });
-  // }
+  // Verify user "_id" before querying to db
+  if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
+    return res.status(400).send({
+      message: 'User is not valid'
+    });
+  }
 
   User
     .findOne({
       _id: req.user._id
     })
-    .exec(function (err, user) {
+    .exec((err, user) => {
       if (err) return next(err);
-
       if (!user) {
         return res.status(400).send({
             message: 'No account with that username has been found'
           });
       }
-
       req.user = user;
       next();
     });
@@ -125,53 +125,51 @@ function verifyUser(req, res, next) {
 };
 
 
-
-function verifyAdmin() {
-  return verifyUserType('admin');
-};
-
 function verifyUserType(userType) {
-  return function(req, res, next) {
+  return (req, res, next) => {
 
-    if (!req.user.role || req.user.role === userType) {
+    if (!req.user.role || req.user.role !== userType) {
       return res.status(400).send({
           message: 'User is not authorized'
         });
     }
     next();
 
-  }
+  };
 };
 
 
-function verify(userType) {
+function verify(type) {
 
-  if (!userType) {
-    return function(req, res, next) {
+  if (!type) {
+    return (req, res, next) => {
       next(new Error('Auth verification type is not set'));
     };
   }
 
-  if (config.userTypes.indexOf(userType) === -1 && userType !== 'token') {
-    return function(req, res, next) {
-      next(new Error('Auth verification type does is not valid'));
+  if (config.userTypes.indexOf(type) === -1
+      && type !== 'token'
+      && type !== 'user') {
+    return (req, res, next) => {
+      next(new Error('Auth verification type is not valid'));
     };
   }
 
-  if (userType === 'token') {
+  if (type === 'token') {
     return verifyToken;
   }
 
-  if (userType === 'user') {
+  if (type === 'user') {
     return middlewares()
       .use(verifyToken)
-      .use(verifyUser)
+      .use(loadUser)
   }
 
   return middlewares()
     .use(verifyToken)
-    .use(verifyUserType(userType))
-    .use(verifyUser);
+    .use(verifyUserType(type))
+    .use(loadUser)
+    .use(verifyUserType(type));
 
 };
 
@@ -180,57 +178,29 @@ function verify(userType) {
 function signup(req, res) {
   // For security measurement we remove the role from the req.body object
   delete req.body.role;
+  delete req.body.created;
 
   // Init Variables
-  var user = new User(req.body);
-  var message = null;
+  let user = new User(req.body);
+  // let message = null;
 
   // Add missing user fields
   user.provider = 'local';
-  user.displayName = user.firstName + ' ' + user.lastName;
+  user.displayName = user.name.first + ' ' + user.name.last;
 
-  // Then save the user
-  user.save(function (err) {
-    if (err) {
-      return res.status(400).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
+  user
+    .save(err => {
+      if (err) return next(err);
+
       // Remove sensitive data before login
-      user.password = undefined;
-      user.salt = undefined;
+      // user.password = undefined;
+      // user.salt = undefined;
 
-      req.login(user, function (err) {
-        if (err) {
-          res.status(400).send(err);
-        } else {
-          res.json(user);
-        }
-      });
-    }
-  });
+      req.user = user;
+      next();
+    })
+
 };
-
-
-// function signin(req, res, next) {
-//   passport.authenticate('local', function (err, user, info) {
-//     if (err || !user) {
-//       res.status(400).send(info);
-//     } else {
-//       // Remove sensitive data before login
-//       user.password = undefined;
-//       user.salt = undefined;
-//
-//       req.login(user, function (err) {
-//         if (err) {
-//           res.status(400).send(err);
-//         } else {
-//           res.json(user);
-//         }
-//       });
-//     }
-//   })(req, res, next);
-// };
 
 
 /**
@@ -240,13 +210,40 @@ function signin(req, res, next) {
   passport.authenticate('local', (err, user, info) => {
     let error = err || info;
     if (error) return res.status(401).json(error);
-    if (!user) return res.status(404).json({
+    if (!user) return res.status(404).send({
       message: 'Something went wrong, please try again.'
     });
     req.user = user;
     next();
   })(req, res, next)
 };
+
+
+function changePassword(req, res, next) {
+  let userId = req.user._id;
+  let oldPass = String(req.body.oldPassword);
+  let newPass = String(req.body.newPassword);
+
+  User.findById(userId, function (err, user) {
+
+    if(!user.authenticate(oldPass)) {
+      return res.status(403).send({
+        message: 'This password is not correct.'
+      });
+    }
+    user.password = newPass;
+    user.save(function(err) {
+      if (err) return next(err);
+      res.status(200).send({
+        message: 'Password change successful'
+      });
+    });
+  });
+};
+
+
+
+
 
 
 /**

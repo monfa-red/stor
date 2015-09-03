@@ -60,7 +60,10 @@ let UserSchema = new Schema({
 
 	profileImage: String,
 
-	provider: String,
+	provider: {
+    type: String,
+    default: 'local'
+  },
 
 	salt: String,
 

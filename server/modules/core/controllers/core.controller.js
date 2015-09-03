@@ -9,6 +9,8 @@ export default {
 
  notFound,
 
+ badRequest,
+
  serverError
 
 };
@@ -28,18 +30,21 @@ function index(req, res) {
  * Render the server not found responses
  * Performs content-negotiation on the Accept HTTP header
  */
-function notFound(req, res) {
+function notFound(req, res, next) {
 
-  res.status(404)
-    .format({
-      'text/html': () => res.render('404', {
-        title: '404 Page Not Found'
-      }),
-      'application/json': () => res.json({
-        error: 'Path Not Found'
-      }),
-      'default': () => res.send('Page Not Found')
-    })
+  next({
+    status: 404,
+    message: 'Page Not Found'
+  });
+
+};
+
+function badRequest(req, res, next) {
+
+  next({
+    status: 400,
+    message: 'Bad request'
+  });
 
 };
 
