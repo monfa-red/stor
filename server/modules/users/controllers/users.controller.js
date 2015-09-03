@@ -19,9 +19,9 @@ let User = mongoose.model('User');
  */
 export default {
 
-  create,
+  me,
 
-  read,
+  show,
 
   update,
 
@@ -31,28 +31,35 @@ export default {
 
 };
 
+/**
+ * Using Rails-like standard naming convention for endpoints.
+ * GET     /api/xxx              ->  index
+ * POST    /api/xxx              ->  create
+ * GET     /api/xxx/:id          ->  show
+ * PUT     /api/xxx/:id          ->  update
+ * DELETE  /api/xxx/:id          ->  destroy
+ */
+
 
 /**
- * Create and save a user
+ * Show users own profile
  */
-function create(req, res) {
+function me(req, res, next) {
 
-  let user = new User(req.body);
-
-  user
-    .save(err => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
-      res.json(user);
-    })
+  if(!req.user || !req.user.email) {
+    return next(new Error('User is not attached to req object'));
+  }
+  res.json(req.user || null);
 
 };
 
 
-function read(req, res) {
+
+
+
+
+
+function show(req, res) {
 
 };
 
@@ -74,6 +81,8 @@ function all(req, res) {
 
   User
     .find()
+    .limit(16)
+    .select('-salt -password')
     .sort('-created')
     .exec((err, users) => {
       if (err) {

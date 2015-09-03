@@ -1,11 +1,7 @@
 'use strict';
 
-// session = require('express-session'),
-// MongoStore = require('connect-mongo')(session),
 // multer = require('multer'),
 // compress = require('compression'),
-// helmet = require('helmet'),
-// flash = require('connect-flash'),
 
 /**
  * Module dependencies.
@@ -196,6 +192,7 @@ function serverRoutes(app) {
 
 
 /**
+ * TODO: Clean up the mess!
  * Configure error handling
  */
 function errorHandler(app) {
@@ -214,8 +211,10 @@ function errorHandler(app) {
 
     // api error handle
    if (req.originalUrl.startsWith('/api/')) {
+      delete error.status;
+      delete error.title;
       return res.status(err.status || 400)
-        .json({ message: error.message })
+        .json(error)
     }
     // all other errors handler
     res.status(error.status)

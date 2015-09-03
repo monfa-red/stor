@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
-import compose from 'composable-middleware';
+import use from 'composable-middleware';
 import config from '../../../config/config';
 
 
@@ -24,13 +24,13 @@ export default  {
 
   signToken,
 
-  verifyToken,
+  token: verifyToken,
 
-  loadUser,
+  user: use(verifyToken, loadUser),
 
-  verifyUser : compose(verifyToken, loadUser),
+  admin: use(verifyToken, loadUser, hasRole('admin')),
 
-  restrictTo,
+  is: hasRole,
 
   signin,
 
@@ -52,17 +52,13 @@ export default  {
 /**
  * Sign and send a jwt token
  */
-function signToken(req, res) {
+function signToken(req, res, next) {
 
-  if (!req.user) return res.status(401).json({
-    // message: 'Something went wrong, please try again.'
-    message: 'req.user not set (change this msg!)'
-  })
+  if (!req.user) {
+    return next(new Error('User is not attached to req object'));
+  }
 
-  let token = jwt.sign({
-      _id: req.user._id,
-      role: req.user.role
-    }, config.secret, {
+  let token = jwt.sign(req.user.token, config.secret, {
       expiresInMinutes: config.tokenExpiration
     });
   res.json({ token: token });
@@ -104,6 +100,7 @@ function loadUser(req, res, next) {
     .findOne({
       _id: req.user._id
     })
+    .select('-salt -password')
     .exec((err, user) => {
       if (err) return next(err);
       if (!user) {
@@ -121,7 +118,7 @@ function loadUser(req, res, next) {
 /**
  * Restrict to only users who have that role
  */
-function restrictTo(type) {
+function hasRole(type) {
 
   if (!type || type.length === 0 ) {
     return next(new Error('Auth restriction type is not set'));
@@ -142,7 +139,7 @@ function restrictTo(type) {
 
 
 /**
- * Register user with local provider
+ * Create and save a user with local provider
  */
 function signup(req, res) {
 

@@ -26,6 +26,10 @@ let UserSchema = new Schema({
 		default: Date.now
 	},
 
+	updated: {
+    type: Date
+  },
+
 	name: {
 		first: {
 			type: String,
@@ -53,30 +57,31 @@ let UserSchema = new Schema({
 		// match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 
+	profileImage: {
+		type: String
+	},
+
+	provider: {
+		type: String,
+		default: 'local'
+	},
+
 	password: {
 		type: String,
 		required: 'Password is required'
 	},
 
-	profileImage: String,
-
-	provider: {
-    type: String,
-    default: 'local'
-  },
-
-	salt: String,
-
-	resetPasswordToken: String,
-
-	resetPasswordExpires: Date,
+	salt: {
+		type: String
+	},
 
 	profile: {},
-
 	facebook: {},
+	google: {},
 
-	google: {}
-
+	/* For reset password */
+	resetPasswordToken: String,
+	resetPasswordExpires: Date
 
 });
 
@@ -85,23 +90,23 @@ let UserSchema = new Schema({
  */
 // Public profile information
 // UserSchema
-// 	.virtual('profile')
-// 		.get(() => {
-// 				return {
-// 					'name': this.name,
-// 					'role': this.role
-// 				};
-// 			});
+// 	.virtual('displayName')
+// 	.get(function() {
+// 		return {
+// 			'name': this.name,
+// 			'role': this.role
+// 		};
+// 	});
 
-// Non-sensitive info we'll be putting in the token
+// Non-sensitive data to sign a token with
 UserSchema
   .virtual('token')
-	  .get(() => {
-	    return {
-	      '_id': this._id,
-	      'role': this.role
-	    };
-	  });
+  .get(function() {
+    return {
+      '_id': this._id,
+      'role': this.role
+    };
+  });
 
 
 /**
@@ -109,22 +114,12 @@ UserSchema
  */
 UserSchema.methods = {
 
-	isAdmin,
-
 	authenticate,
 
 	makeSalt,
 
 	encryptPassword,
 
-};
-
-
-/**
- * IsAdmin - check if the user is an administrator
- */
-function isAdmin() {
-	return this.role !== 'admin';
 };
 
 /**
@@ -178,6 +173,6 @@ UserSchema.pre('save', function(next) {
 
 
 /**
- * Compiling UserSchema into User model
+ * Passing UserSchema to User model
  */
 mongoose.model('User', UserSchema);

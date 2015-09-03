@@ -26,7 +26,7 @@ function authRouter(app) {
 
 
   app.route('/api/auth/test')
-    .post(auth.verifyUser, auth.restrictTo('admin'),  (req, res, next) => {
+    .post(auth.admin,  (req, res, next) => {
       res.send(req.user)
     })
   //
