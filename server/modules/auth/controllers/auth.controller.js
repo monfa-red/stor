@@ -141,6 +141,16 @@ function verifyUserType(userType) {
 
 function verify(type) {
 
+  // if (!type ||
+  //   type.length === 0 ||
+  //   (Array.isArray(type) && type.indexOf('token') >= 0 && type.length === 1)) {
+  //     return verifyToken;
+  //   };
+  //
+  //
+  //
+
+
   if (!type) {
     return (req, res, next) => {
       next(new Error('Auth verification type is not set'));
