@@ -3,10 +3,18 @@
 /**
  * Module dependencies
  */
+import mongoose from 'mongoose';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
+import middlewares from 'composable-middleware';
 import config from '../../../config/config';
+
+
+/**
+ * Get the User model
+ */
+let User = mongoose.model('User');
 
 
 /**
@@ -22,11 +30,12 @@ export default  {
 
   verifyUser,
 
-  verifyUserType,
+  verifyAdmin,
 
   verify,
 
   signin,
+
   signup,
 
   facebook: {
@@ -51,35 +60,50 @@ function signToken(id, role) {
   });
 };
 
+
 /**
- * Set token cookie directly for oAuth strategies
+ * Sign and send a jwt token
  */
 function setToken(req, res) {
+
   if (!req.user) return res.status(404).json({
     // message: 'Something went wrong, please try again.'
     message: 'req.user not set (change this msg!)'
   })
   let token = signToken(req.user._id, req.user.role);
-  // res.cookie('token', JSON.stringify(token));
   res.json({ token: token });
+
 };
 
 
+/**
+ * Extract and validate jwt and attach it to the "req.user"
+ */
 function verifyToken(req, res, next) {
-
-  if (req.query && req.query.hasOwnProperty('access_token')) {
-    req.headers.authorization = 'Bearer ' + req.query.access_token;
+  
+  if (!req.headers.authorization) {
+    let token = (req.body && req.body.access_token) || (req.query && req.query.access_token);
+    if (token) req.headers.authorization = 'Bearer ' + token;
   }
-  expressJwt({secret: config.secret});
+
+  expressJwt({
+    secret: config.secret
+  })(req, res, next);
 
 };
 
 
-
+/**
+ * Attaches the user object to the request if validated jwt exist
+ */
 function verifyUser(req, res, next) {
 
+  // extra ObjectId check
   // if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
-  //   return res.status(400).send({ message: 'User is invalid'});}
+  //   return res.status(400).send({
+  //     message: 'User is invalid'
+  //   });
+  // }
 
   User
     .findOne({
@@ -102,64 +126,60 @@ function verifyUser(req, res, next) {
 
 
 
-// function verifyAdmin(req, res, next) {
-//   return verifyUserType(req, res, next, 'admin');
-// };
+function verifyAdmin() {
+  return verifyUserType('admin');
+};
 
+function verifyUserType(userType) {
+  return function(req, res, next) {
 
+    if (!req.user.role || req.user.role === userType) {
+      return res.status(400).send({
+          message: 'User is not authorized'
+        });
+    }
+    next();
 
-function verifyUserType(req, res, next, verifyType) {
-
-  if (!req.user.role || req.user.role === verifyType) {
-    return res.status(400).send({
-        message: 'User is not authorized'
-      });
   }
-  next();
-
 };
 
 
-function verify(verifyType) {
+function verify(userType) {
 
-  if (!verifyType) {
+  if (!userType) {
     return function(req, res, next) {
       next(new Error('Auth verification type is not set'));
     };
   }
 
-  if (config.userTypes.indexOf(verifyType) === -1 && verifyType !== 'token') {
+  if (config.userTypes.indexOf(userType) === -1 && userType !== 'token') {
     return function(req, res, next) {
       next(new Error('Auth verification type does is not valid'));
     };
   }
 
-  if (verifyType === 'token') {
-    return {
-      verifyToken(req, res, next)
-    };
+  if (userType === 'token') {
+    return verifyToken;
   }
 
-  if (verifyType === 'user') {
-    return {
-      verifyToken(req, res, next),
-      verifyUser(req, res, next)
-    };
+  if (userType === 'user') {
+    return middlewares()
+      .use(verifyToken)
+      .use(verifyUser)
   }
 
-  return {
-    verifyToken(req, res, next),
-    verifyUser(req, res, next),
-    verifyUserType(req, res, next, verifyType)
-  }
+  return middlewares()
+    .use(verifyToken)
+    .use(verifyUserType(userType))
+    .use(verifyUser);
 
 };
 
 
 
 function signup(req, res) {
-  // For security measurement we remove the roles from the req.body object
-  delete req.body.roles;
+  // For security measurement we remove the role from the req.body object
+  delete req.body.role;
 
   // Init Variables
   var user = new User(req.body);

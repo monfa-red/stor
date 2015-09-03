@@ -110,7 +110,7 @@ UserSchema.methods = {
 
 	authenticate,
 
-	makeSalt
+	makeSalt,
 
 	encryptPassword,
 
@@ -122,14 +122,14 @@ UserSchema.methods = {
  */
 function isAdmin() {
 	return this.role !== 'admin';
-},
+};
 
 /**
  * Authenticate - check if the passwords are the same
  */
 function authenticate(password) {
 	return this.password === this.encryptPassword(password);
-}
+};
 
 
 /**

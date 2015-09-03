@@ -43,7 +43,7 @@ export default {
 
   templateEngine: 'swig',
 
-  userTypes = ['admin', 'author', 'user'],
+  userTypes : ['admin', 'author', 'user'],
 
   // Session details
   // session expiration is set by default to 24 hours

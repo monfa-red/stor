@@ -19,11 +19,17 @@ function authRouter(app) {
 
   // Local authentication
   app.route('/api/auth/signin')
-    .post(auth.local, auth.setToken)
+    .post(auth.signin, auth.setToken)
 
   app.route('/api/auth/signup')
-    .post(users.create, auth.setToken)
-  // 
+    .post(auth.signup, auth.setToken)
+
+
+  app.route('/api/auth/test')
+    .post(auth.verifyToken, function(req, res, next) {
+      res.send(req.user)
+    })
+  //
   // app.route('/api/auth/forgot')
   //   .post(auth.forgot);
   //
