@@ -8,7 +8,7 @@ import faker from 'faker';
 
 
 /**
- * Export product Routes (to: express.js)
+ * Export product Routes
  */
 export default productsRouter;
 
@@ -18,18 +18,18 @@ export default productsRouter;
  */
 function productsRouter(app) {
 
-  //REMOVE THIS
+  //TODO: REMOVE THIS
   fakeUserInitialTests(app);
 
   // Routes
   app
     .route('/api/products')
-      .get(products.all)
+      .get(products.index)
       .post(products.create);
 
   app
     .route('/api/products/:productId')
-      .get(products.read)
+      .get(products.show)
       .put(products.update)
       .delete(products.destroy)
 

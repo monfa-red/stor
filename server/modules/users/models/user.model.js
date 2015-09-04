@@ -15,7 +15,6 @@ let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId;
 
 
-
 /**
  * User Schema
  */

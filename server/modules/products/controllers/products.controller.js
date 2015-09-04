@@ -20,16 +20,53 @@ export default {
 
   create,
 
-  read,
+  show,
 
   update,
 
   destroy,
 
-  all
+  index
 
 };
 
+/**
+ * Using Rails-like standard naming convention for endpoints.
+ * GET     /api/xxx              ->  index
+ * POST    /api/xxx              ->  create
+ * GET     /api/xxx/:id          ->  show
+ * PUT     /api/xxx/:id          ->  update
+ * DELETE  /api/xxx/:id          ->  destroy
+ */
+
+
+ /**
+  * Get a paginated list of products
+  */
+ function index(req, res) {
+
+   let limit = Math.abs(req.query.limit) || 16;
+   let page = (Math.abs(req.query.page) || 1) - 1;
+
+   Product
+     .find()
+     .exists('active')
+     .limit(limit)
+     .skip(limit * page)
+     .select('-__v -categories -details -author')
+     .sort('-created')
+     .populate('category.main', 'name')
+     .exec((err, products) => {
+       if (err) {
+         return res.status(400).send({
+             message: errors.getMessage(err)
+           });
+       }
+       res.json(products);
+     });
+
+ };
+ 
 
 /**
  * Create and save a product
@@ -40,11 +77,7 @@ function create(req, res) {
 
   product
     .save(err => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
+      if (err) return next(err);
       res.json(product);
     })
 
@@ -54,17 +87,23 @@ function create(req, res) {
 /**
  * Find a product by "nameId"
  */
-function read(req, res) {
+function show(req, res, next) {
+
+  let id = req.params.productId;
 
   Product
-    .findOne({ 'nameId': req.params.productId })
-     // TODO: only return necessary data
-    .populate('author')
+    .findOne({ 'nameId': id })
+    .exists('active')
+    .select('-__v')
+    .sort('-created')
+    .populate('author', 'name profileImage')
+    .populate('category', '-_id')
     .exec((err, product) => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
+      if (err) return next(err);
+      if (!product) {
+        return res.status(404).send({
+          message: `Product ${id} does not exists`
+        });
       }
       res.json(product);
     });
@@ -77,17 +116,18 @@ function read(req, res) {
  */
 function update(req, res) {
 
-  let product = req.product;
+  let product = req.body;
   product.title = req.body.title;
   product.content = req.body.content;
 
   product
-    .save(err => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
+    .save()
+    .exec((err, product) => {
+        if (err) {
+          return res.status(400).send({
+              message: errors.getMessage(err)
+            });
+        }
       res.json(product);
     });
 
@@ -100,7 +140,8 @@ function update(req, res) {
 function destroy(req, res) {
 
   Product
-    .remove({ _id: req.params.productId }, (err, result) => {
+    .removeById(req.params.productId)
+    .exec((err, result) => {
       if (err) {
         return res.status(400).send({
             message: errors.getMessage(err)
@@ -113,37 +154,13 @@ function destroy(req, res) {
 
 
 /**
- * Get a list of products
- */
-function all(req, res) {
-
-  Product
-    .find()
-    .select('-__v -categories')
-    .sort('-created')
-    .populate('author', 'firstName lastName email')
-    // .populate('categories', 'name nameId')
-    .populate('category', 'name nameId')
-    .exec((err, products) => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
-      res.json(products);
-    });
-
-};
-
-
-/**
  * Product middleware
  */
 function productByID(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-        message: 'Product is invalid'
+        message: 'Invalid product identifier'
       });
   }
 

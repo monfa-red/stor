@@ -8,7 +8,7 @@ import auth from '../../auth/controllers/auth.controller';
 
 
 /**
- * Export users Routes (to: express.js)
+ * Export users Routes
  */
 export default usersRouter;
 

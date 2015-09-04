@@ -34,6 +34,10 @@ let categorySchema = new Schema({
     required: 'Category name can not be blank'
   },
 
+  parent: {
+    type: String,
+  },
+
   author: {
     type: ObjectId,
     required: 'Category author is required',

@@ -24,6 +24,10 @@ let productSchema = new Schema({
     default: Date.now
   },
 
+	updated: {
+    type: Date
+  },
+
   nameId: {
     type: String
   },
@@ -96,18 +100,18 @@ let productSchema = new Schema({
     ref: 'User'
   },
 
-  // Default category for SEO
   category: {
-    type: ObjectId,
-    required: 'Main category should be selected',
-    ref: 'Category'
-  },
-
-  categories: [{
-    type: ObjectId,
-    required: 'At least one category is required',
-    ref: 'Category'
-  }]
+    main: {
+      type: ObjectId,
+      required: 'Main category should be selected',
+      ref: 'Category'
+    },
+    all: [{
+      type: ObjectId,
+      required: 'At least one category is required',
+      ref: 'Category'
+    }]
+  }
 
 });
 
