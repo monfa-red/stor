@@ -53,20 +53,16 @@ export default {
      .exists('active')
      .limit(limit)
      .skip(limit * page)
-     .select('-__v -categories -details -author')
+     .select('-__v -categories -details -author -category.all')
      .sort('-created')
-     .populate('category.main', 'name')
+     .populate('category.main', 'name nameId')
      .exec((err, products) => {
-       if (err) {
-         return res.status(400).send({
-             message: errors.getMessage(err)
-           });
-       }
+       if (err) return next(err);
        res.json(products);
      });
 
  };
- 
+
 
 /**
  * Create and save a product
