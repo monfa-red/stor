@@ -61,13 +61,13 @@ export default {
   //TODO: structure will change, it's just for test
   files: {
     server: {
-      views: 'server/modules/*/views/',
+      views: 'server/api/*/views/',
       routes: [
-        'server/modules/!(core)/routes/**/*.js',
-        'server/modules/core/routes/**/*.js'
+        'server/api/!(core)/routes/**/*.js',
+        'server/api/core/routes/**/*.js'
       ],
-      models: 'server/modules/*/models/**/*.js',
-      strategies: 'server/modules/auth/strategies/**/*.js'
+      models: 'server/api/*/models/**/*.js',
+      strategies: 'server/api/auth/strategies/**/*.js'
     },
     client: {
       static: 'public',
