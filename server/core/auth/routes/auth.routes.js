@@ -3,8 +3,8 @@
 /**
  * Moudle dependencies
  */
-import authorize from '../controllers/auth.controller';
 import auth from '../services/auth.services';
+import authController from '../controllers/auth.controller';
 
 
 
@@ -21,10 +21,10 @@ function authRouter(app) {
 
   // Local authentication
   app.route('/api/auth/signin')
-    .post(authorize.signin, auth.signToken)
+    .post(authController.signin, auth.signToken)
 
   app.route('/api/auth/signup')
-    .post(authorize.signup, auth.signToken)
+    .post(authController.signup, auth.signToken)
 
 
   app.route('/api/auth/test')
@@ -44,16 +44,16 @@ function authRouter(app) {
 
   // Facebook authentication
   app.route('/api/auth/facebook')
-    .get(authorize.facebook.oAuth);
+    .get(authController.facebook.oAuth);
 
   app.route('/api/auth/facebook/callback')
-    .get(authorize.facebook.oAuthCallback, auth.signToken);
+    .get(authController.facebook.oAuthCallback, auth.signToken);
 
   // Google authentication
   app.route('/api/auth/google')
-    .get(authorize.google.oAuth);
+    .get(authController.google.oAuth);
 
   app.route('/api/auth/google/callback')
-    .get(authorize.google.oAuthCallback, auth.signToken);
+    .get(authController.google.oAuthCallback, auth.signToken);
 
 };
