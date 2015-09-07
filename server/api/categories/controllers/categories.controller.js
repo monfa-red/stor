@@ -4,7 +4,6 @@
  * Module dependencies
  */
 import mongoose from 'mongoose';
-import errors from '../../core/controllers/errors.controller';
 
 
 /**
@@ -18,15 +17,15 @@ let Category = mongoose.model('Category');
  */
 export default {
 
+  index,
+
   create,
 
   read,
 
   update,
 
-  destroy,
-
-  all
+  destroy
 
 };
 
@@ -34,18 +33,14 @@ export default {
 /**
  * Create and save a category
  */
-function create(req, res) {
+function create(req, res, next) {
 
   let category = new Category(req.body);
 
 
   category
     .save(err => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
+      if (err) return next(err);
       res.json(category);
     })
 
@@ -55,17 +50,13 @@ function create(req, res) {
 /**
  * Find a category by "nameId"
  */
-function read(req, res) {
+function read(req, res, next) {
 
   Category
     .findOne({ 'nameId': req.params.categoryId })
      // TODO: only return necessary data
     .exec((err, category) => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
+      if (err) return next(err);
       res.json(category);
     });
 
@@ -75,7 +66,7 @@ function read(req, res) {
 /**
  * Update a category
  */
-function update(req, res) {
+function update(req, res, next) {
 
   let category = req.category;
   category.title = req.body.title;
@@ -83,11 +74,7 @@ function update(req, res) {
 
   category
     .save(err => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
+      if (err) return next(err);
       res.json(category);
     });
 
@@ -97,15 +84,11 @@ function update(req, res) {
 /**
  * Delete an category
  */
-function destroy(req, res) {
+function destroy(req, res, next) {
 
   Category
     .remove({ _id: req.params.categoryId }, (err, result) => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
+      if (err) return next(err);
       res.json(result);
     });
 
@@ -115,7 +98,7 @@ function destroy(req, res) {
 /**
  * Get a list of categorys
  */
-function all(req, res) {
+function index(req, res, next) {
 
   Category
     .find()
@@ -123,11 +106,7 @@ function all(req, res) {
     .sort('-created')
     .populate('author', 'firstName lastName email')
     .exec((err, categorys) => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
+      if (err) return next(err);
       res.json(categorys);
     });
 

@@ -4,7 +4,7 @@
  * Moudle dependencies
  */
 // import orders from '../controllers/orders.controller';
-import auth from '../../auth/controllers/auth.controller';
+import auth from '../../../core/auth/services/auth.services';
 
 
 /**

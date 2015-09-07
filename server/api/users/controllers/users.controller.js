@@ -4,7 +4,6 @@
  * Module dependencies
  */
 import mongoose from 'mongoose';
-import errors from '../../core/controllers/errors.controller';
 
 
 /**
@@ -82,36 +81,8 @@ function index(req, res) {
     .select('-salt -password')
     .sort('-created')
     .exec((err, users) => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
+      if (err) return next(err);
       res.json(users);
     });
 
-};
-
-
-/**
- * Add an address to the user
- */
-function addAddress(req, res, next) {
-
-  let address = new Address;
-  User
-    .findById(req.body.id)
-    .exec((err, user) => {
-      if (err) return next(err);
-      console.log(user);
-      // user.addresses.create(req.body)
-      // user.addresses = [{city:"ghom"}];
-      user
-        .save(err => {
-          console.log('hereee');
-          if (err) return next(err);
-          return res.json(product);
-        });
-    });
-  // let addresses = new Address(req.body)
 };

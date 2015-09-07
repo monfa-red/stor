@@ -19,7 +19,7 @@ function categoriesRouter(app) {
 
   app
     .route('/api/categories')
-      .get(categories.all)
+      .get(categories.index)
       .post(categories.create);
 
   // app
