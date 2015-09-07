@@ -5,7 +5,6 @@
  */
 import mongoose from 'mongoose';
 import crypto from 'crypto';
-// import _ from 'lodash';
 
 
 /**
@@ -32,8 +31,7 @@ let UserSchema = new Schema({
 	name: {
 		first: {
 			type: String,
-			trim: true,
-			default: ''
+			trim: true
 		},
 		last: {
 			type: String,
@@ -74,11 +72,23 @@ let UserSchema = new Schema({
 		type: String
 	},
 
+	// User Address book
+	addresses: {
+		type: ObjectId,
+		ref: 'Address'
+	},
+
+	// Payment methods sub-doc
+	payments: {
+		type: ObjectId,
+		ref: 'Payment'
+	},
+
 	profile: {},
 	facebook: {},
 	google: {},
 
-	/* For reset password */
+	// For reset password
 	resetPasswordToken: String,
 	resetPasswordExpires: Date
 
@@ -151,27 +161,28 @@ function encryptPassword(password) {
   let salt = new Buffer(this.salt, 'base64');
 
   return crypto
-					.pbkdf2Sync(password, salt, iterations, keyLength)
-          	.toString('base64');
+		.pbkdf2Sync(password, salt, iterations, keyLength)
+    	.toString('base64');
 };
 
 
 
 
 /**
- * Pre-save hook
+ * Make salt and encrypt password if it's moddifed
  */
 UserSchema.pre('save', function(next) {
 	if (this.password && this.isModified('password') && this.password.length >= 6) {
 		this.salt = makeSalt();
 		this.password = this.encryptPassword(this.password);
-		next();
+		// next();
 	}
-	next(new Error('Invalid Password'));
+	next();
+	// next(new Error('Invalid Password'));
 });
 
 
 /**
- * Passing UserSchema to User model
+ * Setting UserSchema to User model
  */
 mongoose.model('User', UserSchema);

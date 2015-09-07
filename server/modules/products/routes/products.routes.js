@@ -28,7 +28,7 @@ function productsRouter(app) {
       .post(products.create);
 
   app
-    .route('/api/products/:productId')
+    .route('/api/products/:id')
       .get(products.show)
       .put(products.update)
       .delete(products.destroy)

@@ -43,31 +43,31 @@ export default {
  /**
   * Get a paginated list of products
   */
- function index(req, res) {
+function index(req, res, next) {
 
-   let limit = Math.abs(req.query.limit) || 16;
-   let page = (Math.abs(req.query.page) || 1) - 1;
+  let limit = Math.abs(req.query.limit) || 16;
+  let page = (Math.abs(req.query.page) || 1) - 1;
 
-   Product
-     .find()
-     .exists('active')
-     .limit(limit)
-     .skip(limit * page)
-     .select('-__v -categories -details -author -category.all')
-     .sort('-created')
-     .populate('category.main', 'name nameId')
-     .exec((err, products) => {
-       if (err) return next(err);
-       res.json(products);
-     });
+  Product
+    .find()
+    .exists('active')
+    .limit(limit)
+    .skip(limit * page)
+    .select('-__v -categories -details -author -category.all')
+    .sort('-created')
+    .populate('category.main', 'name nameId')
+    .exec((err, products) => {
+      if (err) return next(err);
+      res.json(products);
+    });
 
- };
+};
 
 
 /**
  * Create and save a product
  */
-function create(req, res) {
+function create(req, res, next) {
 
   let product = new Product(req.body);
 
@@ -85,7 +85,7 @@ function create(req, res) {
  */
 function show(req, res, next) {
 
-  let id = req.params.productId;
+  let id = req.params.id;
 
   Product
     .findOne({ 'nameId': id })
@@ -110,7 +110,7 @@ function show(req, res, next) {
 /**
  * Update a product
  */
-function update(req, res) {
+function update(req, res, next) {
 
   let product = req.body;
   product.title = req.body.title;
@@ -119,11 +119,7 @@ function update(req, res) {
   product
     .save()
     .exec((err, product) => {
-        if (err) {
-          return res.status(400).send({
-              message: errors.getMessage(err)
-            });
-        }
+      if (err) return next(err);
       res.json(product);
     });
 
@@ -131,18 +127,14 @@ function update(req, res) {
 
 
 /**
- * Delete an product
+ * Delete a product
  */
-function destroy(req, res) {
+function destroy(req, res, next) {
 
   Product
-    .removeById(req.params.productId)
+    .removeById(req.params.id)
     .exec((err, result) => {
-      if (err) {
-        return res.status(400).send({
-            message: errors.getMessage(err)
-          });
-      }
+      if (err) return next(err);
       res.json(result);
     });
 
@@ -162,15 +154,14 @@ function productByID(req, res, next, id) {
 
   Product
     .findById(id)
-    .populate('user', 'displayName')
+    .populate('author', 'name profileImage')
     .exec((err, product) => {
-        if (err) {
-          return next(err);
-        } else if (!product) {
-          return res.status(404).send({
-              message: 'No product with that identifier has been found'
-            });
-        }
+      if (err) return next(err);
+      if (!product) {
+        return res.status(404).send({
+          message: `Product ${id} does not exists`
+        });
+      }
       req.product = product;
       next();
     });

@@ -105,7 +105,7 @@ function loadUser(req, res, next) {
       if (err) return next(err);
       if (!user) {
         return res.status(400).send({
-            message: 'No account with that username has been found'
+            message: 'No account with that id has been found'
           });
       }
       req.user = user;
@@ -141,7 +141,7 @@ function hasRole(type) {
 /**
  * Create and save a user with local provider
  */
-function signup(req, res) {
+function signup(req, res, next) {
 
   // For , we remove the role from the req.body
   delete req.body.role;

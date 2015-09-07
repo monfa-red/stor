@@ -13,11 +13,12 @@ import errors from '../../core/controllers/errors.controller';
 let User = mongoose.model('User');
 
 
-
 /**
- * Export methods list
+ * Export user controllers
  */
 export default {
+
+  index,
 
   me,
 
@@ -25,9 +26,7 @@ export default {
 
   update,
 
-  destroy,
-
-  all
+  destroy
 
 };
 
@@ -57,8 +56,6 @@ function me(req, res, next) {
 
 
 
-
-
 function show(req, res) {
 
 };
@@ -77,7 +74,7 @@ function destroy(req, res) {
 /**
  * Get a list of users
  */
-function all(req, res) {
+function index(req, res) {
 
   User
     .find()
@@ -93,4 +90,28 @@ function all(req, res) {
       res.json(users);
     });
 
+};
+
+
+/**
+ * Add an address to the user
+ */
+function addAddress(req, res, next) {
+
+  let address = new Address;
+  User
+    .findById(req.body.id)
+    .exec((err, user) => {
+      if (err) return next(err);
+      console.log(user);
+      // user.addresses.create(req.body)
+      // user.addresses = [{city:"ghom"}];
+      user
+        .save(err => {
+          console.log('hereee');
+          if (err) return next(err);
+          return res.json(product);
+        });
+    });
+  // let addresses = new Address(req.body)
 };

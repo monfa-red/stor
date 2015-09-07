@@ -20,7 +20,9 @@ function usersRouter(app) {
 
   app
     .route('/api/users')
-      .get(auth.admin, users.all)
+      .get(users.index)
+      // .get(auth.admin, users.all)
+
 
   app
     .route('/api/users/me')
