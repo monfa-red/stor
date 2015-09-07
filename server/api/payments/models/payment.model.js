@@ -29,19 +29,19 @@ let PaymentSchema = new Schema({
 
 	type: {
     type: String,
-    required: 'Full name is required',
+    required: 'Please select a payment type',
     trim: true,
   },
 
 	CardNumber: {
     type: String,
-    required: 'Full name is required',
+    required: 'Card number is required',
     trim: true,
   },
 
 	holderName: {
     type: String,
-    required: 'Card holder full name is required',
+    required: 'Card holder name is required',
     trim: true,
   },
 
