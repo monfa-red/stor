@@ -3,7 +3,7 @@
 /**
  * Module dependencies
  */
-import index from '../controllers/system.controller';
+import system from '../controllers/system.controller';
 
 
 /**

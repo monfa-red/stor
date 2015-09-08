@@ -66,7 +66,7 @@ export default {
         // 'server/api/!(core)/routes/**/*.js',
         'server/api/*/routes/**/*.js',
         'server/core/auth/routes/**/*.js',
-        'server/core/index/routes/**/*.js'
+        'server/core/system/routes/**/*.js'
       ],
       models: 'server/api/*/models/**/*.js',
       strategies: 'server/core/auth/strategies/**/*.js'
