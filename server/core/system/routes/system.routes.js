@@ -3,38 +3,38 @@
 /**
  * Module dependencies
  */
-import index from '../controllers/index.controller';
+import index from '../controllers/system.controller';
 
 
 /**
- * Export index router
+ * Export system router
  */
-export default indexRoutes;
+export default systemRoutes;
 
 
 /**
  * Main server routes
  */
-function indexRoutes(app) {
+function systemRoutes(app) {
 
   // default server error page
   app
     .route('/error')
-      .get(index.serverError);
+      .get(system.serverError);
 
   // Handle api and all static routs errors
   app
     .route('/:url(api|lib|assets|app)/*')
-      .get(index.notFound)
-      .all(index.badRequest);
+      .get(system.notFound)
+      .all(system.badRequest);
 
   // Application route
   app
     .route('/*')
-      .get(index.index);
+      .get(system.index);
 
   // Forward all other requests to error handler
   app
-    .use(index.serverError);
+    .use(system.serverError);
 
 };

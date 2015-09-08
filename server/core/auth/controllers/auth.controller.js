@@ -5,7 +5,9 @@
  */
 import mongoose from 'mongoose';
 import passport from 'passport';
+import _ from 'lodash';
 import config from '../../../config/config';
+import auth from '../services/auth.service';
 
 
 /**
@@ -17,7 +19,7 @@ let User = mongoose.model('User');
 /**
  * Export authentication controllers
  */
-export default  {
+export default  _.extend(auth, {
 
   signin,
 
@@ -33,7 +35,7 @@ export default  {
     oAuthCallback: googleCallback
   }
 
-};
+});
 
 
 /**
