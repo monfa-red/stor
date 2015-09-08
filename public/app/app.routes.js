@@ -20,33 +20,23 @@
       .config([
         {
           path: '/',
-          component: 'home',
-          as: 'home'
+          component: 'home'
         },
         {
           path: '/ass',
-          component: 'ass',
-          as: 'ass'
+          component: 'ass'
         },
         {
           path: '/admin',
-          component: 'admin',
-          as: 'admin'
+          component: 'admin'
         },
         {
           path: '/products',
-          component: 'productList',
-          as: 'productList'
+          component: 'productList'
         },
         {
-          path: '/products/:categoryId',
-          component: 'productList',
-          as: 'productCategory'
-        },
-        {
-          path: '/products/:categoryId/:productId',
-          component: 'productDetail',
-          as: 'productDetail'
+          path: '/products/:productId',
+          component: 'productDetail'
         },
         {
           path: '/:otherwise',

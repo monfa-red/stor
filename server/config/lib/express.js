@@ -121,8 +121,8 @@ function helmetHeaders(app) {
   // app.use(helmet());
   app
     .use(helmet.contentSecurityPolicy({
-      defaultSrc: ["'self'", 'google.com'],
-      // scriptSrc: ['scripts.com'],
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", '*.google.com'],
       // styleSrc: ['style.com'],
       // imgSrc: ['img.com'],
       // connectSrc: ['connect.com'],
@@ -133,9 +133,7 @@ function helmetHeaders(app) {
       // sandbox: ['allow-forms', 'allow-scripts'],
       // reportUri: '/report-violation',
       reportOnly: false, // set to true if you only want to report errors
-      setAllHeaders: false, // set to true if you want to set all headers
-      disableAndroid: false, // set to true if you want to disable Android (browsers can vary and be buggy)
-      safari5: false // set to true if you want to force buggy CSP in Safari 5
+      setAllHeaders: false // set to true if you want to set all headers
     }))
     .use(helmet.xframe())
     // .use(helmet.xssFilter())
