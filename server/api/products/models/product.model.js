@@ -4,7 +4,7 @@
  * Module dependencies
  */
 import mongoose from 'mongoose';
-import _ from 'lodash';
+import { kebabCase } from 'lodash';
 
 
 /**
@@ -122,7 +122,7 @@ let productSchema = new Schema({
  */
 productSchema.pre('save', function (next) {
 
-  this.nameId = _.kebabCase(this.name);
+  this.nameId = kebabCase(this.name);
   next();
 
 });
