@@ -29,7 +29,7 @@ function paths(patterns, boolean) {
 
   if (boolean) {
     return glob.sync(patterns)
-      .map(file => file.replace(config.files.client.static, ''));
+      .map(file => file.replace(config.files.client.dist.all, ''));
   }
 
   return glob.sync(path.resolve(patterns));

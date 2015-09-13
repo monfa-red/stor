@@ -120,21 +120,21 @@ function helmetHeaders(app) {
   const SIX_MONTHS = 15778476000;
   // app.use(helmet());
   app
-    .use(helmet.contentSecurityPolicy({
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", '*.google.com'],
-      // styleSrc: ['style.com'],
-      // imgSrc: ['img.com'],
-      // connectSrc: ['connect.com'],
-      // fontSrc: ['font.com'],
-      // objectSrc: ['object.com'],
-      // mediaSrc: ['media.com'],
-      // frameSrc: ['frame.com'],
-      // sandbox: ['allow-forms', 'allow-scripts'],
-      // reportUri: '/report-violation',
-      reportOnly: false, // set to true if you only want to report errors
-      setAllHeaders: false // set to true if you want to set all headers
-    }))
+    // .use(helmet.contentSecurityPolicy({
+    //   defaultSrc: ["'self'"],
+    //   scriptSrc: ["'self'", '*.google.com'],
+    //   // styleSrc: ['style.com'],
+    //   // imgSrc: ['img.com'],
+    //   // connectSrc: ['connect.com'],
+    //   // fontSrc: ['font.com'],
+    //   // objectSrc: ['object.com'],
+    //   // mediaSrc: ['media.com'],
+    //   // frameSrc: ['frame.com'],
+    //   // sandbox: ['allow-forms', 'allow-scripts'],
+    //   // reportUri: '/report-violation',
+    //   reportOnly: false, // set to true if you only want to report errors
+    //   setAllHeaders: false // set to true if you want to set all headers
+    // }))
     .use(helmet.xframe())
     // .use(helmet.xssFilter())
     .use(helmet.xssFilter({
@@ -158,7 +158,7 @@ function helmetHeaders(app) {
 function clientRoutes(app) {
 
   // loop and define static directories
-  paths(config.files.client.static)
+  paths(config.files.client.dist.all)
     .forEach(dir => app.use(express.static(dir)))
 
 };

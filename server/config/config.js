@@ -61,6 +61,8 @@ export default {
   //TODO: structure will change, it's just for test
   files: {
     server: {
+      init: './index',
+      all: 'server',
       views: 'server/core/*/views/',
       routes: [
         // 'server/api/!(core)/routes/**/*.js',
@@ -73,23 +75,32 @@ export default {
       // strategies: 'server/api/auth/strategies/**/*.js'
     },
     client: {
-      static: 'public',
+      src: {
+        all: 'client',
+        app: 'client/app',
+        assets: 'client/assets'
+      },
+      dist: {
+        all: 'dist',
+        app: 'dist/app',
+        assets: 'dist/assets'
+      },
       lib: {
         js: [
-          'public/lib/angular/angular.min.js',
-          'public/lib/angular-resource/angular-resource.js',
-          'public/lib/angular-new-router/dist/router.es5.js',
-          'public/app/*module.js',
-          'public/app/*.js',
-          'public/app/shared/**/*.js',
-          'public/app/**/*module.js',
-          'public/app/**/*service.js',
-          'public/app/**/*.js',
+          'dist/lib/angular/angular.min.js',
+          'dist/lib/angular-resource/angular-resource.js',
+          'dist/lib/angular-new-router/dist/router.es5.js',
+          'dist/app/*module.js',
+          'dist/app/*.js',
+          'dist/app/shared/**/*.js',
+          'dist/app/**/*module.js',
+          'dist/app/**/*service.js',
+          'dist/app/**/*.js',
         ],
-        sass: 'public/assets/src/**/*.scss',
+        // sass: 'dist/assets/**/*.scss',
         css: [
-          'public/lib/material-design-lite/material.css',
-          'public/assets/dist/*/**/*.css'
+          'dist/lib/material-design-lite/material.css',
+          'dist/assets/styles/**/*.css'
         ]
       }
     }

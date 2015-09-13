@@ -1,9 +1,7 @@
 # Project files
 # ======================
 access.log
-public/lib/
-public/libs/
-public/assets/dist/
+dist/
 
 # Mac
 # ===========
@@ -17,7 +15,6 @@ Thumbs.db
 .nodemonignore
 npm-debug.log
 node_modules/
-app/tests/coverage/
 .bower-*/
 .idea/
 
