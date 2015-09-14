@@ -81,7 +81,7 @@ gulp.task('typescript', () => {
 
   return result.js
     .pipe($.sourcemaps.write())
-    .pipe($.changed(PATH.client.dist.app))
+    // .pipe($.changed(PATH.client.dist.app, {extension: '.js'}))
     .pipe(gulp.dest(PATH.client.dist.app));
 });
 
@@ -147,20 +147,16 @@ gulp.task('fonts', () => {
  * Compile and automatically prefix stylesheets
  */
 gulp.task('styles', () => {
-
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-    `${PATH.client.src.assets}/**/*.scss`,
-  ])
-    .pipe($.sass({
-      precision: 10
-    }).on('error', $.sass.logError))
+      `${PATH.client.src.assets}/**/*.scss`,
+    ])
+    .pipe($.sass({precision: 10}).on('error', $.sass.logError))
     .pipe($.autoprefixer(DEFAULTS.autoprefixerBrowsers))
     .pipe(gulp.dest(PATH.client.dist.assets))
     .pipe($.size({title: 'styles'}));
 
     // TODO: add production styles.serve and put in a different task
-    // .pipe($.changed('.tmp/styles', {extension: '.css'}))
     // .pipe($.sourcemaps.init())
     // .pipe(gulp.dest('.tmp'))
     // replace minifyCss with csso
@@ -201,7 +197,10 @@ gulp.task('nodemon', cb => {
   return $.nodemon({
       script: PATH.server.init,
       ext: 'js',
-      ignore: `${PATH.client.src.all}/*`
+      ignore: [
+        `${PATH.client.src.all}/*`,
+        `${PATH.client.dist.all}/*`
+      ]
     })
     .on('start', () => {
       // ensure start only got called once
@@ -246,10 +245,10 @@ gulp.task('browser-sync', () => {
 gulp.task('default', () => {
   runSequence(
     'clean',
-    ['styles', 'images', 'html', 'lib'],
-    ['nodemon'],
-    ['browser-sync'],
-    ['watch']
+    ['styles', 'images', 'html', 'lib', 'typescript'],
+    'nodemon',
+    'browser-sync',
+    'watch'
   );
 });
 
