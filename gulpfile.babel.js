@@ -12,18 +12,15 @@
  * uglify -- js/html minifyer
  * concat -- concat files together
  * nodemon -- nodemon for gulp
- * changed
- * cache
+ * changed, cache, sourcemaps and plumber
  */
-
 
 
 /**
  *
  * WARNING:
- * Only serve is tested and working for development
- * TODO:
- * CLEAN UP THE MESS and finish production tasks
+ * Only default task is tested and working for development
+ * TODO: CLEAN UP THE MESS and finish production tasks
  *
  */
 import gulp from 'gulp';
@@ -38,24 +35,24 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import pkg from './package.json';
 import { files as PATH } from './server/config/config';
 
-const $ = gulpLoadPlugins();
-const reload = browserSync.reload;
-const join = path.join;
-
-let tsProject = $.typescript.createProject('tsconfig.json', {
-  typescript: require('typescript')
-});
 
 
 /**
- * Defaults
+ * Constants
  */
+const $ = gulpLoadPlugins();
+const reload = browserSync.reload;
+const join = path.join;
 const DEFAULTS = {
   // url: 'some-url.com',
   browserSync: {
     proxy: 'http://localhost:3000',
     port: 4000,
-    browser: ['google chrome']
+    browser: ['google chrome'],
+    startReloadDelay: 2000,
+    logPrefix: 'BrowserSync',
+    ghostMode: false,
+    open: false,
   },
   autoprefixerBrowsers: [
     'ie >= 10',
@@ -67,13 +64,20 @@ const DEFAULTS = {
     'ios >= 7',
     'android >= 4.4',
     'bb >= 10'
-  ],
-  browserSyncReloadDelay: 500
+  ]
 };
 
 
 /**
- * Clean
+ * TypeScript config
+ */
+let tsProject = $.typescript.createProject('tsconfig.json', {
+  typescript: require('typescript')
+});
+
+
+/**
+ * Clean the dist folder
  */
 gulp.task('clean', callback => {
   del([
@@ -86,7 +90,7 @@ gulp.task('clean', callback => {
 /**
  * Build development
  */
-gulp.task('ts.dev', () => {
+gulp.task('typescript', () => {
   let result = gulp.src([join(PATH.client.src.app, '**/*.ts'),
                          '!' + join(PATH.client.src.app, '**/*_spec.ts')])
     .pipe($.plumber())
@@ -95,11 +99,35 @@ gulp.task('ts.dev', () => {
 
   return result.js
     .pipe($.sourcemaps.write())
+    .pipe($.changed(PATH.client.dist.app))
     .pipe(gulp.dest(PATH.client.dist.app));
 });
 
 
+/**
+ * Copy html templates
+ */
+gulp.task('html', () => {
+  return gulp.src(`${PATH.client.src.app}/**/*.html`)
+    .pipe($.changed(PATH.client.dist.app))
+    .pipe(gulp.dest(PATH.client.dist.app))
+    .pipe($.size({title: 'html'}));
+})
 
+
+/**
+ * Optimize images
+ */
+gulp.task('images', () => {
+  return gulp.src(`${PATH.client.src.assets}/images/**/*`)
+    .pipe($.cache($.imagemin({
+      progressive: true,
+      interlaced: true
+    })))
+    .pipe($.changed(`${PATH.client.dist.assets}/images`))
+    .pipe(gulp.dest(`${PATH.client.dist.assets}/images`))
+    .pipe($.size({title: 'images'}));
+});
 
 
 // Lint JavaScript
@@ -111,41 +139,20 @@ gulp.task('ts.dev', () => {
 //     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 // });
 
-// Optimize images
-gulp.task('images', () => {
-  return gulp.src(`${PATH.client.src.assets}/images/**/*`)
-    .pipe($.cache($.imagemin({
-      progressive: true,
-      interlaced: true
-    })))
-    .pipe(gulp.dest(`${PATH.client.dist.assets}/images`))
-    .pipe($.size({title: 'images'}));
-});
-
 
 /**
- * TODO: figure this out!!
+ * Copy web fonts to dist
  */
-// Copy all files at the root level (app)
-// gulp.task('copy', () => {
-//   return gulp.src([
-//     'app/*',
-//     '!app/*.html',
-//     'node_modules/apache-server-configs/dist/.htaccess'
-//   ], {
-//     dot: true
-//   }).pipe(gulp.dest('dist'))
-//     .pipe($.size({title: 'copy'}));
-// });
-
-// Copy web fonts to dist
 gulp.task('fonts', () => {
   return gulp.src([`${PATH.client.src.assets}/fonts/**`])
     .pipe(gulp.dest(`${PATH.client.dist.assets}/fonts`))
     .pipe($.size({title: 'fonts'}));
 });
 
-// Compile and automatically prefix stylesheets
+
+/**
+ * Compile and automatically prefix stylesheets
+ */
 gulp.task('styles', () => {
 
   // For best performance, don't add Sass partials to `gulp.src`
@@ -159,9 +166,7 @@ gulp.task('styles', () => {
     .pipe(gulp.dest(PATH.client.dist.assets))
     .pipe($.size({title: 'styles'}));
 
-    /**
-     * TODO: add production styles.serve and put in a different task
-     */
+    // TODO: add production styles.serve and put in a different task
     // .pipe($.changed('.tmp/styles', {extension: '.css'}))
     // .pipe($.sourcemaps.init())
     // .pipe(gulp.dest('.tmp'))
@@ -173,6 +178,95 @@ gulp.task('styles', () => {
     // .pipe(gulp.dest(PATH.public.dist))
     // .pipe($.size({title: 'styles'}));
 });
+
+
+/**
+ * Watch for changes
+ */
+gulp.task('watch', () => {
+
+  gulp
+    .watch(`${PATH.client.src.app}/**/*.html`, () => {
+      runSequence('html', reload);
+    });
+
+  gulp.watch(`${PATH.client.src.app}/**/*.ts`, () => {
+    runSequence('typescript', reload);
+  });
+
+  gulp.watch(`${PATH.client.src.assets}/styles/**/*.scss`, ['styles']);
+  gulp.watch(`${PATH.client.src.assets}/images/**/*.*`, ['images']);
+
+});
+
+
+/**
+ * Reload node serverside app
+ */
+gulp.task('nodemon', cb => {
+  var called = false;
+  return $.nodemon({
+      script: PATH.server.init,
+      ext: 'js',
+      ignore: `${PATH.client.src.all}/*`
+    })
+    .on('start', () => {
+      // ensure start only got called once
+      if (!called) cb()
+      called = true;
+    })
+    .on('restart', () => {
+      // reload connected browsers after a slight delay
+      setTimeout(() => {
+        reload({
+          stream: false
+        });
+      }, DEFAULTS.browserSync.startReloadDelay);
+    });
+});
+
+
+/**
+ * Reload browsers
+ */
+gulp.task('browser-sync', () => {
+  // browser-sync config options: http://www.browsersync.io/docs/options/
+  browserSync.init({
+    notify: false,
+    logPrefix: DEFAULTS.browserSynclogPrefix,
+    // watch the following files; changes will be injected (css & images) or cause browser to refresh
+    files: [`${PATH.client.dist.assets}/styles/*.css`, `${PATH.client.dist.assets}/images/*.*`],
+    proxy: DEFAULTS.browserSync.proxy,
+    port: DEFAULTS.browserSync.port,
+    ghostMode: DEFAULTS.browserSync.ghostMode,
+    open: DEFAULTS.browserSync.open,
+    // browser: DEFAULTS.browserSync.browser
+  });
+});
+
+
+/**
+ * Default task for development (will change!)
+ */
+gulp.task('default', () => {
+  runSequence(
+    'clean',
+    ['styles', 'images', 'html'],
+    ['nodemon'],
+    ['browser-sync'],
+    ['watch']
+  );
+});
+
+
+
+
+
+
+
+
+
+
 
 // Concatenate and minify JavaScript
 // gulp.task('scripts', () => {
@@ -189,7 +283,7 @@ gulp.task('styles', () => {
  * TODO:
  * Setup a template watcher for angluar and server side templates
  */
-//  // Scan your HTML for assets & optimize them
+ // Scan your HTML for assets & optimize them
 // gulp.task('html', () => {
 //   const assets = $.useref.assets({searchPath: '{.tmp,app}'});
 //
@@ -223,89 +317,6 @@ gulp.task('styles', () => {
 // });
 
 
-
-
-gulp.task('nodemon', cb => {
-  var called = false;
-  return $.nodemon({
-    script: PATH.server.init,
-    // watch core server file(s) that require server restart on change
-    // watch: ['app.js']
-  })
-    .on('start', () => {
-      // ensure start only got called once
-      if (!called) cb()
-      called = true;
-    })
-    .on('restart', () => {
-      // reload connected browsers after a slight delay
-      setTimeout(() => {
-        browserSync.reload({
-          stream: false   //
-        });
-      }, DEFAULTS.browserSyncReloadDelay);
-    });
-});
-
-gulp.task('browser-sync', ['nodemon'], () => {
-  // browser-sync config options: http://www.browsersync.io/docs/options/
-  browserSync.init({
-    notify: false,
-    // Customize the BrowserSync console logging prefix
-    logPrefix: 'BrowserSync',
-    // watch the following files; changes will be injected (css & images) or cause browser to refresh
-    files: [`${PATH.client.dist.all}/**/*.*`],
-    // informs browser-sync to proxy our expressjs app which would run at the following location
-    proxy: DEFAULTS.browserSync.proxy,
-    // informs browser-sync to use the following port for the proxied app
-    port: DEFAULTS.browserSync.port,
-    // open the proxied app in chrome
-    browser: DEFAULTS.browserSync.browser
-  });
-});
-
-
-// Watch files for changes & reload
-gulp.task('default', ['styles', 'ts.dev', 'images', 'browser-sync'], () => {
-  gulp.watch([`${PATH.client.src.app}/**/*.html`], reload);
-  gulp.watch([`${PATH.client.src.app}/**/*.ts`], ['ts.dev', reload]);
-  gulp.watch([`${PATH.client.src.assets}/styles/**/*.scss`], ['styles', reload]);
-  gulp.watch([`${PATH.client.src.assets}/images/**/*`], reload);
-});
-
-
-// // Build and serve the output from the dist build
-// gulp.task('serve:dist', ['default'], () => {
-//   browserSync({
-//     notify: false,
-//     logPrefix: 'WSK',
-//     // Run as an https by uncommenting 'https: true'
-//     // Note: this uses an unsigned certificate which on first access
-//     //       will present a certificate warning in the browser.
-//     // https: true,
-//
-//     /**
-//      * TODO: Figure this out!!
-//      */
-//     server: 'dist',
-//     baseDir: 'dist'
-//   });
-// });
-
-// // Build production files, the default task
-// gulp.task('default', ['clean'], callback => {
-//   runSequence(
-//     'styles',
-//     // MODIFIED: not HTML task needed for MEAN Stack now, instead:
-//     // TODO-Later: make a task to optimize HTML templates!
-//     // TODO-Later: find a proper app structure to follow, copy task removed too
-//     // ['jshint', 'html', 'scripts', 'images', 'fonts', 'copy'],
-//     ['jshint','scripts', 'images'],
-//     // TODO-Later: findout what the f is a service worker you idot!
-//     // 'generate-service-worker',
-//     callback
-//   );
-// });
 
 // // Run PageSpeed Insights
 // gulp.task('pagespeed', cb => {
