@@ -1,15 +1,31 @@
 {
-  "version": "1.5.3",
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "declaration": false,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true
-  },
-  "compileOnSave": false
+    "version": "1.5.3",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true
+    },
+    "compileOnSave": false,
+    "filesGlob": [
+        "typings/tsd.d.ts",
+        "client/app/**/*.ts"
+    ],
+    "files": [
+        "typings/tsd.d.ts",
+        "client/app/bootstrap.ts",
+        "client/app/components/app.ts",
+        "client/app/components/dashboard/dashboard.ts",
+        "client/app/components/home/home.ts",
+        "client/app/components/todo/todo.ts",
+        "client/app/directives/Autofocus.ts",
+        "client/app/directives/XLarge.ts",
+        "client/app/services/TodoService.ts",
+        "client/app/system.init.ts"
+    ]
 }
