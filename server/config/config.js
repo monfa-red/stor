@@ -89,13 +89,14 @@ export default {
             './node_modules/reflect-metadata/Reflect.js',
             './node_modules/reflect-metadata/Reflect.js.map',
             './node_modules/systemjs/dist/system.src.js',
-            'client/app/system.config.js',
+            './client/app/system.config.js',
             './node_modules/angular2/bundles/angular2.dev.js',
             './node_modules/angular2/bundles/router.dev.js',
             './node_modules/angular2/bundles/router.dev.js.map',
             './node_modules/angular2/bundles/http.dev.js'
           ]
-        }
+        },
+        typings: 'typings/tsd.d.ts',
       },
       dist: {
         all: 'dist',
@@ -105,7 +106,7 @@ export default {
           all: 'dist/lib',
           angular: 'dist/lib/angular',
           js: [
-            'dist/app/init.js'
+            'dist/app/system.init.js'
           ],
           css: [
             'dist/lib/material-design-lite/material.css',
