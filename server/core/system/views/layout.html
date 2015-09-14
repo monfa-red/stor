@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta charset="UTF-8">
-  <title ng-bind="pageConfig.title + ' {{title}}'">{{title}}</title>
+  <title>{{title}}</title>
   <base href="/">
   <meta name="fragment" content="!">
   <!-- Application CSS Files --> {% for cssFile in cssFiles %}
@@ -15,7 +15,7 @@
 
   <!--Application Angular 2 Files--> {% for angularFile in angularFiles %}
   <script type="text/javascript" src="{{angularFile}}"></script> {% endfor %}
-  
+
   <!--Application JavaScript Files--> {% for jsFile in jsFiles %}
   <script type="text/javascript" src="{{jsFile}}"></script> {% endfor %}
 

@@ -105,12 +105,7 @@ export default {
           all: 'dist/lib',
           angular: 'dist/lib/angular',
           js: [
-            'dist/app/*module.js',
-            'dist/app/*.js',
-            'dist/app/shared/**/*.js',
-            'dist/app/**/*module.js',
-            'dist/app/**/*service.js',
-            'dist/app/**/*.js'
+            'dist/app/init.js'
           ],
           css: [
             'dist/lib/material-design-lite/material.css',
