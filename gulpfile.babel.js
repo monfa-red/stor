@@ -1,27 +1,7 @@
 'use strict';
-/**
- * Available gulp packages to gulp-load-plugins:
- * sass -- sass compiler
- * csso -- css optimizer/minifyer
- * autoprefixer -- css prefixer
- * if -- gulp if stream
- * imagemin -- image compresser
- * jshint -- js hinter
- * size -- log the file sizes
- * sourcemaps -- add sourcemaps useful after minification
- * uglify -- js/html minifyer
- * concat -- concat files together
- * nodemon -- nodemon for gulp
- * changed, cache, sourcemaps and plumber
- */
-
 
 /**
- *
- * WARNING:
- * Only default task is tested and working for development
- * TODO: CLEAN UP THE MESS and finish production tasks
- *
+ * Module dependencies
  */
 import gulp from 'gulp';
 import fs from 'fs';
@@ -34,7 +14,6 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 // import { output as pagespeed } from 'psi';
 import pkg from './package.json';
 import { files as PATH } from './server/config/config';
-
 
 
 /**
@@ -57,11 +36,10 @@ const DEFAULTS = {
   autoprefixerBrowsers: [
     'ie >= 10',
     'ie_mob >= 10',
-    'ff >= 30',
-    'chrome >= 34',
-    'safari >= 7',
-    'opera >= 23',
-    'ios >= 7',
+    'ff >= 35',
+    'chrome >= 40',
+    'safari >= 8',
+    'ios >= 8',
     'android >= 4.4',
     'bb >= 10'
   ]
@@ -79,16 +57,13 @@ let tsProject = $.typescript.createProject('tsconfig.json', {
 /**
  * Clean the dist folder
  */
-// gulp.task('clean.old', callback => {
-//   del([
-//     PATH.client.dist.app,
-//     PATH.client.dist.assets
-//   ], callback);
-// });
+gulp.task('clean', (callback) => {
+  del([`${PATH.client.dist.all}/*`, '!' + PATH.client.dist.lib.all,
+       `!${PATH.client.dist.lib.all}/*`], callback);
+});
 
-gulp.task('clean', (done) => {
-  del([`${PATH.client.dist.all}/*`, '!' + PATH.client.dist.lib,
-       `!${PATH.client.dist.lib}/*`], done);
+gulp.task('clean.all', (callback) => {
+  del(PATH.client.dist.all, callback);
 });
 
 
@@ -96,8 +71,10 @@ gulp.task('clean', (done) => {
  * Build development
  */
 gulp.task('typescript', () => {
-  let result = gulp.src([join(PATH.client.src.app, '**/*.ts'),
-                         '!' + join(PATH.client.src.app, '**/*_spec.ts')])
+  let result = gulp.src([
+      join(PATH.client.src.app, '**/*.ts'),
+      '!' + join(PATH.client.src.app, '**/*_spec.ts')
+    ])
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.typescript(tsProject));
@@ -113,8 +90,9 @@ gulp.task('typescript', () => {
  * Libraries
  */
 gulp.task('lib', function () {
-  return gulp.src(PATH.client.src.lib)
-    .pipe(gulp.dest(PATH.client.dist.lib));
+  return gulp.src(PATH.client.src.lib.angular)
+    .pipe($.changed(PATH.client.dist.lib.angular))
+    .pipe(gulp.dest(PATH.client.dist.lib.angular));
 });
 
 
@@ -245,12 +223,14 @@ gulp.task('nodemon', cb => {
  * Reload browsers
  */
 gulp.task('browser-sync', () => {
-  // browser-sync config options: http://www.browsersync.io/docs/options/
   browserSync.init({
     notify: false,
     logPrefix: DEFAULTS.browserSynclogPrefix,
-    // watch the following files; changes will be injected (css & images) or cause browser to refresh
-    files: [`${PATH.client.dist.assets}/styles/*.css`, `${PATH.client.dist.assets}/images/*.*`],
+    // watch changes will be injected (css & images) or cause browser to refresh
+    files: [
+        `${PATH.client.dist.assets}/styles/*.css`,
+        `${PATH.client.dist.assets}/images/*.*`
+    ],
     proxy: DEFAULTS.browserSync.proxy,
     port: DEFAULTS.browserSync.port,
     ghostMode: DEFAULTS.browserSync.ghostMode,
@@ -266,7 +246,7 @@ gulp.task('browser-sync', () => {
 gulp.task('default', () => {
   runSequence(
     'clean',
-    ['styles', 'images', 'html'],
+    ['styles', 'images', 'html', 'lib'],
     ['nodemon'],
     ['browser-sync'],
     ['watch']
@@ -274,11 +254,24 @@ gulp.task('default', () => {
 });
 
 
-
-
-
-
-
+/**
+ * Bump application version
+ */
+gulp.task('bump', () => {
+  gulp.src(['./bower.json', './package.json'])
+  .pipe($.bump({type:'patch'}))
+  .pipe(gulp.dest('./'));
+});
+gulp.task('bump.minor', () => {
+  gulp.src(['./bower.json', './package.json'])
+  .pipe($.bump({type:'minor'}))
+  .pipe(gulp.dest('./'));
+});
+gulp.task('bump.major', () => {
+  gulp.src(['./bower.json', './package.json'])
+  .pipe($.bump({type:'major'}))
+  .pipe(gulp.dest('./'));
+});
 
 
 
@@ -294,10 +287,7 @@ gulp.task('default', () => {
 // });
 
 
-/**
- * TODO:
- * Setup a template watcher for angluar and server side templates
- */
+
  // Scan your HTML for assets & optimize them
 // gulp.task('html', () => {
 //   const assets = $.useref.assets({searchPath: '{.tmp,app}'});
