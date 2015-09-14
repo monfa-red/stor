@@ -14,15 +14,6 @@ import {Todo} from './todo/todo';
 @View({
   // needed in order to tell Angular's compiler what's in the template
   directives: [RouterOutlet, RouterLink],
-  styles: [`
-    .title { margin: 0.5rem 0; }
-    .main-content { padding: 0.5rem; }
-    .main-nav { margin-bottom: 0.5rem; }
-    .error-message {
-      display: block;
-      color: red;
-    }
-  `],
   template: `
   <section class="main-content">
     <h1 class="title">{{ title }}</h1>
