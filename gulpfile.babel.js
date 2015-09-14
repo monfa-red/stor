@@ -68,20 +68,17 @@ gulp.task('clean.all', (callback) => {
 
 
 /**
- * Build development
+ * TypeScript
  */
-gulp.task('typescript', () => {
-  let result = gulp.src([
-      join(PATH.client.src.app, '**/*.ts'),
-      '!' + join(PATH.client.src.app, '**/*_spec.ts')
-    ])
-    .pipe($.plumber())
+gulp.task('typescript', function() {
+  return gulp
+    .src([PATH.client.src.typings, join(PATH.client.src.app, '**/*.ts')])
+    .pipe($.changed(PATH.client.dist.app, {
+      extension: '.js'
+    }))
     .pipe($.sourcemaps.init())
-    .pipe($.typescript(tsProject));
-
-  return result.js
-    .pipe($.sourcemaps.write())
-    // .pipe($.changed(PATH.client.dist.app, {extension: '.js'}))
+    .pipe($.typescript(tsProject))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest(PATH.client.dist.app));
 });
 
@@ -94,7 +91,6 @@ gulp.task('lib', function () {
     .pipe($.changed(PATH.client.dist.lib.angular))
     .pipe(gulp.dest(PATH.client.dist.lib.angular));
 });
-
 
 
 /**
