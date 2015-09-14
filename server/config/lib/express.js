@@ -70,8 +70,18 @@ function localVariables(app) {
   locals.title = config.app.title;
   locals.description = config.app.description;
   locals.keywords = config.app.keywords;
-  locals.cssFiles = paths(config.files.client.lib.css, true);
-  locals.jsFiles = paths(config.files.client.lib.js, true);
+  locals.cssFiles = paths(config.files.client.dist.lib.css, true);
+  locals.jsFiles = paths(config.files.client.dist.lib.js, true);
+
+  // get the list of angular files in order
+  locals.angularFiles = config.files.client.src.lib.angular
+    .filter(dir => dir.endsWith('.js'))
+    .map(dir => path.join(
+        config.files.client.dist.lib.angular
+          .replace(config.files.client.dist.all, ''),
+        dir.split('/').pop())
+    );
+
   // Passing the request url to environment locals
   app.use((req, res, next) => {
     res.locals.host = req.protocol + '://' + req.hostname;

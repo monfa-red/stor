@@ -13,6 +13,9 @@
     {% block content %}{% endblock %}
 
 
+  <!--Application Angular 2 Files--> {% for angularFile in angularFiles %}
+  <script type="text/javascript" src="{{angularFile}}"></script> {% endfor %}
+  
   <!--Application JavaScript Files--> {% for jsFile in jsFiles %}
   <script type="text/javascript" src="{{jsFile}}"></script> {% endfor %}
 

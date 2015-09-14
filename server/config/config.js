@@ -79,44 +79,45 @@ export default {
         all: 'client',
         app: 'client/app',
         assets: 'client/assets',
-        lib: [
-          // Order is quite important here for the HTML tag injection.
-          './node_modules/angular2/node_modules/traceur/bin/traceur-runtime.js',
-          './node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.js',
-          './node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.js.map',
-          './node_modules/reflect-metadata/Reflect.js',
-          './node_modules/reflect-metadata/Reflect.js.map',
-          './node_modules/systemjs/dist/system.src.js',
-          'client/app/system.config.js',
-          './node_modules/angular2/bundles/angular2.dev.js',
-          './node_modules/angular2/bundles/router.dev.js',
-          './node_modules/angular2/bundles/http.dev.js'
-        ]
+        lib: {
+          all: '',
+          angular: [
+            // Order is quite important here for the HTML tag injection.
+            './node_modules/angular2/node_modules/traceur/bin/traceur-runtime.js',
+            './node_modules/es6-module-loader/dist/es6-module-loader-dev.js',
+            './node_modules/es6-module-loader/dist/es6-module-loader-dev.js.map',
+            './node_modules/reflect-metadata/Reflect.js',
+            './node_modules/reflect-metadata/Reflect.js.map',
+            './node_modules/systemjs/dist/system.src.js',
+            'client/app/system.config.js',
+            './node_modules/angular2/bundles/angular2.dev.js',
+            './node_modules/angular2/bundles/router.dev.js',
+            './node_modules/angular2/bundles/router.dev.js.map',
+            './node_modules/angular2/bundles/http.dev.js'
+          ]
+        }
       },
       dist: {
         all: 'dist',
         app: 'dist/app',
         assets: 'dist/assets',
-        lib: 'dist/lib'
+        lib: {
+          all: 'dist/lib',
+          angular: 'dist/lib/angular',
+          js: [
+            'dist/app/*module.js',
+            'dist/app/*.js',
+            'dist/app/shared/**/*.js',
+            'dist/app/**/*module.js',
+            'dist/app/**/*service.js',
+            'dist/app/**/*.js'
+          ],
+          css: [
+            'dist/lib/material-design-lite/material.css',
+            'dist/assets/styles/**/*.css'
+          ]
+        }
       },
-      lib: {
-        js: [
-          'dist/lib/angular/angular.min.js',
-          'dist/lib/angular-resource/angular-resource.js',
-          'dist/lib/angular-new-router/dist/router.es5.js',
-          'dist/app/*module.js',
-          'dist/app/*.js',
-          'dist/app/shared/**/*.js',
-          'dist/app/**/*module.js',
-          'dist/app/**/*service.js',
-          'dist/app/**/*.js',
-        ],
-        // sass: 'dist/assets/**/*.scss',
-        css: [
-          'dist/lib/material-design-lite/material.css',
-          'dist/assets/styles/**/*.css'
-        ]
-      }
     }
   },
 
