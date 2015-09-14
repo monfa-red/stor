@@ -1,0 +1,31 @@
+<form [ng-form-model]="todoForm" (submit)="todoForm.valid && addOne()">
+  <input ng-control="title" placeholder="Enter new Todo">
+  <button type="submit">Add</button>
+  <span class="error-message" *ng-if="
+    todoForm.dirty &&
+    todoForm.errors?.required &&
+    todoForm.controls.title.touched">
+    Todo is required
+  </span>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Created At</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ng-for="#todo of find()">
+      <td>{{ todo.title }}</td>
+      <td>{{ todo.status }}</td>
+      <td>{{ todo.createdAt }}</td>
+      <td>
+        <button (click)="removeOne(todo)">Remove</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

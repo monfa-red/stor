@@ -4,6 +4,11 @@ import {Component, View} from 'angular2/angular2';
   selector: 'home'
 })
 @View({
-  templateUrl: './app/components/home/home.html'
+  // styleUrls: ['/app/components/home/home.css'],
+  templateUrl: '/app/components/home/home.html'
 })
-export class Home {}
+export class Home {
+  constructor() {
+
+  }
+}
