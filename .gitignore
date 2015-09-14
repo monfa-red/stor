@@ -1,7 +1,7 @@
 # Project files
 # ======================
-access.log
 dist/
+typings/
 */*.temp
 
 # Mac
