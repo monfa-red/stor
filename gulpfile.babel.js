@@ -79,11 +79,16 @@ let tsProject = $.typescript.createProject('tsconfig.json', {
 /**
  * Clean the dist folder
  */
-gulp.task('clean', callback => {
-  del([
-    PATH.client.dist.app,
-    PATH.client.dist.assets
-  ], callback);
+// gulp.task('clean.old', callback => {
+//   del([
+//     PATH.client.dist.app,
+//     PATH.client.dist.assets
+//   ], callback);
+// });
+
+gulp.task('clean', (done) => {
+  del([`${PATH.client.dist.all}/*`, '!' + PATH.client.dist.lib,
+       `!${PATH.client.dist.lib}/*`], done);
 });
 
 
@@ -102,6 +107,16 @@ gulp.task('typescript', () => {
     .pipe($.changed(PATH.client.dist.app))
     .pipe(gulp.dest(PATH.client.dist.app));
 });
+
+
+/**
+ * Libraries
+ */
+gulp.task('lib', function () {
+  return gulp.src(PATH.client.src.lib)
+    .pipe(gulp.dest(PATH.client.dist.lib));
+});
+
 
 
 /**
