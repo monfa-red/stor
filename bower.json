@@ -1,6 +1,6 @@
 {
   "name": "stor",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/monfa-red/stor",
   "authors": [
     "Abbas Monfared <a@monfa.red>"
@@ -16,9 +16,6 @@
     "tests"
   ],
   "dependencies": {
-    "material-design-lite": "~1.0.1",
-    "angular-new-router": "~0.5.3",
-    "angular": "~1.4.4",
-    "angular-resource": "~1.4.4"
+    "material-design-lite": "~1.0.4"
   }
 }
