@@ -76,7 +76,7 @@ let productSchema = new Schema({
     small: {
       type: Array,
       // TODO: remove this placeholder url
-      default: ['assets/src/images/product-place-holder.png']
+      default: ['assets/images/product-place-holder.png']
       // default: ['sdsd', 'dfdsf']
     },
     large: {
