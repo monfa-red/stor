@@ -108,11 +108,11 @@ gulp.task('html', () => {
  * Optimize images
  */
 gulp.task('images', () => {
-  return gulp.src(`${PATH.client.src.assets}/images/**/*`)
-    .pipe($.cache($.imagemin({
+  return gulp.src(`${PATH.client.src.assets}/images/*`)
+    .pipe($.imagemin({
       progressive: true,
       interlaced: true
-    })))
+    }))
     .pipe($.changed(`${PATH.client.dist.assets}/images`))
     .pipe(gulp.dest(`${PATH.client.dist.assets}/images`))
     .pipe($.size({title: 'images'}));
