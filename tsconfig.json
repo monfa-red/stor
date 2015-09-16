@@ -19,12 +19,14 @@
     "files": [
         "typings/tsd.d.ts",
         "client/app/bootstrap.ts",
-        "client/app/components/app.ts",
+        "client/app/components/app/app.ts",
         "client/app/components/dashboard/dashboard.ts",
         "client/app/components/home/home.ts",
+        "client/app/components/product-list/product-list.ts",
         "client/app/components/todo/todo.ts",
         "client/app/directives/Autofocus.ts",
         "client/app/directives/XLarge.ts",
+        "client/app/services/ProductsService.ts",
         "client/app/services/TodoService.ts",
         "client/app/system.init.ts"
     ]

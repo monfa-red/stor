@@ -1,0 +1,41 @@
+<div class="product-list__container">
+
+    <div class="product-list__slogan">
+        <h3>Our summer collection</h3>
+    </div>
+
+    <nav class="product-list__nav">
+         <a href="#" class="product-list__nav-link">Men's</a>
+         <a href="#" class="product-list__nav-link">Women's</a>
+         <a href="#" class="product-list__nav-link">Kid's</a>
+         <a href="#" class="product-list__nav-link">Others</a>
+    </nav>
+
+    <div class="product-list__grid grid ">
+
+        <!-- START Product-list -->
+        <div class="product cell cell--4-col" *ng-for="#product of products">
+
+            <figure class="product__figure">
+                <!-- <img src="{{ product.imageURLs[0] }}"  alt="" /> -->
+                <!-- TODO: setup a ng-for for imgages array -->
+            </figure>
+
+            <div class="product__sale">
+              Sale
+            </div>
+
+            <div class="product__price">
+                <div class="product__price_final">
+                  {{ ( product.price.retail / 100 ) | currency:'USD' }}
+                </div>
+            </div>
+
+            <a class="product__cover" href="/products/{{ product.name }}">
+            </a>
+
+        </div>
+        <!-- END Product-list -->
+
+    </div>
+</div>
