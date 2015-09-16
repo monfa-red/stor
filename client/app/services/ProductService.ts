@@ -4,31 +4,29 @@ import { Http } from 'angular2/http';
 @Injectable()
 export class ProductService {
 
-  list: Array<any>;
-  product: Object;
+  // list: Array<any>;
+  // product: Object;
 
   constructor(public http: Http) {
 
   }
 
-  getList() {
+  getList(callback) {
 
     this.http.get('/api/products')
       .toRx()
       .map(r => r.json())
-      .subscribe(res => this.list = res);
+      .subscribe(res => callback(res));
 
-    return this.list;
   }
 
-  getProduct() {
+  getProduct(callback) {
 
     this.http.get('/api/products/:id')
       .toRx()
       .map(r => r.json())
-      .subscribe(res => this.product = res);
+      .subscribe(res => callback(res));
 
-    return this.product;
   }
 
   // addOne(todo) {

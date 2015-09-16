@@ -1,10 +1,8 @@
-<section class="main-content">
-  <h1 class="title">{{ title }}</h1>
-  <nav class="main-nav">
-    <a [router-link]="['/home']" class="mdl-button">Home</a>
-    <a [router-link]="['/product-list']" class="mdl-button">Product List</a>
-    <a [router-link]="['/dashboard']" class="mdl-button">Dashboard</a>
-    <a [router-link]="['/todo']" class="mdl-button">Todo</a>
-  </nav>
+<nav class="layout__nav">
+  <a [router-link]="['/home']" class="mdl-button">Home</a>
+  <a [router-link]="['/product-list']" class="mdl-button">Product List</a>
+  <a [router-link]="['/todo']" class="mdl-button">Sample</a>
+</nav>
+<section class="layout__content">
   <router-outlet></router-outlet>
 </section>

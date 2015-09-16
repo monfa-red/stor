@@ -4,57 +4,20 @@
   position: absolute;
   width: 100%;
   height: 100%;
-}
 
-/* ========= HEADER ========= */
-/**
- * Can also be effected by:
- * "_home.scss",
- */
-.layout__header {
-  display: flex;
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 15%;
+  &__nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10;
+  }
+  &__content {
 
-  .hero {
-    display: flex;
-    opacity: 0;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    @include absolute-align(0,0);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url('../images/home_bg.jpg');
-    transition: opacity 0s;
-
-    &__logo {
-      width: 50%;
-      height: 13vh;
-      // background-color: yellow;
-      background-image: url('../images/logo_noisy.png');
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    &__text {
-      margin-top: 2vh;
-      margin-bottom: -1.5vh;
-      // font-size: 1.7rem;
-      font-size: 1.5vh;
-      text-transform: uppercase;
-      letter-spacing: 0.16vw;
-      font-weight: 300;
-    }
   }
 }
 
-/* ========= CONTENT ========= */
-.layout__content {
+/* ========= HEADER ========= */
 
-}
+
+
+/* ========= CONTENT ========= */

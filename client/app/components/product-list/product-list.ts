@@ -1,6 +1,6 @@
 // Angular 2
 import { Component, View, NgFor } from 'angular2/angular2';
-import { ProductService } from '../../services/ProductsService';
+import { ProductService } from '../../services/ProductService';
 
 // Simple component
 @Component({
@@ -17,8 +17,9 @@ export class ProductList {
 
   constructor(public productsService: ProductService) {
 
-    this.products = productsService.getList()
+    productsService.getList(list => this.products = list)
+
 
   }
-  
+
 }

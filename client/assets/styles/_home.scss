@@ -2,18 +2,40 @@
  * This layout will be in use when
  * "layout--home" class is added to ".layout"
  */
-.layout.layout--home {
+.layout {
 
-  .layout__header {
-    height: 100%;
+  .hero {
+    display: flex;
+    // opacity: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    @include absolute-align(0,0);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('../images/home_bg.jpg');
+    // transition: opacity 0s;
 
-    .hero {
-      opacity: 1;
-      transition: opacity 0.3s;
+    &__logo {
+      width: 50%;
+      height: 13vh;
+      // background-color: yellow;
+      background-image: url('../images/logo_noisy.png');
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    &__text {
+      margin-top: 2vh;
+      margin-bottom: -1.5vh;
+      // font-size: 1.7rem;
+      font-size: 1.5vh;
+      text-transform: uppercase;
+      letter-spacing: 0.16vw;
+      font-weight: 300;
     }
   }
-  .layout__content {
-    // TODO: remove this
-    display: none
-  }
+
 }
