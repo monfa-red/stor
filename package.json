@@ -41,6 +41,7 @@
     "reflect-metadata": "^0.1.1",
     "serve-favicon": "^2.3.0",
     "size": "^1.0.0",
+    "speakingurl": "^6.0.0",
     "swig": "^1.4.2",
     "systemjs": "^0.18.17",
     "typescript": "^1.5.3"

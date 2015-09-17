@@ -49,18 +49,17 @@ let UserSchema = new Schema({
 		trim: true,
 		required: 'Email is required',
 		unique: true,
-		lowercase: true
-		// validate: [validate, 'Please fill in your email address'],
-		// match: [/.+\@.+\..+/, 'Please fill a valid email address']
-	},
-
-	profileImage: {
-		type: String
+		lowercase: true,
+    match: [/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Please enter a valid email'],
 	},
 
 	provider: {
 		type: String,
 		default: 'local'
+	},
+
+	image: {
+		type: String
 	},
 
 	password: {
@@ -84,7 +83,6 @@ let UserSchema = new Schema({
 		ref: 'Payment'
 	},
 
-	profile: {},
 	facebook: {},
 	google: {},
 
@@ -172,17 +170,16 @@ function encryptPassword(password) {
  * Make salt and encrypt password if it's moddifed
  */
 UserSchema.pre('save', function(next) {
+	// check if the password is just filled and > 6
 	if (this.password && this.isModified('password') && this.password.length >= 6) {
 		this.salt = makeSalt();
 		this.password = this.encryptPassword(this.password);
-		// next();
 	}
 	next();
-	// next(new Error('Invalid Password'));
 });
 
 
 /**
- * Setting UserSchema to User model
+ * Instantiate "User" model
  */
 mongoose.model('User', UserSchema);

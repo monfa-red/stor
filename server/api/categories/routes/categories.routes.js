@@ -23,7 +23,7 @@ function categoriesRouter(app) {
       .post(categories.create);
 
   // app
-  //   .route('/api/categories/:productId')
+  //   .route('/api/categories/:id')
   //     .get(categories.read)
   //     .put(categories.update)
   //     .delete(categories.destroy)

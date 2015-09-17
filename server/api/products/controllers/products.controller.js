@@ -17,15 +17,15 @@ let Product = mongoose.model('Product');
  */
 export default {
 
+  index,
+
   create,
 
   show,
 
   update,
 
-  destroy,
-
-  index
+  destroy
 
 };
 
@@ -52,9 +52,9 @@ function index(req, res, next) {
     .exists('active')
     .limit(limit)
     .skip(limit * page)
-    .select('-__v -categories -details -author -category.all')
+    .select('-__v -details -author -category -images.large')
     .sort('-created')
-    .populate('category.main', 'name nameId')
+    .populate('category.main', 'name slug')
     .exec((err, products) => {
       if (err) return next(err);
       res.json(products);
@@ -80,24 +80,22 @@ function create(req, res, next) {
 
 
 /**
- * Find a product by "nameId"
+ * Find a product by "slug"
  */
 function show(req, res, next) {
 
-  let id = req.params.id;
-
   Product
-    .findOne({ 'nameId': id })
+    .findOne({'slug': req.params.id})
     .exists('active')
     .select('-__v')
     .sort('-created')
-    // .populate('author', 'name profileImage')
+    // .populate('author', 'name image')
     // .populate('category', '-_id')
     .exec((err, product) => {
       if (err) return next(err);
       if (!product) {
-        return res.status(404).send({
-          message: `Product ${id} does not exists`
+        return res.status(404).json({
+          message: `Product ${req.params.id} does not exists`
         });
       }
       res.json(product);
@@ -143,7 +141,7 @@ function destroy(req, res, next) {
 /**
  * Product middleware
  */
-function productByID(req, res, next, id) {
+function byID(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
@@ -153,7 +151,7 @@ function productByID(req, res, next, id) {
 
   Product
     .findById(id)
-    .populate('author', 'name profileImage')
+    .populate('author', 'name image')
     .exec((err, product) => {
       if (err) return next(err);
       if (!product) {

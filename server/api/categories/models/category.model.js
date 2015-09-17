@@ -4,7 +4,7 @@
  * Module dependencies
  */
 import mongoose from 'mongoose';
-import _ from 'lodash';
+import getSlug from 'speakingurl';
 
 
 /**
@@ -24,8 +24,9 @@ let categorySchema = new Schema({
     default: Date.now
   },
 
-  nameId: {
+  slug: {
     type: String,
+    unique: 'Semantic url already exists'
   },
 
   name: {
@@ -48,14 +49,14 @@ let categorySchema = new Schema({
 
 
 /**
- * Fill in the "nameId" with the
- * kebab-cased of "name" property
+ *  create a sematic url from "name" property
+ * and put it into "slug" if not provided
  */
 categorySchema.pre('save', function (next) {
-
-  this.nameId = _.kebabCase(this.name);
+  if (!this.slug) {
+    this.slug = getSlug(this.name);
+  }
   next();
-
 });
 
 

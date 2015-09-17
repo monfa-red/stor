@@ -21,11 +21,29 @@ export default {
 
   create,
 
-  read,
+  show,
 
   update,
 
   destroy
+
+};
+
+
+/**
+ * Get a list of categorys
+ */
+function index(req, res, next) {
+
+  Category
+    .find()
+    .select('-__v')
+    .sort('-created')
+    .populate('author', 'name email')
+    .exec((err, categorys) => {
+      if (err) return next(err);
+      res.json(categorys);
+    });
 
 };
 
@@ -36,7 +54,6 @@ export default {
 function create(req, res, next) {
 
   let category = new Category(req.body);
-
 
   category
     .save(err => {
@@ -50,10 +67,10 @@ function create(req, res, next) {
 /**
  * Find a category by "nameId"
  */
-function read(req, res, next) {
+function show(req, res, next) {
 
   Category
-    .findOne({ 'nameId': req.params.categoryId })
+    .findOne({ 'slug': req.params.id })
      // TODO: only return necessary data
     .exec((err, category) => {
       if (err) return next(err);
@@ -90,24 +107,6 @@ function destroy(req, res, next) {
     .remove({ _id: req.params.categoryId }, (err, result) => {
       if (err) return next(err);
       res.json(result);
-    });
-
-};
-
-
-/**
- * Get a list of categorys
- */
-function index(req, res, next) {
-
-  Category
-    .find()
-    .select('-__v')
-    .sort('-created')
-    .populate('author', 'firstName lastName email')
-    .exec((err, categorys) => {
-      if (err) return next(err);
-      res.json(categorys);
     });
 
 };

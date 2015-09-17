@@ -4,7 +4,7 @@
  * Module dependencies
  */
 import mongoose from 'mongoose';
-import { kebabCase } from 'lodash';
+import getSlug from 'speakingurl';
 
 
 /**
@@ -28,27 +28,24 @@ let productSchema = new Schema({
     type: Date
   },
 
-  nameId: {
-    type: String
+  slug: {
+    type: String,
+    unique: true
   },
 
   name: {
     type: String,
     trim: true,
-    unique: true,
     required: 'Product name can not be blank'
   },
 
   details: {
     caption: {
       type: String,
-      default: '',
-      trim: true,
+      trim: true
     },
     description: {
       type: String,
-      default: '',
-      trim: true,
       required: 'Product description can not be blank'
     }
   },
@@ -56,28 +53,21 @@ let productSchema = new Schema({
   price: {
     retail: {
       type: Number,
-      default: 0,
-      trim: true,
       required: 'Retail price can not be blank'
     },
     sale: {
       type: Number,
-      trim: true
     },
     shipping: {
       type: Number,
       default: 0,
-      trim: true,
       required: 'Shipping price can not be blank'
     }
   },
 
   images: {
     small: {
-      type: Array,
-      // TODO: remove this placeholder url
-      default: ['assets/images/product-place-holder.png']
-      // default: ['sdsd', 'dfdsf']
+      type: Array
     },
     large: {
       type: Array
@@ -117,14 +107,14 @@ let productSchema = new Schema({
 
 
 /**
- * Fill in the "nameId" with the
- * kebab-cased of "name" property
+ * create a sematic url from "name" property
+ * and put it into "slug" if not provided
  */
 productSchema.pre('save', function (next) {
-
-  this.nameId = kebabCase(this.name);
+  if (!this.slug) {
+    this.slug = getSlug(this.name);
+  }
   next();
-
 });
 
 

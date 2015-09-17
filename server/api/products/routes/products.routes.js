@@ -3,8 +3,9 @@
 /**
  * Moudle dependencies
  */
-import products from '../controllers/products.controller';
 import faker from 'faker';
+import products from '../controllers/products.controller';
+import auth from '../../../core/auth/services/auth.service';
 
 
 /**
@@ -26,6 +27,7 @@ function productsRouter(app) {
     .route('/api/products')
       .get(products.index)
       .post(products.create);
+      // .post(auth.admin, products.create);
 
   app
     .route('/api/products/:id')
@@ -46,7 +48,6 @@ function fakeUserInitialTests(app) {
     .route('/api/products/list')
       .get(function(req, res) {
         let jres = {
-            // date: faker.date.past(),
             name: faker.commerce.productName(),
             details: {
               caption: faker.lorem.sentence(),
@@ -56,8 +57,10 @@ function fakeUserInitialTests(app) {
               retail: faker.random.number() + "99",
               shipping: "1299"
             },
-            //TEST: replace it with a user ID
-            author: "55ca791ccbd3c480233a3071",
+            images: {
+              small: ['assets/images/product-place-holder.png']
+            },
+            author: "55faaa0d987b7559175fc751", //works
             category:{
               main: "55d91920203d5c441e0b0bc6",
               all: [

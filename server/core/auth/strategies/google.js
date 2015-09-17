@@ -40,7 +40,7 @@ passport.use(new GoogleStrategy({
           },
           email: profile.emails[0].value,
           role: 'user',
-          profileImage: (providerData.picture)
+          image: (providerData.picture)
             ? providerData.picture
             : undefined,
           provider: 'google',

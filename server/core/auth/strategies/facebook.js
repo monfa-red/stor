@@ -34,8 +34,8 @@ passport.use(new FacebookStrategy({
 
         if (user) return done(null, user);
 
-        console.log('PROFILE::: ', profile);
-        console.log('PROFILE-JJ::: ', profile._json);
+        // console.log('PROFILE::: ', profile);
+        // console.log('PROFILE-JJ::: ', profile._json);
 
         user = new User({
           name: {
@@ -44,7 +44,7 @@ passport.use(new FacebookStrategy({
           },
           email: profile.emails[0].value,
           role: 'user',
-          profileImage: (profile.id)
+          image: (profile.id)
             ? '//graph.facebook.com/' + profile.id + '/picture?type=large'
             : undefined,
           provider: 'facebook',
