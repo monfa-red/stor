@@ -11,7 +11,7 @@ export class ProductService {
 
   }
 
-  getList(callback) {
+  getProducts(callback) {
 
     this.http.get('/api/products')
       .toRx()
@@ -20,12 +20,11 @@ export class ProductService {
 
   }
 
-  getProduct(callback) {
+  getProduct(id, callback) {
 
-    this.http.get('/api/products/:id')
+    this.http.get('/api/products/' + id)
       .toRx()
-      .map(r => r.json())
-      .subscribe(res => callback(res));
+      .subscribe(res => callback(res.json()));
 
   }
 

@@ -1,0 +1,22 @@
+<div class="product-detail__container">
+  <div class="product-detail">
+
+    <h3 class="product-detail-title">
+        {{ product.name }}
+    </h3>
+    <h4 class="product-detail-price">
+        {{ product.price.retail }}
+        {{ product.price.shipping }}
+    </h4>
+    <p>
+      {{ product.details.caption }}
+    </p>
+    <p>
+      {{ product._id }}
+    </p>
+    <p>
+      {{ product.details.description }}
+    </p>
+
+  </div>
+</div>

@@ -17,7 +17,7 @@
         <div class="product cell cell--4-col" *ng-for="#product of products">
 
             <figure class="product__figure">
-                <img src="{{ product.images.small }}"  alt="" />
+                <img src="{{ product.images.small[0] }}"  alt="" />
                 <!-- TODO: setup a ng-for for imgages array -->
             </figure>
 
@@ -27,12 +27,14 @@
 
             <div class="product__price">
                 <div class="product__price_final">
-                  {{ ( product.price.retail / 100 ) | currency:'USD' }}
+                  {{ product.price.retail / 100 }}
                 </div>
             </div>
 
-            <a class="product__cover" href="/products/{{ product.nameId }}">
-            </a>
+            <!-- <a href="/products/{{ product.nameId }}">
+            </a> -->
+            <!-- <a [router-link]="['/product-detail']"></a> -->
+            <a class="product__cover" [router-link]="['/product-detail', {id: product.nameId}]"></a>
 
         </div>
         <!-- END Product-list -->

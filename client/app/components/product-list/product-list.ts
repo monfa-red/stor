@@ -1,5 +1,6 @@
 // Angular 2
 import { Component, View, NgFor } from 'angular2/angular2';
+import { RouterLink } from 'angular2/router';
 import { ProductService } from '../../services/ProductService';
 
 // Simple component
@@ -9,7 +10,7 @@ import { ProductService } from '../../services/ProductService';
 })
 @View({
   templateUrl: '/app/components/product-list/product-list.html',
-  directives: [NgFor]
+  directives: [NgFor, RouterLink]
 })
 export class ProductList {
 
@@ -17,7 +18,7 @@ export class ProductList {
 
   constructor(public productsService: ProductService) {
 
-    productsService.getList(list => this.products = list)
+    productsService.getProducts(list => this.products = list)
 
 
   }

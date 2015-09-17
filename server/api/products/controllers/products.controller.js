@@ -91,8 +91,8 @@ function show(req, res, next) {
     .exists('active')
     .select('-__v')
     .sort('-created')
-    .populate('author', 'name profileImage')
-    .populate('category', '-_id')
+    // .populate('author', 'name profileImage')
+    // .populate('category', '-_id')
     .exec((err, product) => {
       if (err) return next(err);
       if (!product) {

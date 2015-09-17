@@ -4,7 +4,7 @@ import {RouteConfig, RouterOutlet, RouterLink} from 'angular2/router';
 
 // We use a folder if we want separate files
 import {Home} from '../home/home';
-import {Dashboard} from '../dashboard/dashboard';
+import {ProductDetail} from '../product-detail/product-detail';
 import {ProductList} from '../product-list/product-list';
 import {Todo} from '../todo/todo';
 
@@ -19,8 +19,8 @@ import {Todo} from '../todo/todo';
 })
 @RouteConfig([
   { path: '/', as: 'home', component: Home },
-  { path: '/product-list', as: 'product-list', component: ProductList },
-  { path: '/dashboard', as: 'dashboard', component: Dashboard },
+  { path: '/products', as: 'product-list', component: ProductList },
+  { path: '/products/:id', as: 'product-detail', component: ProductDetail },
   { path: '/todo', as: 'todo', component: Todo }
 ])
 export class App {
